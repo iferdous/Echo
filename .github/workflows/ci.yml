@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.13.9"
+      - name: Install locked environment
+        run: uv sync --locked
+      - name: Check formatting
+        run: uv run --no-sync ruff format --check src tests
+      - name: Lint
+        run: uv run --no-sync ruff check src tests
+      - name: Run tests
+        run: uv run --no-sync pytest
+      - name: Run fixture smoke workflow
+        run: |
+          uv run --no-sync echo-audit --version
+          uv run --no-sync echo-audit fixture --out "$RUNNER_TEMP/echo-fixture"

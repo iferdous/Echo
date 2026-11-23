@@ -4,6 +4,19 @@ Echo is a planned audio dataset audit tool. Feed it a clip and a collection of r
 
 A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo will use acoustic fingerprints to find the shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo will use those IDs to check its work and test what it can recover from the audio itself. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
 
+## Getting started
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and use its locked environment. The project pins Python 3.12.16.
+
+```bash
+uv sync --locked
+uv run echo-audit --help
+uv run echo-audit fixture --out .local/fixture
+uv run pytest
+```
+
+The fixture writes a reference WAV, a related crop with a known sample offset, and an unrelated distractor. Use a fresh output path for each run. The command is also available as `uv run python -m echo`. FFmpeg is optional until codec evaluation.
+
 ## Implementation stages
 
 Follow the [numbered stages, 0 through 9](docs/stages/README.md). Start with [Stage 0, Environment and scaffold](docs/stages/00-environment-and-scaffold.md).
