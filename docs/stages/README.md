@@ -1,6 +1,6 @@
 # Echo implementation stages
 
-Start with [Stage 0](00-environment-and-scaffold.md). These are implementation instructions. Echo's metadata preflight is documented in the [evaluation protocol](../evaluation-protocol.md#metadata-preflight).
+Start with [Stage 0](00-environment-and-scaffold.md). Stages 0 and 1 have [recorded implementation results](../results/stages-0-1.md). Echo's metadata preflight is documented in the [evaluation protocol](../evaluation-protocol.md#metadata-preflight).
 
 | Stage | Work | Evidence required to close the stage |
 | --- | --- | --- |

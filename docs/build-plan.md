@@ -50,7 +50,9 @@ A file is one asset. A recording can have several assets, including excerpts. Da
 
 ~~~text
 src/echo/
-  __main__.py          CLI entry point
+  __main__.py          support for python -m echo
+  cli.py               echo-audit command entry point
+  acquisition.py       verified dataset downloads and extraction
   audio.py             decode, validation, and resampling
   fingerprint.py       spectrogram peaks and stable landmark hashes
   index.py             in-memory postings first, then SQLite persistence
@@ -70,12 +72,12 @@ Add files when their responsibilities exist. Keep downloaded datasets and genera
 These are planned interfaces. Each command should have a human-readable summary and write structured evidence where specified.
 
 ~~~text
-echo index TRAIN.csv --out train.sqlite
-echo match QUERY.wav --index train.sqlite --json
-echo audit TEST.csv --index train.sqlite --out audit/
-echo bench --spec bench/matcher-test.json --out run/
-echo experiment --spec bench/paired-esc50.json --out run/
-echo report run/
+echo-audit index TRAIN.csv --out train.sqlite
+echo-audit match QUERY.wav --index train.sqlite --json
+echo-audit audit TEST.csv --index train.sqlite --out audit/
+echo-audit bench --spec bench/matcher-test.json --out run/
+echo-audit experiment --spec bench/paired-esc50.json --out run/
+echo-audit report run/
 ~~~
 
 - A track manifest includes a stable asset ID, dataset/version, relative path, role, optional source service and source ID, label, and attribution reference. Record file checksum and decode status after scanning. Keep missing metadata explicit. Resolve paths relative to the manifest or a specified dataset root.

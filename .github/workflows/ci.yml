@@ -32,3 +32,4 @@ jobs:
         run: |
           uv run --no-sync echo-audit --version
           uv run --no-sync echo-audit fixture --out "$RUNNER_TEMP/echo-fixture"
+          uv run --no-sync echo-audit audio "$RUNNER_TEMP/echo-fixture/query.wav" --target-rate 12000

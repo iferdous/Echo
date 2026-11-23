@@ -1,0 +1,70 @@
+{
+  "esc50_cross_fold_sources": {
+    "131943": [
+      "2",
+      "3"
+    ],
+    "134049": [
+      "2",
+      "3"
+    ],
+    "209698": [
+      "4",
+      "5"
+    ],
+    "234879": [
+      "4",
+      "5"
+    ]
+  },
+  "esc50_rows": 2000,
+  "esc50_source_ids": 1524,
+  "fsd50k_rows": 51197,
+  "inputs": {
+    "esc50_metadata_sha256": "ca660da60191a97de289983a05821c9382d852a38a2ba8428980816b68cf6246",
+    "esc50_revision": "33c8ce9eb2cf0b1c2f8bcf322eb349b6be34dbb6",
+    "fsd50k_ground_truth_sha256": "db2396260a7b1fb06feb6ccac71685794fc89917d71c3a8d64a1de85c2cc0ebf",
+    "fsd50k_revision": "10.5281/zenodo.4060432"
+  },
+  "partitions": {
+    "eval": {
+      "fsd50k_rows": 10231,
+      "shared_esc50_rows": 171,
+      "shared_esc50_rows_by_fold": {
+        "1": 38,
+        "2": 45,
+        "3": 25,
+        "4": 31,
+        "5": 32
+      },
+      "shared_source_ids": 152
+    },
+    "train": {
+      "fsd50k_rows": 36796,
+      "shared_esc50_rows": 399,
+      "shared_esc50_rows_by_fold": {
+        "1": 86,
+        "2": 81,
+        "3": 78,
+        "4": 76,
+        "5": 78
+      },
+      "shared_source_ids": 374
+    },
+    "val": {
+      "fsd50k_rows": 4170,
+      "shared_esc50_rows": 60,
+      "shared_esc50_rows_by_fold": {
+        "1": 5,
+        "2": 6,
+        "3": 15,
+        "4": 20,
+        "5": 14
+      },
+      "shared_source_ids": 51
+    }
+  },
+  "schema_version": 1,
+  "shared_esc50_rows": 630,
+  "shared_source_ids": 577
+}

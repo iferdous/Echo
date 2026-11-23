@@ -1,0 +1,23 @@
+{
+  "channel_counts": {
+    "1": 2000
+  },
+  "dataset": "esc50",
+  "decoded_assets": 2000,
+  "expected_assets": 2000,
+  "formats": {
+    "WAV/PCM_16": 2000
+  },
+  "manifest_sha256": "f36a56e21fd3f70001114a8e0a4514fbad65e1940567d14f7e6aed35cfe80c8b",
+  "max_duration_seconds": 5.0,
+  "metadata_sha256": "ca660da60191a97de289983a05821c9382d852a38a2ba8428980816b68cf6246",
+  "min_duration_seconds": 5.0,
+  "rejected": [],
+  "revision": "33c8ce9eb2cf0b1c2f8bcf322eb349b6be34dbb6",
+  "sample_rates": {
+    "44100": 2000
+  },
+  "schema_version": 1,
+  "total_duration_seconds": 10000.0,
+  "unlisted_wavs": []
+}

@@ -18,4 +18,4 @@
 
 **Done when** a fresh checkout can install, generate and read the fixture, and pass the documented checks. Record the setup commands and CI run.
 
-[Stage index](README.md) · [Next stage](01-audio-foundations-and-datasets.md)
+[Implementation results](../results/stages-0-1.md) · [Stage index](README.md) · [Next stage](01-audio-foundations-and-datasets.md)

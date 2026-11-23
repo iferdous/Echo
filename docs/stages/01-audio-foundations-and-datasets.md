@@ -18,4 +18,4 @@
 
 **Done when** the fixture and ESC-50 data can pass through the same loader, and the spike corpus and query lists can be regenerated with fixed inputs.
 
-[Stage index](README.md) · [Next stage](02-python-fingerprint-matcher.md)
+[Implementation results](../results/stages-0-1.md) · [Stage index](README.md) · [Next stage](02-python-fingerprint-matcher.md)

@@ -1,0 +1,17 @@
+{
+  "absent_source_queries": 10,
+  "index_policy": "one asset per source; all references plus seeded background",
+  "index_sha256": "70ef852301074bee9aa47157832a259deb08bdd7c15e1a513791e5a1a57e0fee",
+  "indexed_assets": 200,
+  "inventory_sha256": "f36a56e21fd3f70001114a8e0a4514fbad65e1940567d14f7e6aed35cfe80c8b",
+  "positive_queries": 20,
+  "queries_sha256": "ea15e04490fc11b0300c65855cbdbe0d9b4d823c4606ed5ebafac11721b62360",
+  "query_strata": {
+    "noise_like": 8,
+    "repetitive": 7,
+    "tonal": 7,
+    "transient": 8
+  },
+  "schema_version": 1,
+  "seed": 137
+}

@@ -44,65 +44,21 @@ The inspected ESC-50 file has 2,000 rows and 1,524 distinct source IDs. Four IDs
 
 ### Reproduce the metadata audit
 
-Run this with standard Python. It downloads only the pinned CSV and the ground-truth archive, checks the observed SHA-256 digests, and prints counts. The checked inputs are small enough to inspect before fetching any audio.
+Run the installed CLI against the pinned ESC-50 CSV and the FSD50K ground-truth ZIP. This path needs only those two metadata files. The command verifies both digests before joining them.
 
-~~~python
-import csv
-import hashlib
-import io
-import urllib.request
-import zipfile
-from collections import Counter, defaultdict
+```bash
+mkdir -p .local/metadata
+curl -fsSL https://raw.githubusercontent.com/karolpiczak/ESC-50/33c8ce9eb2cf0b1c2f8bcf322eb349b6be34dbb6/meta/esc50.csv \
+  -o .local/metadata/esc50.csv
+curl -fsSL 'https://zenodo.org/records/4060432/files/FSD50K.ground_truth.zip?download=1' \
+  -o .local/metadata/fsd50k-ground-truth.zip
+uv run echo-audit data audit \
+  --esc50-metadata .local/metadata/esc50.csv \
+  --fsd50k .local/metadata/fsd50k-ground-truth.zip \
+  --out .local/metadata/audit
+```
 
-esc_revision = "33c8ce9eb2cf0b1c2f8bcf322eb349b6be34dbb6"
-esc_url = f"https://raw.githubusercontent.com/karolpiczak/ESC-50/{esc_revision}/meta/esc50.csv"
-fsd_url = "https://zenodo.org/records/4060432/files/FSD50K.ground_truth.zip?download=1"
-
-with urllib.request.urlopen(esc_url, timeout=30) as response:
-    esc_blob = response.read()
-with urllib.request.urlopen(fsd_url, timeout=30) as response:
-    fsd_blob = response.read()
-
-expected_hashes = {
-    "ESC-50": "ca660da60191a97de289983a05821c9382d852a38a2ba8428980816b68cf6246",
-    "FSD50K": "db2396260a7b1fb06feb6ccac71685794fc89917d71c3a8d64a1de85c2cc0ebf",
-}
-for name, data in {"ESC-50": esc_blob, "FSD50K": fsd_blob}.items():
-    if hashlib.sha256(data).hexdigest() != expected_hashes[name]:
-        raise ValueError(f"{name} input differs from the audited copy")
-
-esc_rows = list(csv.DictReader(io.StringIO(esc_blob.decode("utf-8-sig"))))
-folds_by_source = defaultdict(set)
-for row in esc_rows:
-    folds_by_source[row["src_file"]].add(row["fold"])
-
-fsd_partition = {}
-with zipfile.ZipFile(io.BytesIO(fsd_blob)) as archive:
-    for part in ("dev", "eval"):
-        member, = (path for path in archive.namelist() if path.rsplit("/", 1)[-1] == f"{part}.csv")
-        with archive.open(member) as file:
-            for row in csv.DictReader(io.TextIOWrapper(file, encoding="utf-8-sig")):
-                source = row["fname"]
-                if source in fsd_partition:
-                    raise ValueError(f"Repeated FSD50K ID {source}")
-                fsd_partition[source] = row.get("split") or part
-
-shared_rows = [row for row in esc_rows if row["src_file"] in fsd_partition]
-print("ESC-50 rows and source IDs", len(esc_rows), len(folds_by_source))
-print("Source IDs spanning folds", {
-    source: sorted(folds)
-    for source, folds in sorted(folds_by_source.items())
-    if len(folds) > 1
-})
-for part in ("train", "val", "eval"):
-    matches = [row for row in shared_rows if fsd_partition[row["src_file"]] == part]
-    print(part, {
-        "fsd_rows": Counter(fsd_partition.values())[part],
-        "shared_esc_rows": len(matches),
-        "shared_source_ids": len({row["src_file"] for row in matches}),
-        "shared_esc_fold_one_rows": sum(row["fold"] == "1" for row in matches),
-    })
-~~~
+The generated `overlap.json` includes the exact input digests, counts by FSD50K partition and ESC-50 fold, and the four cross-fold source groups. [Saved Stage 1 output](results/stage-1-overlap.json)
 
 ## Matcher evaluation
 
