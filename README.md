@@ -4,9 +4,13 @@ Echo is a planned audio dataset audit tool. Feed it a clip and a collection of r
 
 A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo will use acoustic fingerprints to find the shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo will use those IDs to check its work and test what it can recover from the audio itself. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
 
+## Implementation stages
+
+Follow the [numbered stages, 0 through 9](docs/stages/README.md). Start with [Stage 0, Environment and scaffold](docs/stages/00-environment-and-scaffold.md).
+
 ## Build documents
 
-- [Build plan](docs/build-plan.md) covers scope, architecture, milestones, commands, tests, and the first implementation session.
+- [Build plan](docs/build-plan.md) covers shared scope, architecture, commands, and implementation decisions.
 - [Evaluation protocol](docs/evaluation-protocol.md) covers the dataset audit, how to verify audio matches, and the controlled model experiment.
 
 ## Planning baseline

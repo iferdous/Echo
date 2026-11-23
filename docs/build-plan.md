@@ -84,27 +84,11 @@ echo report run/
 - Distinguish a decoded query with no accepted hit, insufficient audio evidence, and a decode or input error. Batch audits must preserve a row for errors and rejected queries. Pair/report JSON and CSV carry a schema version and a shared run ID.
 - The metadata comparison can annotate reported candidates after the audio decision. The acoustic path gets audio and opaque track IDs during evaluation, so filenames and Freesound IDs cannot determine the ranking.
 
-## Implementation milestones
+## Implementation stages
 
-| Milestone | Build | Acceptance evidence |
-| --- | --- | --- |
-| 1. Prove the lookup | Minimal installable package, audio reader, deterministic synthetic test pair, in-memory index, 20-crop ESC-50 spike | Each trial has a known original and offset or a known absence. One command returns a candidate and offset, silence abstains, and the spike records misses and wrong hits. |
-| 2. Make the result trustworthy | SQLite index, CLI, calibration set, frozen evaluation set, byte-hash and source-ID baselines, report from files | Reopening an index preserves ranking. Frozen queries cover crops, MP3, resampling and absent-source cases. Accuracy and false acceptances have counts and denominators. |
-| 3. Audit two datasets | Confirm metadata counts, choose FSD50K acquisition path, freeze audio cohort, adjudicate real candidates | Verify a sound-aligned cross-dataset example with provenance. Show counts by eligibility and decision. Publish unresolved pairs as unresolved. |
-| 4. Measure the model effect | Frozen ESC-50 controlled experiment, equal-size class-matched swaps, small CNN and paired seeds | Identical evaluation files and training budgets. Save split checks, predictions, signed score differences, and a separate summary for directly exposed test items. |
-| 5. Package the evidence | Reproduction guide, generated result tables, plots, short recording, tagged preview when ready | A fresh checkout can run the tiny fixture workflow and reproduce the tables from published artifacts. Dataset-derived audio stays out of the release by default. |
-| 6. Explore speed if justified | Profile decode, fingerprinting, SQLite access and voting. If lookup dominates, try compact Rust postings | Same inputs produce the same accepted matches, ranks and offsets. Compare warm and cold timing, throughput, and memory. Keep the result and decision even if Python wins. |
+The [stage index](stages/README.md) contains the ten numbered implementation plans. Each stage specifies its tasks, tests, evidence, and completion criteria. Start with [Stage 0](stages/00-environment-and-scaffold.md).
 
-Milestones 2 and 3 can share a frozen manifest workflow. A small controlled training dry run can start once the grouped split generator and fixtures exist. Publishing the full result depends on all core evidence being ready. Tracked issues or short milestone notes are sufficient for decisions and failures.
-
-### Milestone 1 in detail
-
-1. Create the Python package, a test command, and a one-command smoke run. Verify Python, NumPy, SciPy and SoundFile import on native ARM64. Treat FFmpeg as an optional prerequisite until codec variants.
-2. Generate a deterministic audio fixture with changing tones and transients and a separately generated distractor. Save the source sample offset in the test data or generate it in the test. Load float32 mono PCM, reject invalid sample rates and non-finite or empty results, and resample with an anti-aliasing filter.
-3. Use conservative starter settings of 16 kHz, Hann window, 512-point FFT, 128-sample hop, floor-aware local maxima, a forward pairing window around 50–750 ms and fan-out around 8. These are tuning defaults. Pack the two frequency-bin values and frame difference into a deterministic integer. Save the exact configuration and format version.
-4. For each matched hash, vote for a candidate track and the reference-minus-query frame offset. Group nearby offset votes, count distinct query landmarks and time coverage, and avoid repeated landmarks multiplying support. Suppress extreme-posting hashes with a versioned rule if profiling or negatives show a problem. Start with one consistent offset per match and document the effect on edits that change playback speed.
-5. Select 20 ESC-50 source groups before measuring. Include transient, tonal, repetitive, and noise-like examples. Index the targets plus a declared background corpus. Create 20 clean two-second crops at recorded offsets and a preselected codec subset. Build 10 true absent-source queries with same-class distractors in the index. Keep the source ID lists so the exercise is repeatable.
-6. Record query ID, target or absence, crop offset, rank, accepted or rejected, estimated offset, wrong hits, and elapsed time. Use 16 of 20 correct top-ranked clean crops as an initial development target and track how many estimated offsets land within 50 ms. Report all 10 absent-source decisions, aiming for zero false accepts in this small sample. Diagnose systematic failures before expanding the index. The larger frozen test provides the release metrics.
+The first working lookup is the Stage 0–2 deliverable. Stages 3–5 build the matcher benchmark, cross-dataset audit, and model comparison. Stage 6 profiles the workflow and makes the Rust decision. Stages 7–9 build the demo, evidence bundle, and release.
 
 ### Operational behaviors to test
 
