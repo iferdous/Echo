@@ -69,7 +69,7 @@ Add files when their responsibilities exist. Keep downloaded datasets and genera
 
 ### CLI and data contracts
 
-Stages 2 and 4 implement `index`, `match`, and `audit`. Stage 3 provides its benchmark through `scripts/run_stage3.py`. Stage 5 implements `experiment prepare`, `smoke`, `calibrate`, and `run`. Stage 6 adds the optional Rust voting engine and the profiling script `scripts/run_stage6.py`. The benchmark and report wrappers below are planned. Each command should have a human-readable summary and write structured evidence where specified.
+Stages 2 and 4 implement `index`, `match`, and `audit`. Stage 3 provides its benchmark through `scripts/run_stage3.py`. Stage 5 implements `experiment prepare`, `smoke`, `calibrate`, and `run`. Stage 6 adds the optional Rust voting engine and the profiling script `scripts/run_stage6.py`. Stage 7 adds `data manifest` and `review` for preparing local audio and inspecting a batch offline. The benchmark and `report` wrappers below are planned. Each command should have a human-readable summary and write structured evidence where specified.
 
 ~~~text
 echo-audit index TRAIN.csv --out train.sqlite

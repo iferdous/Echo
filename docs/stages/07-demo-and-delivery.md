@@ -2,6 +2,8 @@
 
 **Outcome.** A reader can understand the match in a short recording and reproduce the same workflow from the command line.
 
+The completed [walkthrough, recording, and engineering guide](../demo/README.md) show the real CLI, offline browser review, a representative miss, and the generated experiment chart.
+
 ## Build
 
 1. Write a fresh-checkout walkthrough that generates or retrieves permitted example inputs, builds an index, queries it, and displays the output. Use generated audio for the public demo by default. Include a permitted dataset example or textual evidence from the cross-dataset run where useful.

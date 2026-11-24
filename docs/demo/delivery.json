@@ -1,0 +1,44 @@
+{
+  "demo_inputs": "generated audio",
+  "deterministic_chart_svg": true,
+  "files_sha256": {
+    "echo-demo.mp4": "f2b39cd14d8cfa9b9d7bb49b5b666eff061bf16d1bfcbf0c29b7168136c63469",
+    "echo-demo.vtt": "b6b389d3dff4f51a0c28c605a34a5364cd63fc8237ba5a692e6999689c2835cb",
+    "evidence.json": "12707b6b3063127e1e8431660932c100de55946f447737a146e47a30d374c53f",
+    "leakage-accuracy.svg": "119364adb32d99c0ee80af9a7190441daace360a0d044aeb7c232e41d8243770",
+    "review-preview.png": "1869af56972c0bb1771e89199bbd832f0c06feb3c74767afab6a730c3df7893e",
+    "video/index.html": "18ad569931cbd03c78d64561d33ac915e469c4f0b25070d44a364bdd92b77834"
+  },
+  "fresh_archive_walkthrough_verified": true,
+  "offline_review_checks": [
+    "keyboard",
+    "status_filter",
+    "search",
+    "375px_viewport",
+    "no_network"
+  ],
+  "schema_version": 1,
+  "stage4_review_query_rows": 267,
+  "video": {
+    "frame_rate": "24/1",
+    "frames": 1656,
+    "height": 720,
+    "inspected_seconds": [
+      3,
+      13,
+      28,
+      40,
+      52,
+      65
+    ],
+    "renderer": "HyperFrames 0.9.82, supported Chrome headless shell, one worker",
+    "seconds": 69.0,
+    "streams": [
+      "h264",
+      "aac",
+      "mov_text"
+    ],
+    "verified_audio_and_caption_cues": true,
+    "width": 1280
+  }
+}

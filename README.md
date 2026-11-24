@@ -4,6 +4,19 @@ Echo audits audio datasets for shared recordings. Give it a clip or a manifest a
 
 A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo uses acoustic fingerprints to find shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo uses those IDs to measure coverage after it ranks candidates by sound. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
 
+## See Echo in use
+
+Start with the [69-second demo](docs/demo/echo-demo.mp4), the [reproducible walkthrough](docs/demo/README.md), or the [engineer guide for your own audio](docs/demo/ENGINEER-GUIDE.md).
+
+| Measured result | Scope |
+| --- | --- |
+| **333 of 360** matching trials accepted correctly | Held-out trials on 40 source recordings. Echo accepted zero of 360 absent-source trials in this benchmark. |
+| **137 of 140** confirmed pairs found at the supported offset | Independent waveform review within a 267-query ESC-50/FSD50K eval audit. |
+| **+9.60 percentage points** from deliberate training exposure | Mean accuracy rose from 47.4% to 57.0% on the same 400 ESC-50 test files across five seed pairs. |
+| **56% less** warm median query time | Optional Rust voting versus tuned Python on the measured cross-dataset sample on Apple M3. |
+
+![Controlled experiment mean accuracy. 47.4% with independent training crops and 57.0% with crops from test recordings on the same 400 ESC-50 files.](docs/demo/leakage-accuracy.svg)
+
 ## Getting started
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and use its locked environment. The project pins Python 3.12.16. The locked environment is verified on Apple Silicon macOS and Ubuntu 24.04.
