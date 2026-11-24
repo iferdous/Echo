@@ -273,6 +273,68 @@ def add_data_commands(commands) -> None:
     spike.set_defaults(handler=run_spike)
 
 
+def run_experiment_command(args: argparse.Namespace) -> int:
+    if args.experiment_command == "prepare":
+        from echo.experiment_data import prepare_design
+
+        report = prepare_design(args.inventory, args.esc_root, args.spec, args.out)
+        print(json.dumps(report["validation"]["rows"], sort_keys=True))
+        return 0
+
+    try:
+        from echo.experiment import calibrate, run_experiment, run_smoke
+    except ModuleNotFoundError as error:
+        if error.name != "torch":
+            raise
+        raise ValueError(
+            "install the locked experiment group with uv sync --locked --group experiment"
+        ) from error
+
+    inputs = (args.inventory, args.esc_root, args.design)
+    if args.experiment_command == "smoke":
+        report = run_smoke(*inputs, args.out)
+        print(f"CPU smoke replay matched in {args.out}")
+    elif args.experiment_command == "calibrate":
+        report = calibrate(*inputs, args.out)
+        print(
+            f"Frozen validation-selected learning rate {report['learning_rate']:g} in {args.out}"
+        )
+    else:
+        report = run_experiment(*inputs, args.calibration, args.out)
+        print(
+            f"Mean exposed minus comparison accuracy {report['slices']['all']['mean_delta_accuracy_pp']:+.2f} pp in {args.out}"
+        )
+    return 0
+
+
+def add_experiment_commands(commands) -> None:
+    experiment = commands.add_parser(
+        "experiment", help="run the controlled ESC-50 leakage study"
+    )
+    modes = experiment.add_subparsers(dest="experiment_command", required=True)
+    for name, help_text in (
+        ("prepare", "freeze group-disjoint splits and render paired crops"),
+        ("smoke", "verify deterministic CPU training on a small clean subset"),
+        (
+            "calibrate",
+            "select the recipe using the clean training and validation splits",
+        ),
+        ("run", "train paired models and score the fixed test set"),
+    ):
+        command = modes.add_parser(name, help=help_text)
+        for arg in ("--inventory", "--esc-root", "--out"):
+            command.add_argument(arg, type=Path, required=True)
+        if name == "prepare":
+            command.add_argument(
+                "--spec", type=Path, default=Path("bench/stage5-spec.json")
+            )
+        else:
+            command.add_argument("--design", type=Path, required=True)
+        if name == "run":
+            command.add_argument("--calibration", type=Path, required=True)
+        command.set_defaults(handler=run_experiment_command)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="echo-audit", description="Audit shared recordings across audio datasets."
@@ -297,6 +359,7 @@ def main(argv: list[str] | None = None) -> int:
 
     add_data_commands(commands)
     add_match_commands(commands)
+    add_experiment_commands(commands)
     args = parser.parse_args(argv)
     try:
         return args.handler(args)
