@@ -11,7 +11,14 @@ from echo.artifacts import new_output_directory, sha256_file, write_csv, write_j
 from echo.datasets import Asset, read_manifest
 from echo.fingerprint import FingerprintConfig
 from echo.index import open_index
-from echo.matcher import DEFAULT_LIMIT, MatchPolicy, MatchResult, match_audio
+from echo.matcher import (
+    DEFAULT_LIMIT,
+    AlignmentEngine,
+    MatchPolicy,
+    MatchResult,
+    align_tracks,
+    match_audio,
+)
 
 QUERY_COLUMNS = (
     "run_id",
@@ -70,6 +77,7 @@ def scan_manifest(
     config: FingerprintConfig | None = None,
     limit: int = DEFAULT_LIMIT,
     reference_manifest_sha256: str | None = None,
+    aligner: AlignmentEngine = align_tracks,
 ) -> Batch:
     if limit < 1:
         raise ValueError("result limit must be positive")
@@ -104,7 +112,9 @@ def scan_manifest(
                     raise ValueError(
                         f"{asset.asset_id}: audio differs from the manifest checksum"
                     )
-                result = match_audio(audio, index, limit=limit, policy=policy)
+                result = match_audio(
+                    audio, index, limit=limit, policy=policy, aligner=aligner
+                )
             except (OSError, ValueError) as error:
                 queries.append(
                     ScannedQuery(

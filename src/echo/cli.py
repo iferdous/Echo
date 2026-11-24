@@ -34,6 +34,7 @@ from echo.matcher import (
     MATCH_SCHEMA_VERSION,
     match_audio,
     read_policy,
+    resolve_alignment_engine,
 )
 from echo.spike import DEFAULT_INDEX_SIZE, DEFAULT_SEED, write_spike
 
@@ -125,8 +126,11 @@ def run_match(args: argparse.Namespace) -> int:
     try:
         expected_config = read_config(args.config) if args.config is not None else None
         policy = read_policy(args.policy) if args.policy is not None else DEFAULT_POLICY
+        aligner = resolve_alignment_engine(args.engine)
         with open_index(args.index, expected_config) as index:
-            result = match_audio(args.path, index, limit=args.limit, policy=policy)
+            result = match_audio(
+                args.path, index, limit=args.limit, policy=policy, aligner=aligner
+            )
             digest = index.config.digest
     except (OSError, ValueError, sqlite3.DatabaseError) as error:
         if not args.json:
@@ -177,6 +181,7 @@ def run_batch_audit(args: argparse.Namespace) -> int:
         policy,
         config=config,
         limit=args.limit,
+        aligner=resolve_alignment_engine(args.engine),
     )
     report = write_batch(batch, args.out)
     print(json.dumps(report, sort_keys=True))
@@ -208,6 +213,12 @@ def add_match_commands(commands) -> None:
     )
     match.add_argument("--policy", type=Path, help="threshold policy JSON")
     match.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
+    match.add_argument(
+        "--engine",
+        choices=("python", "rust"),
+        default="python",
+        help="offset voting engine (default: Python)",
+    )
     match.add_argument("--json", action="store_true")
     match.set_defaults(handler=run_match)
 
@@ -226,6 +237,12 @@ def add_match_commands(commands) -> None:
     )
     audit.add_argument("--policy", type=Path, help="threshold policy JSON")
     audit.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
+    audit.add_argument(
+        "--engine",
+        choices=("python", "rust"),
+        default="python",
+        help="offset voting engine (default: Python)",
+    )
     audit.add_argument("--out", type=Path, required=True)
     audit.set_defaults(handler=run_batch_audit)
 

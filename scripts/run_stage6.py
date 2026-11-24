@@ -24,9 +24,11 @@ from echo.index import build_index, open_index
 from echo.matcher import (
     DEFAULT_LIMIT,
     DEFAULT_POLICY,
+    align_tracks,
     decide,
     rank_postings,
     read_policy,
+    resolve_alignment_engine,
 )
 
 PHASES = (
@@ -62,7 +64,7 @@ BUILD_COLUMNS = (
 )
 
 
-def profile_match(audio_path, index, policy):
+def profile_match(audio_path, index, policy, aligner=align_tracks):
     started = perf_counter_ns()
     audio = load_audio(audio_path, target_rate=index.config.sample_rate)
     decoded = perf_counter_ns()
@@ -83,6 +85,7 @@ def profile_match(audio_path, index, policy):
         postings,
         radius=policy.offset_radius_frames,
         limit=DEFAULT_LIMIT,
+        aligner=aligner,
     )
     result = decide(ranked, policy)
     ended = perf_counter_ns()
@@ -104,8 +107,8 @@ def result_digest(result) -> str:
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
-def query_row(asset, path, index, policy, condition, repeat, opened=0):
-    result, timing = profile_match(path, index, policy)
+def query_row(asset, path, index, policy, aligner, condition, repeat, opened=0):
+    result, timing = profile_match(path, index, policy, aligner)
     return {
         "query_id": asset.asset_id,
         "role": asset.role,
@@ -166,6 +169,7 @@ def environment():
 
 def run_query(args):
     policy = read_policy(args.policy) if args.policy else DEFAULT_POLICY
+    aligner = resolve_alignment_engine(args.engine)
     manifest_sha = sha256_file(args.manifest)
     planned = []
     for asset in read_manifest(args.manifest):
@@ -199,6 +203,7 @@ def run_query(args):
                             path,
                             index,
                             policy,
+                            aligner,
                             "fresh_connection",
                             repeat,
                             perf_counter_ns() - opened,
@@ -207,10 +212,18 @@ def run_query(args):
         if args.warm:
             with open_index(args.index) as index:
                 for _, path in planned:
-                    profile_match(path, index, policy)
+                    profile_match(path, index, policy, aligner)
                 for repeat in range(1, args.warm + 1):
                     rows.extend(
-                        query_row(asset, path, index, policy, "warm_connection", repeat)
+                        query_row(
+                            asset,
+                            path,
+                            index,
+                            policy,
+                            aligner,
+                            "warm_connection",
+                            repeat,
+                        )
                         for asset, path in planned
                     )
         digests = {}
@@ -223,6 +236,12 @@ def run_query(args):
         report = {
             "schema_version": 1,
             "workload": args.workload,
+            "engine": args.engine,
+            "native_binary_sha256": sha256_file(
+                Path(sys.modules["_echo_offsets"].__file__)
+            )
+            if args.engine == "rust"
+            else None,
             "environment": environment(),
             "input_query_manifest_sha256": manifest_sha,
             "match_policy_sha256": policy.digest,
@@ -307,6 +326,7 @@ def main():
         if name == "query":
             child.add_argument("--index", type=Path, required=True)
             child.add_argument("--policy", type=Path)
+            child.add_argument("--engine", choices=("python", "rust"), default="python")
             child.add_argument("--warm", type=int, default=3)
             child.add_argument("--fresh", type=int, default=1)
         else:

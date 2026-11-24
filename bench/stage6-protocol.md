@@ -1,0 +1,6 @@
+# Stage 6 profiling workloads
+
+- The ESC-50 crop workload uses all 30 Stage 2 queries in their published order against its existing 200-track SQLite index and default policy.
+- The cross-dataset workload takes 32 Stage 4 queries in the original manifest order. It includes 12 confirmed accepted clips, four unresolved same-source clips, all three independently verified miss or offset disagreements, the unresolved accepted control, six declined same-class controls, and six declined background controls. Sampling within outcome strata uses Python's `Random(20261124)`. It uses the published 290-track FSD50K index and frozen Stage 3 policy.
+- Collect one timed pass with a new SQLite connection per query, then one untimed warmup pass and three timed passes on a reused connection. Check SHA-256 inputs before timing and keep the filesystem cache uncontrolled. Measure each variant on the same host without overlapping the timed runs. Rebuild each index twice in separate processes from the query profiles and record the individual build times and throughput.
+- Retain the native backend as explicit opt-in if all ranked outputs agree, warm median latency falls by at least 15% on both workloads versus tuned Python, and neither warm p95 rises by more than 10%. Check peak RSS, boundary cost, and build/install complexity when deciding whether to keep Python as the default.

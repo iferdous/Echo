@@ -36,3 +36,23 @@ jobs:
           uv run --no-sync echo-audit index "$RUNNER_TEMP/echo-fixture/index.csv" --out "$RUNNER_TEMP/echo.sqlite"
           uv run --no-sync echo-audit match "$RUNNER_TEMP/echo-fixture/query.wav" --index "$RUNNER_TEMP/echo.sqlite" --json > "$RUNNER_TEMP/echo-match.json"
           uv run --no-sync python -c 'import json, sys; from pathlib import Path; match = json.loads(Path(sys.argv[1]).read_text()); assert match["status"] == "matched" and match["candidates"][0]["asset_id"] == "fixture:reference" and abs(match["candidates"][0]["offset_seconds"] - 0.75) <= 0.008' "$RUNNER_TEMP/echo-match.json"
+
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.13.9"
+      - name: Install Python tools
+        run: uv sync --locked
+      - name: Build and install the optional native wheel
+        run: |
+          cargo fmt --check --manifest-path native/Cargo.toml
+          uv tool run --from maturin==1.16.0 maturin build --release --locked --manifest-path native/Cargo.toml --interpreter .venv/bin/python --compatibility linux --out "$RUNNER_TEMP/echo-wheels"
+          uv pip install --no-deps "$RUNNER_TEMP"/echo-wheels/*.whl
+      - name: Verify native and Python result parity
+        run: uv run --no-sync python -c 'import _echo_offsets' && uv run --no-sync pytest tests/test_native_offsets.py tests/test_matcher.py tests/test_stage6_profile.py

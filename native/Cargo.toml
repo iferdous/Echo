@@ -1,0 +1,12 @@
+[package]
+name = "echo-offsets"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+
+[lib]
+name = "_echo_offsets"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = "=0.30.1"

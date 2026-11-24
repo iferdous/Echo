@@ -4,7 +4,9 @@ import hashlib
 import json
 from bisect import bisect_left, bisect_right
 from collections import defaultdict
+from collections.abc import Callable
 from dataclasses import asdict, dataclass, replace
+from importlib import import_module
 from pathlib import Path
 
 from echo.audio import load_audio
@@ -201,6 +203,40 @@ def align_tracks(
     return alignments
 
 
+type AlignmentEngine = Callable[
+    [list[Landmark], dict[int, list[Posting]], int], list[Alignment]
+]
+
+
+def resolve_alignment_engine(name: str) -> AlignmentEngine:
+    if name == "python":
+        return align_tracks
+    if name != "rust":
+        raise ValueError(f"unknown offset engine: {name}")
+    try:
+        module = import_module("_echo_offsets")
+    except ImportError as error:
+        raise ValueError(
+            "Rust offset engine unavailable; build and install the optional native wheel"
+        ) from error
+    if getattr(module, "API_VERSION", None) != 1:
+        raise ValueError("Rust offset engine is incompatible; rebuild the native wheel")
+
+    def rust_align(
+        query: list[Landmark], postings: dict[int, list[Posting]], radius: int
+    ) -> list[Alignment]:
+        try:
+            rows = module.align(
+                [(point.frame, point.key) for point in query], postings, radius
+            )
+        except (OverflowError, UnicodeError):
+            # The Python API also permits integers and strings outside the native representation.
+            return align_tracks(query, postings, radius)
+        return [Alignment(*row) for row in rows]
+
+    return rust_align
+
+
 def rank_postings(
     query: list[Landmark],
     query_samples: int,
@@ -209,6 +245,7 @@ def rank_postings(
     *,
     radius: int,
     limit: int,
+    aligner: AlignmentEngine = align_tracks,
 ) -> MatchResult:
     if not query:
         return MatchResult(
@@ -218,7 +255,7 @@ def rank_postings(
             0,
             [],
         )
-    alignments = align_tracks(query, postings, radius)
+    alignments = aligner(query, postings, radius)
     alignments.sort(
         key=lambda item: (
             -item.score,
@@ -254,6 +291,7 @@ def rank_landmarks(
     *,
     limit: int = DEFAULT_LIMIT,
     policy: MatchPolicy = DEFAULT_POLICY,
+    aligner: AlignmentEngine = align_tracks,
 ) -> MatchResult:
     if limit < 1:
         raise ValueError("result limit must be positive")
@@ -272,6 +310,7 @@ def rank_landmarks(
         postings,
         radius=policy.offset_radius_frames,
         limit=limit,
+        aligner=aligner,
     )
 
 
@@ -307,11 +346,12 @@ def match_landmarks(
     *,
     limit: int = DEFAULT_LIMIT,
     policy: MatchPolicy = DEFAULT_POLICY,
+    aligner: AlignmentEngine = align_tracks,
 ) -> MatchResult:
     if limit < 1:
         raise ValueError("result limit must be positive")
     raw = rank_landmarks(
-        query, query_samples, index, limit=max(limit, 2), policy=policy
+        query, query_samples, index, limit=max(limit, 2), policy=policy, aligner=aligner
     )
     result = decide(raw, policy)
     return replace(result, candidates=result.candidates[:limit])
@@ -323,6 +363,7 @@ def match_audio(
     *,
     limit: int = DEFAULT_LIMIT,
     policy: MatchPolicy = DEFAULT_POLICY,
+    aligner: AlignmentEngine = align_tracks,
 ) -> MatchResult:
     audio = load_audio(path, target_rate=index.config.sample_rate)
     return match_landmarks(
@@ -331,4 +372,5 @@ def match_audio(
         index,
         limit=limit,
         policy=policy,
+        aligner=aligner,
     )
