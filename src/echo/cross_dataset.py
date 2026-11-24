@@ -9,6 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from pathlib import Path
 from random import Random
+from shutil import copyfile
 from zipfile import ZipFile
 
 from echo.acquisition import verify_digest
@@ -275,7 +276,54 @@ def collect_member(asset, root, archive, catalog, licenses):
     }
 
 
-def acquire_cohort(cohort_path: Path, metadata_zip: Path, out: Path) -> dict:
+def read_acquisition(
+    root: Path, cohort_path: Path, references: list[Asset]
+) -> tuple[dict, dict[str, Asset], dict[str, dict]]:
+    summary = json.loads((root / "acquisition.json").read_text(encoding="utf-8"))
+    digests = {
+        "cohort_sha256": cohort_path / "cohort.json",
+        "index_sha256": root / "index.csv",
+        "acquisition_sha256": root / "acquisition.csv",
+    }
+    if summary.get("schema_version") != 1 or any(
+        summary[key] != sha256_file(path) for key, path in digests.items()
+    ):
+        raise ValueError("acquisition differs from its recorded checksums")
+    available = {asset.asset_id: asset for asset in read_manifest(root / "index.csv")}
+    with digests["acquisition_sha256"].open(encoding="utf-8", newline="") as file:
+        records = list(csv_rows(file, ACQUISITION_COLUMNS, name=str(file.name)))
+    rows = {row["reference_id"]: row for row in records}
+    if (
+        len(records) != len(references)
+        or rows.keys() != {asset.asset_id for asset in references}
+        or len(available) != summary["available_references"]
+        or len(references) != summary["selected_references"]
+        or len(references) - len(available) != summary["unavailable_references"]
+        or available.keys()
+        != {key for key, row in rows.items() if row["status"] == "available"}
+    ):
+        raise ValueError(
+            "acquisition counts or reference IDs differ from the frozen cohort"
+        )
+    for asset in references:
+        row = rows[asset.asset_id]
+        indexed = available.get(asset.asset_id)
+        if row["fsd_source_id"] != asset.source_id or row["cohort"] != asset.role:
+            raise ValueError(f"{asset.asset_id}: inconsistent acquisition metadata")
+        if indexed and (
+            not indexed.sha256
+            or indexed.sha256 != row["sha256"]
+            or indexed != replace(asset, sha256=indexed.sha256)
+        ):
+            raise ValueError(
+                f"{asset.asset_id}: index manifest differs from the frozen reference"
+            )
+    return summary, available, rows
+
+
+def acquire_cohort(
+    cohort_path: Path, metadata_zip: Path, out: Path, *, resume: Path | None = None
+) -> dict:
     cohort, references, _ = read_cohort(cohort_path)
     licenses = read_licenses(metadata_zip)
     source = ZenodoRanges()
@@ -288,19 +336,37 @@ def acquire_cohort(cohort_path: Path, metadata_zip: Path, out: Path) -> dict:
         raise ValueError(
             "ZIP catalog and official eval metadata contain different recording IDs"
         )
+    prior, existing, previous_rows = (
+        read_acquisition(resume, cohort_path, references) if resume else ({}, {}, {})
+    )
     with new_output_directory(out):
         (out / "audio").mkdir()
-        with ThreadPoolExecutor(max_workers=6) as workers:
-            results = list(
-                workers.map(
-                    lambda asset: collect_member(
-                        asset, out, archive, catalog, licenses
+        for asset in existing.values():
+            target = asset.local_path(out)
+            copyfile(asset.local_path(resume), target)
+            if sha256_file(target) != asset.sha256:
+                raise ValueError(f"{asset.asset_id}: previously acquired WAV changed")
+
+        pending = [asset for asset in references if asset.asset_id not in existing]
+        with ThreadPoolExecutor(max_workers=2 if resume else 6) as workers:
+            retry_results = {
+                asset.asset_id: result
+                for asset, result in zip(
+                    pending,
+                    workers.map(
+                        lambda asset: collect_member(
+                            asset, out, archive, catalog, licenses
+                        ),
+                        pending,
                     ),
-                    references,
+                    strict=True,
                 )
-            )
-        verified = [asset for asset, _ in results if asset is not None]
-        rows = [row for _, row in results]
+            }
+        results = {key: (asset, previous_rows[key]) for key, asset in existing.items()}
+        results.update(retry_results)
+        ordered = [results[asset.asset_id] for asset in references]
+        verified = [asset for asset, _ in ordered if asset is not None]
+        rows = [row for _, row in ordered]
         manifest = out / "index.csv"
         write_manifest(manifest, verified)
         write_csv(out / "acquisition.csv", ACQUISITION_COLUMNS, rows)
@@ -316,12 +382,17 @@ def acquire_cohort(cohort_path: Path, metadata_zip: Path, out: Path) -> dict:
                 {"url": PART_URL.format(name=name), "bytes": size, "published_md5": md5}
                 for name, size, md5 in PARTS
             ],
-            "archive_payload_bytes_received": source.payload_bytes,
-            "range_responses": source.requests,
+            "archive_payload_bytes_received": prior.get(
+                "archive_payload_bytes_received", 0
+            )
+            + source.payload_bytes,
+            "range_responses": prior.get("range_responses", 0) + source.requests,
+            "previously_available_references": len(existing),
+            "retried_references": len(pending) if resume else 0,
             "selected_references": len(references),
             "available_references": len(verified),
             "unavailable_references": len(references) - len(verified),
-            "wav_bytes_kept": sum(row.get("bytes", 0) for row in rows),
+            "wav_bytes_kept": sum(int(row.get("bytes") or 0) for row in rows),
         }
         write_json(out / "acquisition.json", summary)
     return summary

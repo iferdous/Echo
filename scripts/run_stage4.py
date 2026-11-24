@@ -27,6 +27,9 @@ def main() -> int:
     acquire.add_argument("--cohort", type=Path, required=True)
     acquire.add_argument("--metadata", type=Path, required=True)
     acquire.add_argument("--out", type=Path, required=True)
+    acquire.add_argument(
+        "--resume", type=Path, help="reuse verified WAVs from a previous run"
+    )
     args = parser.parse_args()
     try:
         if args.mode == "prepare":
@@ -45,7 +48,9 @@ def main() -> int:
                 )
             )
         else:
-            report = acquire_cohort(args.cohort, args.metadata, args.out)
+            report = acquire_cohort(
+                args.cohort, args.metadata, args.out, resume=args.resume
+            )
             print(
                 json.dumps(
                     {
