@@ -60,8 +60,15 @@ def score_query(row, spike, memory, sqlite):
         "expected_asset_id": asset_id,
     }
 
-    path = (spike / row["query_path"]).resolve()
     try:
+        if asset_id:
+            start_sample = int(row["crop_start_sample"])
+            source_rate = int(row["source_sample_rate"])
+            if start_sample < 0 or source_rate <= 0:
+                raise ValueError("invalid crop offset or sample rate")
+            expected_offset = start_sample / source_rate
+        result["expected_offset_seconds"] = expected_offset
+        path = (spike / row["query_path"]).resolve()
         if (
             not path.is_relative_to(spike.resolve())
             or sha256_file(path) != row["sha256"]
