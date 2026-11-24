@@ -18,4 +18,4 @@
 
 **Done when** a repeatable run produces per-query evidence and aggregate tables for the recorded calibration and test configuration.
 
-[Stage index](README.md) · [Next stage](04-cross-dataset-audit.md)
+[Implementation results](../results/stage-3.md) · [Stage index](README.md) · [Next stage](04-cross-dataset-audit.md)

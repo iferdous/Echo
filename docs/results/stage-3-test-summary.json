@@ -1,0 +1,233 @@
+{
+  "calibration_sha256": "2cba051747c3c866d6d8fcf8949ba609ec81a51d4d1a3d2448b54f9cfc52f64c",
+  "design_sha256": "3609664a1dc646901716d0553545e34da6eddcb0389904175a5ea94268ac4bc7",
+  "index": {
+    "build_ms": 5989.148,
+    "bytes": 20754432,
+    "fingerprint_config_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+    "fingerprint_version": 1,
+    "indexed_assets": 120,
+    "manifest_sha256": "0cab59b6f466de9f8aa703c423772b74a49de1e77eaa92ebe2347354ffa1af31",
+    "postings": 1207248,
+    "schema_version": 1
+  },
+  "metrics": {
+    "baselines": {
+      "bytes": {
+        "absent_queries": 360,
+        "accepted_absent": 0,
+        "available": 720,
+        "correct_top_1": 40,
+        "positive_queries": 360,
+        "unavailable": 0
+      },
+      "source": {
+        "absent_queries": 180,
+        "accepted_absent": 0,
+        "available": 360,
+        "correct_top_1": 180,
+        "positive_queries": 180,
+        "unavailable": 360
+      }
+    },
+    "excluded": 0,
+    "id_visibility": {
+      "masked": {
+        "absent": 180,
+        "correct_accepts": 165,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 7,
+        "positive_abstentions": 15,
+        "positives": 180,
+        "top_1": 172,
+        "top_5": 172
+      },
+      "visible": {
+        "absent": 180,
+        "correct_accepts": 168,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 6,
+        "positive_abstentions": 12,
+        "positives": 180,
+        "top_1": 178,
+        "top_5": 179
+      }
+    },
+    "input_errors": 0,
+    "match": {
+      "absent": 360,
+      "correct_accepts": 333,
+      "false_accepts": 0,
+      "incorrect_accepts": 0,
+      "insufficient_evidence": 13,
+      "positive_abstentions": 27,
+      "positives": 360,
+      "top_1": 350,
+      "top_5": 351
+    },
+    "matched_offset_error_ms": {
+      "max": 8.0,
+      "n": 350,
+      "p50": 0.0,
+      "p95": 4.0
+    },
+    "planned_queries": 720,
+    "query_ms": {
+      "decode_ms": {
+        "max": 13.608,
+        "n": 720,
+        "p50": 1.448,
+        "p95": 2.5043
+      },
+      "fingerprint_ms": {
+        "max": 164.939,
+        "n": 720,
+        "p50": 8.125,
+        "p95": 25.5257
+      },
+      "ranking_ms": {
+        "max": 568.791,
+        "n": 720,
+        "p50": 54.425,
+        "p95": 172.2862
+      },
+      "total_ms": {
+        "max": 576.359,
+        "n": 720,
+        "p50": 64.689,
+        "p95": 199.5127
+      }
+    },
+    "source_groups": {
+      "absent_group_wilson_95": [
+        0.0,
+        0.087622
+      ],
+      "absent_groups_with_a_false_accept": 0,
+      "absent_source_groups": 40,
+      "mean_correct_accept_rate_by_positive_group": 0.925,
+      "positive_group_bootstrap_95": [
+        0.855556,
+        0.975
+      ],
+      "positive_source_groups": 40
+    },
+    "valid_queries": 720,
+    "variants": {
+      "crop_1s": {
+        "absent": 40,
+        "correct_accepts": 38,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 2,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "crop_2s": {
+        "absent": 40,
+        "correct_accepts": 38,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 2,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "crop_4s": {
+        "absent": 40,
+        "correct_accepts": 38,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 2,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "identity": {
+        "absent": 40,
+        "correct_accepts": 40,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 0,
+        "positive_abstentions": 0,
+        "positives": 40,
+        "top_1": 40,
+        "top_5": 40
+      },
+      "mp3_128k": {
+        "absent": 40,
+        "correct_accepts": 38,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 2,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "mp3_64k": {
+        "absent": 40,
+        "correct_accepts": 38,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 2,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "noise_10db": {
+        "absent": 40,
+        "correct_accepts": 27,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 0,
+        "positive_abstentions": 13,
+        "positives": 40,
+        "top_1": 38,
+        "top_5": 38
+      },
+      "quiet_24db": {
+        "absent": 40,
+        "correct_accepts": 38,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 1,
+        "positive_abstentions": 2,
+        "positives": 40,
+        "top_1": 38,
+        "top_5": 39
+      },
+      "resample_8khz": {
+        "absent": 40,
+        "correct_accepts": 38,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 2,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      }
+    }
+  },
+  "policy_sha256": "eb78b5ed1e4b370196b7191a853afde96c86a4880a06dca0ee75141a6e1b78c4",
+  "results_sha256": "c84016c1aec01d870f3ba444f8e2b2c3de4386882cbd17f10dda09d1a91b0f12",
+  "run": {
+    "dirty": false,
+    "lock_sha256": "b087987244071f2ba4534845a74ce03fa433f75d75c815c504b9b7e26ccd83a9",
+    "machine": "arm64",
+    "peak_whole_process_rss_bytes": 157843456,
+    "platform": "Darwin",
+    "python": "3.12.16",
+    "source_commit": "03ece9322b1f87ca0cc45cfaae92a8078cc2671c"
+  },
+  "schema_version": 1,
+  "timing_scope": "One open SQLite connection. Per-query timing excludes checksum and report writing."
+}

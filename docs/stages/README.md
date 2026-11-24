@@ -1,6 +1,6 @@
 # Echo implementation stages
 
-Start with [Stage 0](00-environment-and-scaffold.md). The [Stages 0 and 1 verification](../results/stages-0-1.md) and [Stage 2 matcher results](../results/stage-2.md) are recorded. Echo's metadata preflight is documented in the [evaluation protocol](../evaluation-protocol.md#metadata-preflight).
+Start with [Stage 0](00-environment-and-scaffold.md). See the [Stages 0 and 1 verification](../results/stages-0-1.md), [Stage 2 matcher results](../results/stage-2.md), and [Stage 3 held-out benchmark](../results/stage-3.md). Echo's metadata preflight is documented in the [evaluation protocol](../evaluation-protocol.md#metadata-preflight).
 
 | Stage | Work | Evidence required to close the stage |
 | --- | --- | --- |

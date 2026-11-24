@@ -12,10 +12,10 @@ Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and use it
 uv sync --locked
 uv run echo-audit --help
 uv run echo-audit fixture --out .local/fixture
-uv run pytest
+uv run --group benchmark pytest
 ```
 
-The fixture writes a reference WAV, a related crop with a known sample offset, and an unrelated distractor. Use a fresh output path for each run. The command is also available as `uv run python -m echo`. FFmpeg is optional until codec evaluation.
+The fixture writes a reference WAV, a related crop with a known sample offset, and an unrelated distractor. Use a fresh output path for each run. The command is also available as `uv run python -m echo`. The benchmark dependency group supplies FFmpeg for codec evaluation.
 
 ## Try the matcher
 
@@ -44,6 +44,10 @@ uv run echo-audit data spike \
 ```
 
 The fetch uses a roughly 616 MiB ESC-50 archive and a small FSD50K metadata ZIP. Use new output directories for reruns. See the [Stage 0 and 1 results](docs/results/stages-0-1.md) for the verified environment, reports, and output layout.
+
+## Stage 3 benchmark
+
+The matcher accepted **333 of 360** held-out matching trials and **0 of 360** absent-source trials. Each side used 40 recordings with nine variants per recording. The report includes the calibration and test protocol, individual conditions, the frozen policy, and reproduction commands. [Stage 3 report](docs/results/stage-3.md)
 
 ## Implementation stages
 
