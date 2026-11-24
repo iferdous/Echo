@@ -1,0 +1,208 @@
+{
+  "calibration_summary_sha256": "5b29a9fff785cc07bf8d8a82dc688b67f65c5b03c7a473cbf515db10f20a2394",
+  "candidates": [
+    {
+      "counts": {
+        "absent": 360,
+        "correct_accepts": 331,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 16,
+        "positive_abstentions": 29,
+        "positives": 360,
+        "top_1": 350,
+        "top_5": 350
+      },
+      "name": "stage2",
+      "policy": {
+        "max_postings_per_hash": 256,
+        "min_anchor_frames": 8,
+        "min_coverage": 0.2,
+        "min_distinct_hashes": 10,
+        "min_score_margin": 0,
+        "min_support": 18,
+        "min_support_fraction": 0.035,
+        "offset_radius_frames": 1
+      }
+    },
+    {
+      "counts": {
+        "absent": 360,
+        "correct_accepts": 332,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 16,
+        "positive_abstentions": 28,
+        "positives": 360,
+        "top_1": 350,
+        "top_5": 350
+      },
+      "name": "short_span",
+      "policy": {
+        "max_postings_per_hash": 256,
+        "min_anchor_frames": 8,
+        "min_coverage": 0.14,
+        "min_distinct_hashes": 10,
+        "min_score_margin": 0,
+        "min_support": 18,
+        "min_support_fraction": 0.035,
+        "offset_radius_frames": 1
+      }
+    },
+    {
+      "counts": {
+        "absent": 360,
+        "correct_accepts": 332,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 16,
+        "positive_abstentions": 28,
+        "positives": 360,
+        "top_1": 350,
+        "top_5": 350
+      },
+      "name": "short_span_margin",
+      "policy": {
+        "max_postings_per_hash": 256,
+        "min_anchor_frames": 8,
+        "min_coverage": 0.14,
+        "min_distinct_hashes": 10,
+        "min_score_margin": 12,
+        "min_support": 18,
+        "min_support_fraction": 0.035,
+        "offset_radius_frames": 1
+      }
+    },
+    {
+      "counts": {
+        "absent": 360,
+        "correct_accepts": 335,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 16,
+        "positive_abstentions": 25,
+        "positives": 360,
+        "top_1": 350,
+        "top_5": 350
+      },
+      "name": "weaker_support_margin",
+      "policy": {
+        "max_postings_per_hash": 256,
+        "min_anchor_frames": 8,
+        "min_coverage": 0.2,
+        "min_distinct_hashes": 10,
+        "min_score_margin": 12,
+        "min_support": 18,
+        "min_support_fraction": 0.02,
+        "offset_radius_frames": 1
+      }
+    },
+    {
+      "counts": {
+        "absent": 360,
+        "correct_accepts": 331,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 16,
+        "positive_abstentions": 29,
+        "positives": 360,
+        "top_1": 350,
+        "top_5": 350
+      },
+      "name": "larger_support",
+      "policy": {
+        "max_postings_per_hash": 256,
+        "min_anchor_frames": 8,
+        "min_coverage": 0.2,
+        "min_distinct_hashes": 10,
+        "min_score_margin": 12,
+        "min_support": 28,
+        "min_support_fraction": 0.035,
+        "offset_radius_frames": 1
+      }
+    },
+    {
+      "counts": {
+        "absent": 360,
+        "correct_accepts": 330,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 16,
+        "positive_abstentions": 30,
+        "positives": 360,
+        "top_1": 350,
+        "top_5": 350
+      },
+      "name": "larger_span",
+      "policy": {
+        "max_postings_per_hash": 256,
+        "min_anchor_frames": 8,
+        "min_coverage": 0.33,
+        "min_distinct_hashes": 10,
+        "min_score_margin": 12,
+        "min_support": 18,
+        "min_support_fraction": 0.035,
+        "offset_radius_frames": 1
+      }
+    },
+    {
+      "counts": {
+        "absent": 360,
+        "correct_accepts": 336,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 16,
+        "positive_abstentions": 24,
+        "positives": 360,
+        "top_1": 350,
+        "top_5": 350
+      },
+      "name": "short_span_weaker_support",
+      "policy": {
+        "max_postings_per_hash": 256,
+        "min_anchor_frames": 8,
+        "min_coverage": 0.14,
+        "min_distinct_hashes": 10,
+        "min_score_margin": 12,
+        "min_support": 18,
+        "min_support_fraction": 0.02,
+        "offset_radius_frames": 1
+      }
+    },
+    {
+      "counts": {
+        "absent": 360,
+        "correct_accepts": 324,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 16,
+        "positive_abstentions": 36,
+        "positives": 360,
+        "top_1": 350,
+        "top_5": 350
+      },
+      "name": "high_precision",
+      "policy": {
+        "max_postings_per_hash": 256,
+        "min_anchor_frames": 8,
+        "min_coverage": 0.2,
+        "min_distinct_hashes": 10,
+        "min_score_margin": 20,
+        "min_support": 32,
+        "min_support_fraction": 0.06,
+        "offset_radius_frames": 1
+      }
+    }
+  ],
+  "chosen_policy": "short_span_weaker_support",
+  "design_sha256": "3609664a1dc646901716d0553545e34da6eddcb0389904175a5ea94268ac4bc7",
+  "fingerprint_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+  "policy_sha256": "eb78b5ed1e4b370196b7191a853afde96c86a4880a06dca0ee75141a6e1b78c4",
+  "schema_version": 1,
+  "selection_order": [
+    "fewer_false_accepts",
+    "fewer_incorrect_accepts",
+    "more_correct_accepts",
+    "grid_order"
+  ]
+}

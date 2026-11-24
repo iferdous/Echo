@@ -1,0 +1,10 @@
+{
+  "max_postings_per_hash": 256,
+  "min_anchor_frames": 8,
+  "min_coverage": 0.14,
+  "min_distinct_hashes": 10,
+  "min_score_margin": 12,
+  "min_support": 18,
+  "min_support_fraction": 0.02,
+  "offset_radius_frames": 1
+}

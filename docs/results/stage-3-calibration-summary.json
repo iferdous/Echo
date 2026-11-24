@@ -1,0 +1,231 @@
+{
+  "index": {
+    "build_ms": 5024.666,
+    "bytes": 22138880,
+    "fingerprint_config_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+    "fingerprint_version": 1,
+    "indexed_assets": 120,
+    "manifest_sha256": "5969b57d4e2fe446a217624ac9380984369a708598b0347a74ad5fc960e19e0b",
+    "postings": 1278744,
+    "schema_version": 1
+  },
+  "metrics": {
+    "baselines": {
+      "bytes": {
+        "absent_queries": 360,
+        "accepted_absent": 0,
+        "available": 720,
+        "correct_top_1": 40,
+        "positive_queries": 360,
+        "unavailable": 0
+      },
+      "source": {
+        "absent_queries": 180,
+        "accepted_absent": 0,
+        "available": 360,
+        "correct_top_1": 180,
+        "positive_queries": 180,
+        "unavailable": 360
+      }
+    },
+    "excluded": 0,
+    "id_visibility": {
+      "masked": {
+        "absent": 180,
+        "correct_accepts": 173,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 8,
+        "positive_abstentions": 7,
+        "positives": 180,
+        "top_1": 180,
+        "top_5": 180
+      },
+      "visible": {
+        "absent": 180,
+        "correct_accepts": 163,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 8,
+        "positive_abstentions": 17,
+        "positives": 180,
+        "top_1": 170,
+        "top_5": 170
+      }
+    },
+    "input_errors": 0,
+    "match": {
+      "absent": 360,
+      "correct_accepts": 336,
+      "false_accepts": 0,
+      "incorrect_accepts": 0,
+      "insufficient_evidence": 16,
+      "positive_abstentions": 24,
+      "positives": 360,
+      "top_1": 350,
+      "top_5": 350
+    },
+    "matched_offset_error_ms": {
+      "max": 1844.0,
+      "n": 350,
+      "p50": 0.0,
+      "p95": 4.0
+    },
+    "planned_queries": 720,
+    "query_ms": {
+      "decode_ms": {
+        "max": 14.465,
+        "n": 720,
+        "p50": 1.4435,
+        "p95": 2.58395
+      },
+      "fingerprint_ms": {
+        "max": 90.995,
+        "n": 720,
+        "p50": 8.493,
+        "p95": 28.04515
+      },
+      "ranking_ms": {
+        "max": 915.44,
+        "n": 720,
+        "p50": 60.225,
+        "p95": 178.92315
+      },
+      "total_ms": {
+        "max": 939.217,
+        "n": 720,
+        "p50": 70.6205,
+        "p95": 204.5433
+      }
+    },
+    "source_groups": {
+      "absent_group_wilson_95": [
+        0.0,
+        0.087622
+      ],
+      "absent_groups_with_a_false_accept": 0,
+      "absent_source_groups": 40,
+      "mean_correct_accept_rate_by_positive_group": 0.933333,
+      "positive_group_bootstrap_95": [
+        0.872222,
+        0.972222
+      ],
+      "positive_source_groups": 40
+    },
+    "valid_queries": 720,
+    "variants": {
+      "crop_1s": {
+        "absent": 40,
+        "correct_accepts": 39,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 1,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "crop_2s": {
+        "absent": 40,
+        "correct_accepts": 39,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 1,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "crop_4s": {
+        "absent": 40,
+        "correct_accepts": 39,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 1,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "identity": {
+        "absent": 40,
+        "correct_accepts": 39,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 0,
+        "positive_abstentions": 1,
+        "positives": 40,
+        "top_1": 40,
+        "top_5": 40
+      },
+      "mp3_128k": {
+        "absent": 40,
+        "correct_accepts": 39,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 1,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "mp3_64k": {
+        "absent": 40,
+        "correct_accepts": 39,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 1,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "noise_10db": {
+        "absent": 40,
+        "correct_accepts": 25,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 15,
+        "positives": 40,
+        "top_1": 37,
+        "top_5": 37
+      },
+      "quiet_24db": {
+        "absent": 40,
+        "correct_accepts": 38,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 2,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      },
+      "resample_8khz": {
+        "absent": 40,
+        "correct_accepts": 39,
+        "false_accepts": 0,
+        "incorrect_accepts": 0,
+        "insufficient_evidence": 2,
+        "positive_abstentions": 1,
+        "positives": 40,
+        "top_1": 39,
+        "top_5": 39
+      }
+    }
+  },
+  "policy_sha256": "eb78b5ed1e4b370196b7191a853afde96c86a4880a06dca0ee75141a6e1b78c4",
+  "results_sha256": "e60755605b23dcfbeab62707d882e359cf831656adb0fe1aca754ef15783f889",
+  "run": {
+    "dirty": false,
+    "lock_sha256": "b087987244071f2ba4534845a74ce03fa433f75d75c815c504b9b7e26ccd83a9",
+    "machine": "arm64",
+    "peak_whole_process_rss_bytes": 160677888,
+    "platform": "Darwin",
+    "python": "3.12.16",
+    "source_commit": "201282f442dbe1c3d12c8c4639f3a139792509ec"
+  },
+  "schema_version": 1,
+  "timing_scope": "One open SQLite connection. Per-query timing excludes checksum and report writing."
+}

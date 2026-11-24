@@ -1,0 +1,88 @@
+{
+  "ffmpeg": "ffmpeg version 9.0 Copyright (c) 2000-2026 the FFmpeg developers",
+  "inventory_sha256": "f36a56e21fd3f70001114a8e0a4514fbad65e1940567d14f7e6aed35cfe80c8b",
+  "schema_version": 1,
+  "spec": {
+    "background_references_per_split": 80,
+    "groups_per_label_and_kind": 2,
+    "seed": 8312026
+  },
+  "spec_sha256": "b0694420b25dc99a1eb9365c43bca03d15611babd5c1004d23135007d0eb39f4",
+  "splits": {
+    "calibration": {
+      "absent_source_groups": 40,
+      "index_sha256": "5969b57d4e2fe446a217624ac9380984369a708598b0347a74ad5fc960e19e0b",
+      "indexed_references": 120,
+      "planned_trials": 720,
+      "positive_source_groups": 40,
+      "queries_sha256": "74ed3e172f58e2a0a938f69ad24865a5d44ba4938c9b0f56dd8ffe06fce1a5f1"
+    },
+    "test": {
+      "absent_source_groups": 40,
+      "index_sha256": "0cab59b6f466de9f8aa703c423772b74a49de1e77eaa92ebe2347354ffa1af31",
+      "indexed_references": 120,
+      "planned_trials": 720,
+      "positive_source_groups": 40,
+      "queries_sha256": "4f928750e7bb6b2edc854e9a026935abb8ca53d9add732f4a253852a9f0741d0"
+    }
+  },
+  "stage2_excluded_source_groups": 210,
+  "stage2_index_sha256": "70ef852301074bee9aa47157832a259deb08bdd7c15e1a513791e5a1a57e0fee",
+  "stage2_queries_sha256": "ea15e04490fc11b0300c65855cbdbe0d9b4d823c4606ed5ebafac11721b62360",
+  "variants": [
+    {
+      "name": "identity",
+      "seconds": null,
+      "transform": "copy",
+      "value": 0
+    },
+    {
+      "name": "crop_1s",
+      "seconds": 1,
+      "transform": "pcm",
+      "value": 0
+    },
+    {
+      "name": "crop_2s",
+      "seconds": 2,
+      "transform": "pcm",
+      "value": 0
+    },
+    {
+      "name": "crop_4s",
+      "seconds": 4,
+      "transform": "pcm",
+      "value": 0
+    },
+    {
+      "name": "mp3_64k",
+      "seconds": 2,
+      "transform": "mp3",
+      "value": 64
+    },
+    {
+      "name": "mp3_128k",
+      "seconds": 2,
+      "transform": "mp3",
+      "value": 128
+    },
+    {
+      "name": "resample_8khz",
+      "seconds": 2,
+      "transform": "resample",
+      "value": 8000
+    },
+    {
+      "name": "noise_10db",
+      "seconds": 2,
+      "transform": "snr",
+      "value": 10
+    },
+    {
+      "name": "quiet_24db",
+      "seconds": 2,
+      "transform": "gain",
+      "value": -24
+    }
+  ]
+}
