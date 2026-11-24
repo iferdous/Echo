@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Echo audit review</title>
+<style>
+:root{color-scheme:light;--paper:#f5f4eb;--surface:#fffdf6;--ink:#142822;--quiet:#4d5b54;--pine:#126751;--line:#d5d9cf;--amber:#8b4b09;--red:#952c36}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
+main{max-width:1120px;margin:auto;padding:clamp(20px,5vw,64px)}
+h1,h2,p{margin:0}
+h1{font-size:clamp(2.3rem,6vw,4.25rem);line-height:1.06;letter-spacing:-.055em}
+h2{font-size:1.55rem;letter-spacing:-.025em}
+header>p{margin-top:1rem;max-width:58ch;color:var(--quiet)}
+.small,code,td:not(:nth-child(2)){font-variant-numeric:tabular-nums}
+code{font: .92em ui-monospace,SFMono-Regular,monospace;overflow-wrap:anywhere}
+:focus-visible{outline:3px solid var(--pine);outline-offset:3px}
+dl{margin:2rem 0;display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid var(--line)}
+dl>div{min-width:0;padding:1rem .75rem}
+dl>div+div{border-inline-start:1px solid var(--line)}
+dt{color:var(--quiet);font-size:.88rem}
+dd{margin:0;font-size:2.05rem;letter-spacing:-.04em;font-weight:700;font-variant-numeric:tabular-nums}
+.tools{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:.6rem 0 1rem;flex-wrap:wrap}
+.tools label{display:grid;gap:.25rem;font-size:.85rem;font-weight:650}
+.search{flex:1;min-width:min(100%,17rem);max-width:26rem}
+input,select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid #a6afa4;border-radius:.45rem;padding:.6rem .7rem;max-width:100%}
+#visible{align-self:center;margin-left:auto;color:var(--quiet);font-size:.88rem}
+.labels,summary{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.3fr) minmax(0,.55fr);align-items:start;gap:.85rem}
+.labels{font-size:.78rem;color:var(--quiet);padding:.4rem .75rem .4rem 1.7rem}
+.query{background:var(--surface);border:1px solid var(--line);border-radius:.45rem;margin-bottom:.45rem}
+summary{padding:.8rem .75rem .8rem 1.7rem;position:relative;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"›";position:absolute;left:.7rem;top:.78rem;color:var(--pine);font-weight:750}
+details[open]>summary::before{transform:rotate(90deg)}
+.status{font-size:.87rem;font-weight:680}
+.status.matched{color:var(--pine)}
+.status.insufficient_evidence{color:var(--amber)}
+.status.input_error,.problem{color:var(--red)}
+.offset{font: .85rem/1.6 ui-monospace,SFMono-Regular,monospace;white-space:nowrap}
+.inside{border-top:1px solid var(--line);padding:.8rem 1.1rem 1rem;display:grid;gap:.65rem}
+.problem{overflow-wrap:anywhere}
+.quiet,small{color:var(--quiet);font-size:.84rem}
+small{display:block}
+.table-scroll{overflow-x:auto}
+table{border-collapse:collapse;min-width:34rem;width:100%;font-size:.86rem}
+th,td{border-top:1px solid var(--line);text-align:left;padding:.5rem;vertical-align:top}
+thead{background:#eeefe5}
+.empty{padding:1.5rem;border-block:1px solid var(--line);color:var(--quiet)}
+footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--line);display:grid;gap:.45rem;color:var(--quiet);font-size:.85rem;overflow-wrap:anywhere}
+@media(max-width:700px){dl{grid-template-columns:repeat(2,1fr)}dl>div:nth-child(3){border-inline-start:0}dl>div:nth-child(n+3){border-block-start:1px solid var(--line)}.labels{display:none}summary{grid-template-columns:minmax(0,1fr) auto;gap:.2rem 1rem}.offset{text-align:right}.reference{font-size:.85rem}}
+@media print{body,.query{background:white}.tools{display:none}main{padding:0}}
+</style>
+<main>
+  <header>
+    <h1>Echo audit review</h1>
+    <p>$query_count queries against $reference_count indexed recordings. Review the decisions and time intervals before changing a dataset split.</p>
+  </header>
+  <dl aria-label="Audit decisions">$counts</dl>
+  <section aria-labelledby="query-heading">
+    <h2 id="query-heading">Queries</h2>
+    <div class="tools" id="filters" hidden>
+      <label class="search">Find a query or reference <input type="search" id="search" autocomplete="off"></label>
+      <label>Decision <select id="decision">
+        <option value="">All decisions</option>
+        <option value="matched">Accepted</option>
+        <option value="no_match">No accepted match</option>
+        <option value="insufficient_evidence">Insufficient evidence</option>
+        <option value="input_error">Input error</option>
+      </select></label>
+      <p id="visible" aria-live="polite"></p>
+    </div>
+    <noscript><p class="quiet">Expand a query to read its evidence. Filters require JavaScript.</p></noscript>
+    <div class="labels" aria-hidden="true"><span>Query</span><span>Decision</span><span>Top reference</span><span>Offset</span></div>
+    $items
+    <p class="empty" id="no-results" hidden>No queries match these filters.</p>
+  </section>
+  <footer>
+    <p>Offset is reference time minus query time. Votes measure landmark support. Ranked candidates can fall below the acceptance rule.</p>
+    <p>Run <code>$run_id</code> · $candidate_count candidates</p>
+    <p>Match policy SHA-256 <code>$policy_sha256</code></p>
+  </footer>
+</main>
+<script>
+"use strict";
+const filters = document.getElementById("filters");
+const search = document.getElementById("search");
+const decision = document.getElementById("decision");
+const queries = Array.from(document.querySelectorAll("details.query"));
+function refresh() {
+  const needle = search.value.trim().toLowerCase();
+  const state = decision.value;
+  let count = 0;
+  for (const query of queries) {
+    const show = (!state || query.dataset.state === state) && query.dataset.names.toLowerCase().includes(needle);
+    query.hidden = !show;
+    if (show) count += 1;
+  }
+  document.getElementById("visible").textContent = count + " of " + queries.length + " queries";
+  document.getElementById("no-results").hidden = count > 0 || queries.length === 0;
+}
+filters.hidden = false;
+search.addEventListener("input", refresh);
+decision.addEventListener("change", refresh);
+refresh();
+</script>
+</html>

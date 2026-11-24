@@ -3,10 +3,12 @@
 import csv
 import hashlib
 import json
+import os
 import shutil
 from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 
 @contextmanager
@@ -18,6 +20,18 @@ def new_output_directory(path: Path) -> Iterator[None]:
     except BaseException:
         shutil.rmtree(path)
         raise
+
+
+@contextmanager
+def new_output_file(path: Path) -> Iterator[Path]:
+    """Publish a completed file atomically without replacing an existing one."""
+    if path.exists():
+        raise FileExistsError(f"output already exists: {path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with TemporaryDirectory(dir=path.parent) as directory:
+        temporary = Path(directory) / path.name
+        yield temporary
+        os.link(temporary, path)
 
 
 def write_json(path: Path, value: object) -> None:

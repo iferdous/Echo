@@ -28,6 +28,7 @@ from echo.datasets import (
 from echo.fingerprint import read_config
 from echo.fixtures import write_fixture
 from echo.index import build_index, open_index
+from echo.local_manifest import manifest_directory
 from echo.matcher import (
     DEFAULT_LIMIT,
     DEFAULT_POLICY,
@@ -36,6 +37,7 @@ from echo.matcher import (
     read_policy,
     resolve_alignment_engine,
 )
+from echo.review import render_review
 from echo.spike import DEFAULT_INDEX_SIZE, DEFAULT_SEED, write_spike
 
 
@@ -188,6 +190,24 @@ def run_batch_audit(args: argparse.Namespace) -> int:
     return int(report["decisions"].get("input_error", 0) > 0)
 
 
+def run_manifest(args: argparse.Namespace) -> int:
+    count = manifest_directory(
+        args.root,
+        args.out,
+        dataset=args.dataset,
+        revision=args.revision,
+        role=args.role,
+    )
+    print(f"Wrote {count} checksummed audio rows to {args.out}")
+    return 0
+
+
+def run_review(args: argparse.Namespace) -> int:
+    count = render_review(args.audit, args.out)
+    print(f"Wrote offline review for {count} queries to {args.out}")
+    return 0
+
+
 def add_match_commands(commands) -> None:
     index = commands.add_parser("index", help="build a local SQLite fingerprint index")
     index.add_argument("manifest", type=Path)
@@ -246,6 +266,13 @@ def add_match_commands(commands) -> None:
     audit.add_argument("--out", type=Path, required=True)
     audit.set_defaults(handler=run_batch_audit)
 
+    review = commands.add_parser(
+        "review", help="render a batch audit as an offline HTML review"
+    )
+    review.add_argument("audit", type=Path)
+    review.add_argument("--out", type=Path, required=True)
+    review.set_defaults(handler=run_review)
+
 
 def add_data_commands(commands) -> None:
     data = commands.add_parser(
@@ -288,6 +315,18 @@ def add_data_commands(commands) -> None:
     spike.add_argument("--seed", type=int, default=DEFAULT_SEED)
     spike.add_argument("--index-size", type=int, default=DEFAULT_INDEX_SIZE)
     spike.set_defaults(handler=run_spike)
+
+    manifest = data_commands.add_parser(
+        "manifest", help="checksum a folder of local audio"
+    )
+    manifest.add_argument("root", type=Path)
+    manifest.add_argument(
+        "--dataset", required=True, help="name used to prefix asset IDs"
+    )
+    manifest.add_argument("--revision", default="local")
+    manifest.add_argument("--role", choices=("reference", "query"), required=True)
+    manifest.add_argument("--out", type=Path, required=True)
+    manifest.set_defaults(handler=run_manifest)
 
 
 def run_experiment_command(args: argparse.Namespace) -> int:
