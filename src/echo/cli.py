@@ -13,6 +13,7 @@ from zipfile import BadZipFile
 from echo.acquisition import fetch_stage_one, verify_digest
 from echo.artifacts import new_output_directory, sha256_file, write_json
 from echo.audio import load_audio
+from echo.batch import scan_manifest, write_batch
 from echo.datasets import (
     ESC50_METADATA_SHA256,
     ESC50_REVISION,
@@ -164,6 +165,24 @@ def run_match(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_batch_audit(args: argparse.Namespace) -> int:
+    if args.out.exists():
+        raise FileExistsError(f"audit output already exists: {args.out}")
+    policy = read_policy(args.policy) if args.policy is not None else DEFAULT_POLICY
+    config = read_config(args.config) if args.config is not None else None
+    batch = scan_manifest(
+        args.manifest,
+        args.root or args.manifest.parent,
+        args.index,
+        policy,
+        config=config,
+        limit=args.limit,
+    )
+    report = write_batch(batch, args.out)
+    print(json.dumps(report, sort_keys=True))
+    return int(report["decisions"].get("input_error", 0) > 0)
+
+
 def add_match_commands(commands) -> None:
     index = commands.add_parser("index", help="build a local SQLite fingerprint index")
     index.add_argument("manifest", type=Path)
@@ -191,6 +210,24 @@ def add_match_commands(commands) -> None:
     match.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
     match.add_argument("--json", action="store_true")
     match.set_defaults(handler=run_match)
+
+    audit = commands.add_parser(
+        "audit", help="match an audio manifest and write query and candidate CSVs"
+    )
+    audit.add_argument("manifest", type=Path)
+    audit.add_argument(
+        "--root",
+        type=Path,
+        help="query audio root (defaults to the manifest directory)",
+    )
+    audit.add_argument("--index", type=Path, required=True)
+    audit.add_argument(
+        "--config", type=Path, help="require this fingerprint configuration"
+    )
+    audit.add_argument("--policy", type=Path, help="threshold policy JSON")
+    audit.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
+    audit.add_argument("--out", type=Path, required=True)
+    audit.set_defaults(handler=run_batch_audit)
 
 
 def add_data_commands(commands) -> None:
