@@ -1,0 +1,38 @@
+{
+  "classes": {
+    "airplane": 0,
+    "breathing": 1,
+    "brushing_teeth": 2
+  },
+  "deterministic_replay": true,
+  "environment": {
+    "deterministic_algorithms": true,
+    "device": "cpu",
+    "dirty": false,
+    "libsndfile": "1.2.2",
+    "lock_sha256": "492e2a85b273c305e24db298141317f059cbd6fe7992568d00dede36c51167e1",
+    "machine": "arm64",
+    "numpy": "2.5.5",
+    "peak_whole_process_rss_bytes": 349143040,
+    "platform": "Darwin",
+    "python": "3.12.16",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0",
+    "source_commit": "efc42c56a0555e059b39741bf4d115efb7552bb9",
+    "torch": "2.12.1",
+    "torch_threads": 4
+  },
+  "logs": [
+    {
+      "epoch": 1,
+      "mean_training_loss": 1.0193948904673258,
+      "optimizer_updates": 4,
+      "validation_accuracy": 0.3333333333333333,
+      "validation_correct": 2,
+      "validation_rows": 6
+    }
+  ],
+  "schema_version": 1,
+  "training_rows": 15,
+  "validation_only": true
+}
