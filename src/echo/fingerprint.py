@@ -166,7 +166,12 @@ def spectral_peaks(
 def fingerprint(
     samples: NDArray[np.float32], config: FingerprintConfig
 ) -> list[Landmark]:
-    peaks = spectral_peaks(samples, config)
+    return pair_peaks(spectral_peaks(samples, config), config)
+
+
+def pair_peaks(
+    peaks: list[tuple[int, int]], config: FingerprintConfig
+) -> list[Landmark]:
     frames = [frame for frame, _ in peaks]
     result = set()
     min_delay, max_delay = config.min_pair_frames, config.max_pair_frames

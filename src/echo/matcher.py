@@ -8,7 +8,7 @@ from pathlib import Path
 
 from echo.audio import load_audio
 from echo.fingerprint import Landmark, fingerprint
-from echo.index import Index, Track
+from echo.index import Index, Posting, Track
 
 MATCH_SCHEMA_VERSION = 1
 DEFAULT_LIMIT = 5
@@ -153,28 +153,9 @@ def describe_alignment(
     )
 
 
-def rank_landmarks(
-    query: list[Landmark],
-    query_samples: int,
-    index: Index,
-    *,
-    limit: int = DEFAULT_LIMIT,
-    policy: MatchPolicy = DEFAULT_POLICY,
-) -> MatchResult:
-    if limit < 1:
-        raise ValueError("result limit must be positive")
-    if query_samples < 1:
-        raise ValueError("query must contain at least one sample")
-    query = sorted(set(query))
-    duration = query_samples / index.config.sample_rate
-    if not query:
-        return MatchResult(
-            MATCH_SCHEMA_VERSION, "insufficient_evidence", duration, len(query), []
-        )
-
-    postings = index.lookup(
-        {point.key for point in query}, policy.max_postings_per_hash
-    )
+def align_tracks(
+    query: list[Landmark], postings: dict[int, list[Posting]], radius: int
+) -> list[Alignment]:
     bins = defaultdict(lambda: defaultdict(set))
     for query_id, point in enumerate(query):
         for asset_id, reference_frame in postings.get(point.key, ()):
@@ -182,7 +163,7 @@ def rank_landmarks(
 
     alignments = []
     for asset_id, track_bins in bins.items():
-        offset, votes = best_offset(track_bins, policy.offset_radius_frames)
+        offset, votes = best_offset(track_bins, radius)
         matched = [query[query_id] for query_id in votes]
         frames = {point.frame for point in matched}
         alignments.append(
@@ -196,6 +177,27 @@ def rank_landmarks(
                 len({point.key for point in matched}),
             )
         )
+    return alignments
+
+
+def rank_postings(
+    query: list[Landmark],
+    query_samples: int,
+    index: Index,
+    postings: dict[int, list[Posting]],
+    *,
+    radius: int,
+    limit: int,
+) -> MatchResult:
+    if not query:
+        return MatchResult(
+            MATCH_SCHEMA_VERSION,
+            "insufficient_evidence",
+            query_samples / index.config.sample_rate,
+            0,
+            [],
+        )
+    alignments = align_tracks(query, postings, radius)
     alignments.sort(
         key=lambda item: (
             -item.score,
@@ -216,7 +218,39 @@ def rank_landmarks(
         for rank, item in enumerate(alignments[:limit], start=1)
     ]
     return MatchResult(
-        MATCH_SCHEMA_VERSION, "no_match", duration, len(query), candidates
+        MATCH_SCHEMA_VERSION,
+        "no_match",
+        query_samples / index.config.sample_rate,
+        len(query),
+        candidates,
+    )
+
+
+def rank_landmarks(
+    query: list[Landmark],
+    query_samples: int,
+    index: Index,
+    *,
+    limit: int = DEFAULT_LIMIT,
+    policy: MatchPolicy = DEFAULT_POLICY,
+) -> MatchResult:
+    if limit < 1:
+        raise ValueError("result limit must be positive")
+    if query_samples < 1:
+        raise ValueError("query must contain at least one sample")
+    query = sorted(set(query))
+    postings = (
+        index.lookup({point.key for point in query}, policy.max_postings_per_hash)
+        if query
+        else {}
+    )
+    return rank_postings(
+        query,
+        query_samples,
+        index,
+        postings,
+        radius=policy.offset_radius_frames,
+        limit=limit,
     )
 
 
