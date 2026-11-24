@@ -208,3 +208,14 @@ def test_policy_file_uses_stable_digest_and_rejects_invalid_thresholds(tmp_path)
     path.write_text('{"min_coverage": 1.2}')
     with pytest.raises(ValueError, match="min_coverage"):
         read_policy(path)
+
+
+def test_sparse_offset_window_preserves_deduplication_and_ties():
+    from echo.matcher import best_offset
+
+    bins = {-7: {0, 3}, -4: {0, 2}, 4: {1, 2}, 7: {1, 3}}
+    assert best_offset(bins, 0) == (-4, {0, 2})
+    assert best_offset(bins, 1) == (-4, {0, 2})
+    assert best_offset(bins, 3) == (-4, {0, 2, 3})
+    assert best_offset(bins, 10**20) == (-4, {0, 1, 2, 3})
+    assert best_offset({}, 1) == (0, set())

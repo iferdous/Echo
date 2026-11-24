@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+from bisect import bisect_left, bisect_right
 from collections import defaultdict
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
@@ -89,16 +90,36 @@ class MatchResult:
 
 
 def best_offset(bins: dict[int, set[int]], radius: int) -> tuple[int, set[int]]:
-    best_key = None
+    if not bins:
+        return 0, set()
+    if radius == 0:
+        return max(
+            bins.items(), key=lambda band: (len(band[1]), -abs(band[0]), -band[0])
+        )
+
+    # The released policies use one neighboring frame either side.
+    populated = sorted(bins) if radius > 1 else []
+    best_key = (-1, 0, 0, 0)
     best_frame = 0
     best_votes = set()
     for offset, exact in bins.items():
-        combined = exact.copy()
-        for neighbor in range(offset - radius, offset + radius + 1):
-            if neighbor != offset and neighbor in bins:
-                combined.update(bins[neighbor])
+        if radius == 1:
+            left = bins.get(offset - 1)
+            right = bins.get(offset + 1)
+            if left and right:
+                combined = exact.union(left, right)
+            elif left or right:
+                combined = exact.union(left or right)
+            else:
+                combined = exact
+        else:
+            start = bisect_left(populated, offset - radius)
+            end = bisect_right(populated, offset + radius, lo=start)
+            combined = exact.union(
+                *(bins[key] for key in populated[start:end] if key != offset)
+            )
         key = (len(combined), len(exact), -abs(offset), -offset)
-        if best_key is None or key > best_key:
+        if key > best_key:
             best_key = key
             best_frame = offset
             best_votes = combined
