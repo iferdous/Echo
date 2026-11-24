@@ -2,10 +2,12 @@
 
 **Outcome.** Use audio to audit a declared ESC-50/FSD50K cohort. Verify which candidates share audible content and explain how much of the known metadata overlap was eligible for the comparison.
 
+The [Stage 4 results and reproduction commands](../results/stage-4.md) document the completed official-audio audit, including the unresolved cases and a replayed alignment.
+
 ## Build
 
 1. Use the official metadata preflight to select the cohort. Start with FSD50K eval for the acoustic study. Include representative shared-ID pairs, same-class distractors from different sources, and a seeded broader background. Freeze the IDs and split definitions before checking matcher results.
-2. Choose and record the acquisition method. Budget for both FSD50K eval split archive parts and local extraction. Log bytes transferred, files kept, unavailable recordings, and the selected audio digests. If using Freesound files as substitutes, label the run by the audio actually used. [Archive and cohort rules](../evaluation-protocol.md#acquisition-sequence)
+2. Choose and record the acquisition method. Use verified byte-range reads from both official FSD50K eval ZIP parts where supported. Budget for full download and extraction if needed. Log bytes transferred, files kept, unavailable recordings, and the selected audio digests. If using Freesound files as substitutes, label the run by the audio actually used. [Archive and cohort rules](../evaluation-protocol.md#acquisition-sequence)
 3. Build the FSD50K index with the Stage 3 fingerprint configuration and use the [frozen match policy](../results/stage-3-policy.json) for decisions. Search the eligible ESC-50 files against it. Have the acoustic path rank on sound, then append source IDs and label information to candidate evidence.
 4. Verify a stratified sample of accepted, borderline, discrepant-ID and missed known-source cases. Compare aligned excerpts by listening and inspecting the time offset. Record confirmed, rejected or unresolved verdicts and keep metadata-only agreement visible. Audit genuinely missing or differing IDs separately from cases where IDs were hidden for a benchmark.
 5. Report published metadata totals, Echo's reproduced join on the full metadata, and eligible results in the indexed cohort. Show how missing assets, disjoint source excerpts and matcher misses contribute to the gaps. Report both pair/row and unique-source units where meaningful.

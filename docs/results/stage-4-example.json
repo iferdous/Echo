@@ -1,0 +1,164 @@
+{
+  "index_manifest_sha256": "8ea1331f42ebc76915741d4ef735229e776cd3d7daa1f09602fa2183d8e12c3c",
+  "local_excerpt": {
+    "comparison_wav_sha256": "bd1092150bf9a85e8e90a93a8ea0af487737245d8739c97eca879f0ce3384f09",
+    "duration_seconds": 0.5,
+    "query_start_seconds": 2.5,
+    "reference_start_seconds": 3.113125,
+    "sample_rate": 8000
+  },
+  "query": {
+    "asset_id": "esc50:4-207124-A-0.wav",
+    "attribution": "LICENSE",
+    "dataset": "esc50",
+    "fold": "4",
+    "freesound_url": "https://freesound.org/s/207124/",
+    "label": "dog",
+    "path": "audio/4-207124-A-0.wav",
+    "revision": "33c8ce9eb2cf0b1c2f8bcf322eb349b6be34dbb6",
+    "role": "shared_eval_id",
+    "sha256": "4172efa07482e36b67f50bc730d9ecaf95da20c81f79242d0439ac6bae21f53c",
+    "source_id": "207124",
+    "source_service": "freesound"
+  },
+  "reference": {
+    "asset_id": "reference-0249",
+    "attribution": "https://freesound.org/s/207124/",
+    "dataset": "fsd50k",
+    "fold": "eval",
+    "label": "Bark|Growling|Dog|Domestic_animals_and_pets|Animal",
+    "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+    "path": "audio/207124.wav",
+    "revision": "10.5281/zenodo.4060432",
+    "role": "shared_eval_id",
+    "sha256": "390a00952404d8e0341be05e8940a32dc66acbff0d8a9e0a3efab0c6699361c8",
+    "source_id": "207124",
+    "source_service": "freesound"
+  },
+  "replay_matches_batch": true,
+  "replayed_cli_output": {
+    "candidates": [
+      {
+        "anchor_frames": 211,
+        "asset_id": "reference-0249",
+        "coverage": 0.7568,
+        "distinct_hashes": 1324,
+        "offset_frames": 77,
+        "offset_seconds": 0.616,
+        "passes_threshold": true,
+        "query_span_seconds": [
+          1.128,
+          4.912
+        ],
+        "rank": 1,
+        "reference_span_seconds": [
+          1.744,
+          5.528
+        ],
+        "score": 1379,
+        "support_fraction": 0.278417120936806
+      },
+      {
+        "anchor_frames": 9,
+        "asset_id": "reference-0049",
+        "coverage": 0.4288,
+        "distinct_hashes": 13,
+        "offset_frames": 821,
+        "offset_seconds": 6.568,
+        "passes_threshold": false,
+        "query_span_seconds": [
+          1.16,
+          3.304
+        ],
+        "rank": 2,
+        "reference_span_seconds": [
+          7.728,
+          9.872
+        ],
+        "score": 13,
+        "support_fraction": 0.0026246719160104987
+      },
+      {
+        "anchor_frames": 10,
+        "asset_id": "reference-0200",
+        "coverage": 0.7872,
+        "distinct_hashes": 12,
+        "offset_frames": 1466,
+        "offset_seconds": 11.728,
+        "passes_threshold": false,
+        "query_span_seconds": [
+          0.368,
+          4.304
+        ],
+        "rank": 3,
+        "reference_span_seconds": [
+          12.096,
+          16.032
+        ],
+        "score": 12,
+        "support_fraction": 0.0024227740763173833
+      },
+      {
+        "anchor_frames": 9,
+        "asset_id": "reference-0246",
+        "coverage": 0.6432,
+        "distinct_hashes": 12,
+        "offset_frames": 678,
+        "offset_seconds": 5.424,
+        "passes_threshold": false,
+        "query_span_seconds": [
+          0.976,
+          4.192
+        ],
+        "rank": 4,
+        "reference_span_seconds": [
+          6.4,
+          9.616
+        ],
+        "score": 12,
+        "support_fraction": 0.0024227740763173833
+      },
+      {
+        "anchor_frames": 9,
+        "asset_id": "reference-0109",
+        "coverage": 0.5104,
+        "distinct_hashes": 12,
+        "offset_frames": 2560,
+        "offset_seconds": 20.48,
+        "passes_threshold": false,
+        "query_span_seconds": [
+          1.792,
+          4.344
+        ],
+        "rank": 5,
+        "reference_span_seconds": [
+          22.272,
+          24.824
+        ],
+        "score": 12,
+        "support_fraction": 0.0024227740763173833
+      }
+    ],
+    "fingerprint_config_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+    "match_policy_sha256": "eb78b5ed1e4b370196b7191a853afde96c86a4880a06dca0ee75141a6e1b78c4",
+    "query_duration_seconds": 5.0,
+    "query_id": "4-207124-A-0.wav",
+    "query_landmarks": 4953,
+    "schema_version": 1,
+    "status": "matched"
+  },
+  "run_id": "21351d5272b0c7d71b07a74bc127e9edcbaa89da2dc8808fea8aed0b9a3f5988",
+  "schema_version": 1,
+  "waveform_check": {
+    "aligned_windows": 8,
+    "listening_review": "not_performed",
+    "median_aligned_correlation": 0.9995906161937549,
+    "offset_difference_seconds": 0.002875,
+    "offset_seconds": 0.613125,
+    "query_span_seconds": [
+      1.0,
+      5.0
+    ],
+    "verdict": "confirmed"
+  }
+}

@@ -1,6 +1,6 @@
 # Echo implementation stages
 
-Start with [Stage 0](00-environment-and-scaffold.md). See the [Stages 0 and 1 verification](../results/stages-0-1.md), [Stage 2 matcher results](../results/stage-2.md), and [Stage 3 held-out benchmark](../results/stage-3.md). Echo's metadata preflight is documented in the [evaluation protocol](../evaluation-protocol.md#metadata-preflight).
+Start with [Stage 0](00-environment-and-scaffold.md). See the [Stages 0 and 1 verification](../results/stages-0-1.md), [Stage 2 matcher results](../results/stage-2.md), [Stage 3 held-out benchmark](../results/stage-3.md), and [Stage 4 cross-dataset audit](../results/stage-4.md). Echo's metadata preflight is documented in the [evaluation protocol](../evaluation-protocol.md#metadata-preflight).
 
 | Stage | Work | Evidence required to close the stage |
 | --- | --- | --- |
@@ -17,4 +17,4 @@ Start with [Stage 0](00-environment-and-scaffold.md). See the [Stages 0 and 1 ve
 
 Use the [build plan](../build-plan.md) for shared architecture and command contracts. Use the [evaluation protocol](../evaluation-protocol.md) for source grouping, metric definitions, and experiment rules.
 
-At each stage, record the commit, commands and checks run, paths to outputs, and remaining questions. Keep development trials distinct from frozen runs. Stage 6 can close with a profiling report and the Python implementation. Stage 5 can start its split checks and CPU smoke run while the FSD50K audit is underway.
+At each stage, record the commit, commands and checks run, paths to outputs, and remaining questions. Keep development trials distinct from frozen runs. Stage 6 can close with a profiling report and the Python implementation.

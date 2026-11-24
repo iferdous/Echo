@@ -1,8 +1,8 @@
 # Echo
 
-Echo is an audio dataset auditing project. The current build prepares pinned datasets, checks for shared recording IDs, and searches audio by sound. Give it a known clip or a crop and it returns a candidate recording and signed time offset. Later stages will measure how exposure to shared recordings changes a classifier's score.
+Echo audits audio datasets for shared recordings. Give it a clip or a manifest and an index of reference audio. It reports candidate recordings, timestamps, and the evidence behind each decision. The next stage measures how exposure to shared recordings changes a classifier's score.
 
-A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo uses acoustic fingerprints to find shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo will use those IDs to check its work and test what it can recover from the audio itself. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
+A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo uses acoustic fingerprints to find shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo uses those IDs to measure coverage after it ranks candidates by sound. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
 
 ## Getting started
 
@@ -48,6 +48,18 @@ The fetch uses a roughly 616 MiB ESC-50 archive and a small FSD50K metadata ZIP.
 ## Stage 3 benchmark
 
 The matcher accepted **333 of 360** held-out matching trials and **0 of 360** absent-source trials. Each side used 40 recordings with nine variants per recording. The report includes the calibration and test protocol, individual conditions, the frozen policy, and reproduction commands. [Stage 3 report](docs/results/stage-3.md)
+
+## Stage 4 cross-dataset audit
+
+Echo scored 267 ESC-50 clips against a frozen cohort of 290 official FSD50K eval recordings. An independent waveform check confirmed shared audio in 140 same-source pairs. Echo accepted the right recording at the supported offset for 137. The report includes the misses, unresolved cases, and replay instructions. [Stage 4 report and evidence](docs/results/stage-4.md)
+
+To audit your own dataset, build a reference index and pass a query manifest with the same [asset columns](src/echo/datasets.py). All runs write query decisions and ranked candidates to CSV.
+
+```bash
+uv run echo-audit index references.csv --root reference-audio --out references.sqlite
+uv run echo-audit audit queries.csv --root query-audio --index references.sqlite \
+  --policy docs/results/stage-3-policy.json --out .local/my-audit
+```
 
 ## Implementation stages
 

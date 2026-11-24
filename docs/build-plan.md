@@ -69,12 +69,12 @@ Add files when their responsibilities exist. Keep downloaded datasets and genera
 
 ### CLI and data contracts
 
-Stage 2 implements `index` and `match`. The remaining commands describe later stages. Each command should have a human-readable summary and write structured evidence where specified.
+Stages 2 and 4 implement `index`, `match`, and `audit`. Stage 3 provides its benchmark through `scripts/run_stage3.py`. The additional CLI commands below are planned. Each command should have a human-readable summary and write structured evidence where specified.
 
 ~~~text
 echo-audit index TRAIN.csv --out train.sqlite
 echo-audit match QUERY.wav --index train.sqlite --json
-echo-audit audit TEST.csv --index train.sqlite --out audit/
+echo-audit audit TEST.csv --root test-audio --index train.sqlite --out audit/
 echo-audit bench --spec bench/matcher-test.json --out run/
 echo-audit experiment --spec bench/paired-esc50.json --out run/
 echo-audit report run/
@@ -111,7 +111,7 @@ The release evidence should include commit, lockfile digest, dataset revisions, 
 
 - Source groups are audited explicitly. The metadata preflight found four ESC-50 source IDs spanning folds. The controlled model run introduces known shared audio and uses same-class replacements to hold the training budget constant.
 - Source IDs, acoustic overlap and review verdicts have independent fields. Different labels or different takes can share a source. The released report keeps those distinctions visible.
-- Start FSD50K with metadata and budget for split archives. Selective extraction can reduce the files kept on disk. Archive access and bytes transferred need separate verification.
+- Start FSD50K with metadata and budget for split archives. Record archive access and transferred bytes separately from the extracted files. Stage 4 verifies exact range responses and checks each selected official WAV.
 - The application and model experiment can ship with descriptive findings. Timing targets, accuracy targets and the direction of the model effect remain hypotheses until measured. A static demo and reproducible report carry the first release.
 
 ## First implementation session

@@ -1,0 +1,29 @@
+{
+  "acquisition_sha256": "97e02aa2fbbeee8190c0077a778cb2f1d409c235bbed11bc8598ecdebd6756b4",
+  "archive_payload_bytes_received": 194922436,
+  "available_references": 290,
+  "catalog_entries": 10231,
+  "cohort_sha256": "a1403a5e8d41510d47ee149a4bdc2edcba0106ce769f37982a7fd4782b416828",
+  "index_sha256": "8ea1331f42ebc76915741d4ef735229e776cd3d7daa1f09602fa2183d8e12c3c",
+  "metadata_md5": "b9ea0c829a411c1d42adb9da539ed237",
+  "method": "official_split_zip_http_ranges",
+  "parts": [
+    {
+      "bytes": 3221225472,
+      "published_md5": "3090670eaeecc013ca1ff84fe4442aeb",
+      "url": "https://zenodo.org/api/records/4060432/files/FSD50K.eval_audio.z01/content"
+    },
+    {
+      "bytes": 3037675767,
+      "published_md5": "6fa47636c3a3ad5c7dfeba99f2637982",
+      "url": "https://zenodo.org/api/records/4060432/files/FSD50K.eval_audio.zip/content"
+    }
+  ],
+  "previously_available_references": 287,
+  "range_responses": 294,
+  "retried_references": 3,
+  "schema_version": 1,
+  "selected_references": 290,
+  "unavailable_references": 0,
+  "wav_bytes_kept": 267543840
+}
