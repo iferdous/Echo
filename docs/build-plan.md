@@ -12,7 +12,7 @@ This plan consolidates Muse's handoff into an implementation path. The existing 
 
 **Portfolio release.** Run the fingerprint benchmark across a declared corpus and a frozen test manifest. Audit a reproducible ESC-50/FSD50K cohort with examples a reader can verify. Complete the controlled training experiment and generate tables from run artifacts. Ship a recorded demo and a copyable CLI walkthrough. Work through the full evidence path even if real-world overlap recovery or the ML effect is small.
 
-**Extensions.** A PyTorch cross-dataset experiment depends on usable naturally overlapping clips and same-origin controls. A Rust implementation depends on profiling. A hosted upload interface depends on a use case beyond the CLI and recorded demo. These extensions can be evaluated independently after the main results are available.
+**Extensions.** A PyTorch cross-dataset experiment depends on usable naturally overlapping clips and same-origin controls. A hosted upload interface depends on a use case beyond the CLI and recorded demo. These extensions can be evaluated independently after the main results are available.
 
 ## Stack
 
@@ -26,7 +26,7 @@ This plan consolidates Muse's handoff into an implementation path. The existing 
 | Model | Optional locked PyTorch dependency, CPU CNN from random initialization | Train on fixed log-mel features as a controlled measurement of the impact of known overlap. |
 | Outputs | CSV, JSON, Markdown, static plots | Save evidence first and generate a short report and figures from it. |
 | CI | GitHub Actions, Ubuntu first | Exercise contracts, generated fixtures and a small reproducible smoke benchmark. Add Windows or macOS coverage when support is verified. |
-| Optional acceleration | Rust, PyO3 and maturin if an in-process port helps | Port only a measured hot path and preserve Python results. Compare on the same hardware and corpus. |
+| Optional acceleration | Rust offset voting with PyO3 and maturin | Speed up voting while keeping the same SQLite format and matching decisions. Python remains the default. |
 
 ## How it fits together
 
@@ -69,7 +69,7 @@ Add files when their responsibilities exist. Keep downloaded datasets and genera
 
 ### CLI and data contracts
 
-Stages 2 and 4 implement `index`, `match`, and `audit`. Stage 3 provides its benchmark through `scripts/run_stage3.py`. Stage 5 implements `experiment prepare`, `smoke`, `calibrate`, and `run`. The benchmark and report wrappers below are planned. Each command should have a human-readable summary and write structured evidence where specified.
+Stages 2 and 4 implement `index`, `match`, and `audit`. Stage 3 provides its benchmark through `scripts/run_stage3.py`. Stage 5 implements `experiment prepare`, `smoke`, `calibrate`, and `run`. Stage 6 adds the optional Rust voting engine and the profiling script `scripts/run_stage6.py`. The benchmark and report wrappers below are planned. Each command should have a human-readable summary and write structured evidence where specified.
 
 ~~~text
 echo-audit index TRAIN.csv --out train.sqlite

@@ -65,6 +65,10 @@ uv run echo-audit audit queries.csv --root query-audio --index references.sqlite
 
 On the same 400 ESC-50 test clips, mean accuracy rose from **47.4% to 57.0%** when training included three-second crops from selected test recordings. Both models in each of five seed pairs trained on 1,096 examples. On the 164 directly exposed clips, accuracy rose by **19.27 percentage points**. [Stage 5 report, predictions, and reproduction](docs/results/stage-5.md)
 
+## Stage 6 matcher profiling
+
+Echo uses Python by default and offers Rust offset voting through `--engine rust` for `match` and `audit`. On the measured Apple M3 workloads, Rust reduced warm median query time by **56%** on ESC-50/FSD50K and **42%** on the ESC-50 crops versus tuned Python. Both engines use the same SQLite index and matching rules. [Stage 6 profiles and native build instructions](docs/results/stage-6.md)
+
 ## Implementation stages
 
 Follow the [numbered stages, 0 through 9](docs/stages/README.md). Start with [Stage 0, Environment and scaffold](docs/stages/00-environment-and-scaffold.md).

@@ -1,0 +1,91 @@
+{
+  "artifacts_sha256": {
+    "baseline-stage2.csv": "59e355f6c266910ac9a112a4e43a42ea5ecb394b193f8cfc7690d2bb06321c93",
+    "baseline-stage2.json": "86e965afe59737f4c564cd2927aab6a095df85941d79473b0a53bb91e26c7eb7",
+    "baseline-stage4.csv": "26074c0af6118db7a4ffa3ae5d7a1270268a5902d72d7483cb44c4dfce7f1b37",
+    "baseline-stage4.json": "ced1c37803d448f6b1f9e2f255417db045cfe20aec0a51581e122d72cfe3afbc",
+    "build-stage2.csv": "bd5700a03be052856cd25c641e31de6ebeac440db08ea4f9ec8e28fc5ff5b4f0",
+    "build-stage2.json": "7c3eba25fcd8741f1f5ac1379ba6dc66614676592b3fc995ec8f7464c397c554",
+    "build-stage4.csv": "6cb1364dacef3ac2b5cffe56705cfc9076fabeaa13092737474848007543b0ea",
+    "build-stage4.json": "4f188418a226a9c05fcdc32e0db77f052221ecc504ef21564c082a37253ebd90",
+    "cli-parity.json": "786d88da57c6d6909c85cd0b0698beb288b527724e45324ad42b61f1460aff17",
+    "full-parity.json": "c4d7c0b111821de5255001670ace7e72b8b5ac96e4a13bebfe7a139f374f95b6",
+    "rust-stage2-first-pass.csv": "d1fe19127d7f6797a20fa98b288d10d2c5cb7be85f0d1aa845477a1e90883b4f",
+    "rust-stage2-first-pass.json": "6b9168092f10d604f7cab760673cc07909d0d7148e6c1d1a42acc2ea19980b63",
+    "rust-stage2.csv": "03f8b92594d4afd6508d9bdc2a9ccf8a354e021bb580ca4f79b0cdc484bbe06b",
+    "rust-stage2.json": "512ceff483ebfeb661e42e5fb8b93e1c5039c0e5157dc9ba14da44438ba76a4a",
+    "rust-stage4.csv": "02b9a4e2f6bc3ae0d4441aeff76e861545e5df87ef0d073ba89e8119f6c51415",
+    "rust-stage4.json": "90b340603ef4bde94189929771e246a35ff7a7dd190402b5042d3d36e8f44944",
+    "tuned-stage2-first-pass.csv": "369698e4ccbd180080081d8e950e91c631b0f3601bc7896fae7064a2e3429eb9",
+    "tuned-stage2-first-pass.json": "971a8553c110c6de8bbe340a04c626910f1d6ef4edf84a80bc96132c394a6db7",
+    "tuned-stage2.csv": "af490a48f6ec51908b7c33efca85aabe537cae12eaa62181086ada9d7c9cf174",
+    "tuned-stage2.json": "36f0ec7eef2c2bbbf3f1d98c9c135867def366b5ab857a29f00d4a996c39af3c",
+    "tuned-stage4.csv": "21fa4a1da0a73d96f4f5a6bc34074d6a71f1d2bd12a28fe7e8a66ab7c5620d0a",
+    "tuned-stage4.json": "25264d43355f44124432de8602e940a2037eade815600d4e4e8a0aaf2a4fb223"
+  },
+  "decision": "python_default_rust_opt_in",
+  "esc50_crop_primary_pair": "retimed_both_engines_after_phase_wide_first_pass_slowdown",
+  "full_stage4_equivalence": {
+    "equal_complete_match_results": 267,
+    "index_sha256": "7976dce7485e64872bb14e3c43f96c71116ab3ce3340b2987007f0b55c3d49b2",
+    "match_policy_sha256": "eb78b5ed1e4b370196b7191a853afde96c86a4880a06dca0ee75141a6e1b78c4",
+    "matching_published_stage4_candidate_rows": 1335,
+    "matching_published_stage4_decisions": 267,
+    "published_candidate_csv_sha256": "c527bad2c5151f3d06550133f1b3f903a2aceab628bf4f84adc7b3761c186c8a",
+    "published_query_csv_sha256": "efb21eba69ab04306eff197a643b2479533c30c2f168c82a9c065c13fb6ce085",
+    "query_count": 267,
+    "query_manifest_sha256": "ee8d01cfefebcf8b487dfc99f81a2d675bf6e66c7127a231dff400950f635bb2",
+    "ranked_candidates": 1335,
+    "schema_version": 1,
+    "workload": "full_stage4_eval_audit"
+  },
+  "predeclared_median_reduction_min_percent": 15,
+  "predeclared_p95_regression_max_percent": 10,
+  "production_cli_check": {
+    "candidates_sha256": "79ae6f8b892350a51cce6a606c1714c2b7861fefe014663b766e6ba3dbc0ed57",
+    "cli_candidate_csvs_byte_identical": true,
+    "engines": {
+      "python": {
+        "median_ms": 609.054,
+        "p95_ms": 1376.0317499999999,
+        "queries": 32
+      },
+      "rust": {
+        "median_ms": 300.3645,
+        "p95_ms": 630.05855,
+        "queries": 32
+      }
+    },
+    "ordered_cli_query_rows_agree_excluding_timings": true,
+    "schema_version": 1,
+    "timing_boundary": "single batch pass on one connection; per-row audio checksum, match and return; excludes process startup and output",
+    "workload": "esc50-fsd50k"
+  },
+  "rebuild_index_sha256": {
+    "stage2": [
+      "7183e89a0e840c188f01b73464c46606e6c77599b1fe36f2db3d3673fdbf41a0",
+      "7183e89a0e840c188f01b73464c46606e6c77599b1fe36f2db3d3673fdbf41a0"
+    ],
+    "stage4": [
+      "7976dce7485e64872bb14e3c43f96c71116ab3ce3340b2987007f0b55c3d49b2",
+      "7976dce7485e64872bb14e3c43f96c71116ab3ce3340b2987007f0b55c3d49b2"
+    ]
+  },
+  "schema_version": 1,
+  "workloads": {
+    "stage2": {
+      "equivalent_timed_observations_per_variant": 120,
+      "warm_median_reduction_percent": 41.66765253331434,
+      "warm_median_speedup": 1.7143146871829777,
+      "warm_p95_reduction_percent": 31.2965227308838,
+      "workload": "ESC-50 crop"
+    },
+    "stage4": {
+      "equivalent_timed_observations_per_variant": 128,
+      "warm_median_reduction_percent": 56.052991741826695,
+      "warm_median_speedup": 2.275467749989601,
+      "warm_p95_reduction_percent": 55.778088400971384,
+      "workload": "ESC-50 \u2192 FSD50K"
+    }
+  }
+}

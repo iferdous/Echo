@@ -1,0 +1,20 @@
+{
+  "candidates_sha256": "79ae6f8b892350a51cce6a606c1714c2b7861fefe014663b766e6ba3dbc0ed57",
+  "cli_candidate_csvs_byte_identical": true,
+  "engines": {
+    "python": {
+      "median_ms": 609.054,
+      "p95_ms": 1376.0317499999999,
+      "queries": 32
+    },
+    "rust": {
+      "median_ms": 300.3645,
+      "p95_ms": 630.05855,
+      "queries": 32
+    }
+  },
+  "ordered_cli_query_rows_agree_excluding_timings": true,
+  "schema_version": 1,
+  "timing_boundary": "single batch pass on one connection; per-row audio checksum, match and return; excludes process startup and output",
+  "workload": "esc50-fsd50k"
+}

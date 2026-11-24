@@ -2,6 +2,8 @@
 
 **Outcome.** Identify where Echo spends time and memory across representative queries. Add an experimental Rust backend when a measurable lookup bottleneck justifies the work.
 
+The [Stage 6 report](../results/stage-6.md) includes the measured timings, the optional Rust backend decision, and full Stage 4 result parity.
+
 ## Build
 
 1. Profile decode and resampling, spectrogram/peak extraction, database retrieval, and voting separately. Measure end-to-end query latency and build time as well. Use the same manifests and stable query order across implementations.

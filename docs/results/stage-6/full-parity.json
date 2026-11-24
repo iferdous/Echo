@@ -1,0 +1,14 @@
+{
+  "equal_complete_match_results": 267,
+  "index_sha256": "7976dce7485e64872bb14e3c43f96c71116ab3ce3340b2987007f0b55c3d49b2",
+  "match_policy_sha256": "eb78b5ed1e4b370196b7191a853afde96c86a4880a06dca0ee75141a6e1b78c4",
+  "matching_published_stage4_candidate_rows": 1335,
+  "matching_published_stage4_decisions": 267,
+  "published_candidate_csv_sha256": "c527bad2c5151f3d06550133f1b3f903a2aceab628bf4f84adc7b3761c186c8a",
+  "published_query_csv_sha256": "efb21eba69ab04306eff197a643b2479533c30c2f168c82a9c065c13fb6ce085",
+  "query_count": 267,
+  "query_manifest_sha256": "ee8d01cfefebcf8b487dfc99f81a2d675bf6e66c7127a231dff400950f635bb2",
+  "ranked_candidates": 1335,
+  "schema_version": 1,
+  "workload": "full_stage4_eval_audit"
+}
