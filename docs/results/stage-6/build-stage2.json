@@ -1,0 +1,38 @@
+{
+  "builds_sha256": "bd5700a03be052856cd25c641e31de6ebeac440db08ea4f9ec8e28fc5ff5b4f0",
+  "environment": {
+    "dirty": false,
+    "libsndfile": "1.2.2",
+    "lock_sha256": "492e2a85b273c305e24db298141317f059cbd6fe7992568d00dede36c51167e1",
+    "machine": "arm64",
+    "numpy": "2.5.5",
+    "peak_rss_scope": "whole fresh Python process, OS high-water mark",
+    "peak_whole_process_rss_bytes": 114507776,
+    "platform": "Darwin",
+    "python": "3.12.16",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0",
+    "source_commit": "58351cb5f5157a8b01007ab6348d10bd40e8b492",
+    "sqlite": "3.53.1",
+    "system": "macOS-26.6.2-arm64-arm-64bit"
+  },
+  "index": {
+    "bytes": 37326848,
+    "fingerprint_config_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+    "fingerprint_version": 1,
+    "indexed_assets": 200,
+    "manifest_sha256": "70ef852301074bee9aa47157832a259deb08bdd7c15e1a513791e5a1a57e0fee",
+    "postings": 2203046,
+    "schema_version": 1
+  },
+  "latency": {
+    "p50_ms": 15706.033271,
+    "p95_ms": 15854.757352100001
+  },
+  "median_postings_per_second": 140283.02783059323,
+  "median_tracks_per_second": 12.735369831641574,
+  "repetitions": 2,
+  "schema_version": 1,
+  "timing_boundary": "fresh database path per build; hashes and decode through SQLite publication; uncontrolled OS cache",
+  "workload": "esc50-crops"
+}

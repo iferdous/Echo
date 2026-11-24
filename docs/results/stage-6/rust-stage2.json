@@ -1,0 +1,145 @@
+{
+  "engine": "rust",
+  "environment": {
+    "dirty": false,
+    "libsndfile": "1.2.2",
+    "lock_sha256": "492e2a85b273c305e24db298141317f059cbd6fe7992568d00dede36c51167e1",
+    "machine": "arm64",
+    "numpy": "2.5.5",
+    "peak_rss_scope": "whole fresh Python process, OS high-water mark",
+    "peak_whole_process_rss_bytes": 138133504,
+    "platform": "Darwin",
+    "python": "3.12.16",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0",
+    "source_commit": "58351cb5f5157a8b01007ab6348d10bd40e8b492",
+    "sqlite": "3.53.1",
+    "system": "macOS-26.6.2-arm64-arm-64bit"
+  },
+  "index": {
+    "bytes": 37326848,
+    "fingerprint_config_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+    "indexed_assets": 200,
+    "manifest_sha256": "70ef852301074bee9aa47157832a259deb08bdd7c15e1a513791e5a1a57e0fee",
+    "postings": 2203046,
+    "sha256": "7183e89a0e840c188f01b73464c46606e6c77599b1fe36f2db3d3673fdbf41a0"
+  },
+  "input_query_manifest_sha256": "24ec9b1b09db48db9bca49fe5c04fee6f1d4bf830378908390be5b713b161a02",
+  "match_policy_sha256": "0fcc832c470289f5205fc6cc8f044742980990dc2a22dd43bd1048ccd24d53be",
+  "measurements": {
+    "fresh_connection": {
+      "latency": {
+        "decode_ns": {
+          "p50_ms": 2.1615415000000002,
+          "p95_ms": 2.693317
+        },
+        "match_ns": {
+          "p50_ms": 104.39016649999999,
+          "p95_ms": 155.5878038
+        },
+        "open_ns": {
+          "p50_ms": 0.6768125,
+          "p95_ms": 0.94641685
+        },
+        "pair_hashes_ns": {
+          "p50_ms": 15.808312999999998,
+          "p95_ms": 31.501181550000002
+        },
+        "retrieve_ns": {
+          "p50_ms": 61.503854000000004,
+          "p95_ms": 98.80887034999999
+        },
+        "spectral_peaks_ns": {
+          "p50_ms": 2.5540000000000003,
+          "p95_ms": 2.95552905
+        },
+        "total_ns": {
+          "p50_ms": 105.114125,
+          "p95_ms": 156.2349243
+        },
+        "vote_rank_decide_ns": {
+          "p50_ms": 16.741958,
+          "p95_ms": 28.4876898
+        }
+      },
+      "observations": 30,
+      "percent_of_measured_match_time": {
+        "decode_ns": 2.311522269340791,
+        "pair_hashes_ns": 18.020686454091756,
+        "retrieve_ns": 60.1047301528663,
+        "spectral_peaks_ns": 2.7028233912803383,
+        "vote_rank_decide_ns": 16.860237732420813
+      },
+      "statuses_per_observation": {
+        "insufficient_evidence": 1,
+        "matched": 18,
+        "no_match": 11
+      }
+    },
+    "warm_connection": {
+      "latency": {
+        "decode_ns": {
+          "p50_ms": 2.2708335,
+          "p95_ms": 2.756775
+        },
+        "match_ns": {
+          "p50_ms": 102.322229,
+          "p95_ms": 164.82318139999998
+        },
+        "open_ns": {
+          "p50_ms": 0.0,
+          "p95_ms": 0.0
+        },
+        "pair_hashes_ns": {
+          "p50_ms": 17.850707999999997,
+          "p95_ms": 35.967233699999994
+        },
+        "retrieve_ns": {
+          "p50_ms": 60.425167,
+          "p95_ms": 99.35265869999999
+        },
+        "spectral_peaks_ns": {
+          "p50_ms": 2.676188,
+          "p95_ms": 3.3623582999999995
+        },
+        "total_ns": {
+          "p50_ms": 102.322229,
+          "p95_ms": 164.82318139999998
+        },
+        "vote_rank_decide_ns": {
+          "p50_ms": 17.985791499999998,
+          "p95_ms": 29.4748128
+        }
+      },
+      "observations": 90,
+      "percent_of_measured_match_time": {
+        "decode_ns": 2.3765120639478328,
+        "pair_hashes_ns": 18.458611233161104,
+        "retrieve_ns": 58.97663863996261,
+        "spectral_peaks_ns": 2.6715829823585366,
+        "vote_rank_decide_ns": 17.51665508056992
+      },
+      "statuses_per_observation": {
+        "insufficient_evidence": 3,
+        "matched": 54,
+        "no_match": 33
+      }
+    }
+  },
+  "native_binary_sha256": "3b5d58e5083ab0fb8bb63b0e40254b70a1dd28b10673ef6b00c3192e42bf3457",
+  "queries_sha256": "03f8b92594d4afd6508d9bdc2a9ccf8a354e021bb580ca4f79b0cdc484bbe06b",
+  "query_count": 30,
+  "repetitions": {
+    "fresh": 1,
+    "warm": 3,
+    "warmup": 1
+  },
+  "schema_version": 1,
+  "timing_boundary": {
+    "filesystem_cache": "uncontrolled; query WAVs were checksummed before timing",
+    "fresh": "fresh SQLite connection per query; total includes open and schema/track read",
+    "match": "decode, fingerprints, lookup, vote, rank and decision; excludes checksums and output",
+    "warm": "one connection after one full warmup pass; excludes opening"
+  },
+  "workload": "esc50-crops"
+}
