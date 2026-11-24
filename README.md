@@ -1,6 +1,6 @@
 # Echo
 
-Echo audits audio datasets for shared recordings. Give it a clip or a manifest and an index of reference audio. It reports candidate recordings, timestamps, and the evidence behind each decision. The next stage measures how exposure to shared recordings changes a classifier's score.
+Echo audits audio datasets for shared recordings. Give it a clip or a manifest and an index of reference audio. It reports candidate recordings, timestamps, and the evidence behind each decision. A controlled training experiment shows how prior exposure to test audio changes a classifier's score.
 
 A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo uses acoustic fingerprints to find shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo uses those IDs to measure coverage after it ranks candidates by sound. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
 
@@ -60,6 +60,10 @@ uv run echo-audit index references.csv --root reference-audio --out references.s
 uv run echo-audit audit queries.csv --root query-audio --index references.sqlite \
   --policy docs/results/stage-3-policy.json --out .local/my-audit
 ```
+
+## Stage 5 model experiment
+
+On the same 400 ESC-50 test clips, mean accuracy rose from **47.4% to 57.0%** when training included three-second crops from selected test recordings. Both models in each of five seed pairs trained on 1,096 examples. On the 164 directly exposed clips, accuracy rose by **19.27 percentage points**. [Stage 5 report, predictions, and reproduction](docs/results/stage-5.md)
 
 ## Implementation stages
 

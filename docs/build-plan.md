@@ -23,7 +23,7 @@ This plan consolidates Muse's handoff into an implementation path. The existing 
 | Codec tests | FFmpeg | Produce and decode explicit MP3 variants. Record the encoder, arguments, and version. |
 | Matcher | Python landmark hashing and offset voting | Implement the baseline from the published approach. Use in-memory postings during the spike. |
 | Persistent index | SQLite through Python's standard library | Store track IDs and hash postings with a format/configuration version. Keep the CLI usable across processes. |
-| Model | PyTorch, small CNN from random initialization | Train on fixed log-mel features as a controlled measurement of the impact of known overlap. |
+| Model | Optional locked PyTorch dependency, CPU CNN from random initialization | Train on fixed log-mel features as a controlled measurement of the impact of known overlap. |
 | Outputs | CSV, JSON, Markdown, static plots | Save evidence first and generate a short report and figures from it. |
 | CI | GitHub Actions, Ubuntu first | Exercise contracts, generated fixtures and a small reproducible smoke benchmark. Add Windows or macOS coverage when support is verified. |
 | Optional acceleration | Rust, PyO3 and maturin if an in-process port helps | Port only a measured hot path and preserve Python results. Compare on the same hardware and corpus. |
@@ -69,14 +69,14 @@ Add files when their responsibilities exist. Keep downloaded datasets and genera
 
 ### CLI and data contracts
 
-Stages 2 and 4 implement `index`, `match`, and `audit`. Stage 3 provides its benchmark through `scripts/run_stage3.py`. The additional CLI commands below are planned. Each command should have a human-readable summary and write structured evidence where specified.
+Stages 2 and 4 implement `index`, `match`, and `audit`. Stage 3 provides its benchmark through `scripts/run_stage3.py`. Stage 5 implements `experiment prepare`, `smoke`, `calibrate`, and `run`. The benchmark and report wrappers below are planned. Each command should have a human-readable summary and write structured evidence where specified.
 
 ~~~text
 echo-audit index TRAIN.csv --out train.sqlite
 echo-audit match QUERY.wav --index train.sqlite --json
 echo-audit audit TEST.csv --root test-audio --index train.sqlite --out audit/
 echo-audit bench --spec bench/matcher-test.json --out run/
-echo-audit experiment --spec bench/paired-esc50.json --out run/
+echo-audit experiment run --inventory ASSETS.csv --esc-root ESC50/ --design DESIGN/ --calibration CALIBRATION.json --out run/
 echo-audit report run/
 ~~~
 

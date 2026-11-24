@@ -98,6 +98,8 @@ Report counts alongside proportions. For repeatedly transformed queries, record 
 
 ## Model experiment
 
+The completed ESC-50 comparison and reproduction commands are in the [Stage 5 report](results/stage-5.md).
+
 ### Main study with known exposure
 
 Use ESC-50 and construct the exposure deliberately so Echo can finish a valid model study even if the FSD50K cohort is slow to acquire or has limited usable alignment pairs. This main result answers how a specific exposure changes one classifier's score under controlled conditions.

@@ -2,6 +2,8 @@
 
 **Outcome.** Measure the difference in test performance when a classifier has already heard parts of selected test recordings during training.
 
+The [Stage 5 report](../results/stage-5.md) includes the completed five-seed comparison, frozen splits, training logs and per-item predictions.
+
 ## Build
 
 1. Freeze ESC-50 fold 1 for evaluation and fold 2 for validation. Use folds 3–5 as the training and donor pool. Apply the recording-group precedence in the protocol, including the verified metadata exceptions. Save the ordered split manifests and digests. [Main study protocol](../evaluation-protocol.md#main-study-with-known-exposure)
