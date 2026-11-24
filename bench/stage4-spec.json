@@ -1,0 +1,32 @@
+{
+  "seed": 4060432,
+  "class_queries_per_label": 2,
+  "class_references_per_label": 2,
+  "background_queries": 50,
+  "background_references": 96,
+  "class_map": {
+    "car_horn": "Vehicle_horn_and_car_horn_and_honking",
+    "cat": "Cat",
+    "chirping_birds": "Chirp_and_tweet",
+    "church_bells": "Church_bell",
+    "clapping": "Clapping",
+    "clock_tick": "Tick-tock",
+    "coughing": "Cough",
+    "crickets": "Cricket",
+    "crow": "Crow",
+    "dog": "Bark",
+    "door_wood_knock": "Knock",
+    "fireworks": "Fireworks",
+    "footsteps": "Walk_and_footsteps",
+    "frog": "Frog",
+    "keyboard_typing": "Computer_keyboard",
+    "laughing": "Laughter",
+    "rain": "Rain",
+    "sea_waves": "Waves_and_surf",
+    "siren": "Siren",
+    "thunderstorm": "Thunderstorm",
+    "toilet_flush": "Toilet_flush",
+    "train": "Train",
+    "wind": "Wind"
+  }
+}
