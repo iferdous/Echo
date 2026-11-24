@@ -6,6 +6,7 @@ import numpy as np
 import soundfile as sf
 
 from echo.artifacts import new_output_directory, sha256_file, write_json
+from echo.datasets import Asset, write_manifest
 
 FIXTURE_SEED = 137
 SAMPLE_RATE = 16_000
@@ -21,6 +22,9 @@ def write_fixture(out: Path) -> None:
         pulse = np.exp(-(((time - center) / 0.016) ** 2))
         reference += 0.22 * pulse * rng.uniform(-1, 1, time.size)
     distractor = 0.31 * np.sin(2 * np.pi * (740 * time + 6 * time**2))
+    for center in (0.24, 0.91, 1.48, 2.61, 3.31):
+        pulse = np.exp(-(((time - center) / 0.012) ** 2))
+        distractor += 0.23 * pulse * rng.uniform(-1, 1, time.size)
 
     # Quantize the source before slicing so the crop shares exact PCM samples.
     pcm = np.rint(reference * 32767).astype(np.int16)
@@ -32,6 +36,19 @@ def write_fixture(out: Path) -> None:
     with new_output_directory(out):
         for name, audio in recordings.items():
             sf.write(out / name, audio, SAMPLE_RATE, subtype="PCM_16")
+        write_manifest(
+            out / "index.csv",
+            [
+                Asset(
+                    "fixture:reference",
+                    "fixture",
+                    str(FIXTURE_SEED),
+                    "reference.wav",
+                    "index",
+                    sha256=sha256_file(out / "reference.wav"),
+                )
+            ],
+        )
         write_json(
             out / "fixture.json",
             {

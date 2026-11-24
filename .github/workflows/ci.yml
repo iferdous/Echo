@@ -23,9 +23,9 @@ jobs:
       - name: Install locked environment
         run: uv sync --locked
       - name: Check formatting
-        run: uv run --no-sync ruff format --check src tests
+        run: uv run --no-sync ruff format --check src tests scripts
       - name: Lint
-        run: uv run --no-sync ruff check src tests
+        run: uv run --no-sync ruff check src tests scripts
       - name: Run tests
         run: uv run --no-sync pytest
       - name: Run fixture smoke workflow
@@ -33,3 +33,6 @@ jobs:
           uv run --no-sync echo-audit --version
           uv run --no-sync echo-audit fixture --out "$RUNNER_TEMP/echo-fixture"
           uv run --no-sync echo-audit audio "$RUNNER_TEMP/echo-fixture/query.wav" --target-rate 12000
+          uv run --no-sync echo-audit index "$RUNNER_TEMP/echo-fixture/index.csv" --out "$RUNNER_TEMP/echo.sqlite"
+          uv run --no-sync echo-audit match "$RUNNER_TEMP/echo-fixture/query.wav" --index "$RUNNER_TEMP/echo.sqlite" --json > "$RUNNER_TEMP/echo-match.json"
+          uv run --no-sync python -c 'import json, sys; from pathlib import Path; match = json.loads(Path(sys.argv[1]).read_text()); assert match["status"] == "matched" and match["candidates"][0]["asset_id"] == "fixture:reference" and abs(match["candidates"][0]["offset_seconds"] - 0.75) <= 0.008' "$RUNNER_TEMP/echo-match.json"

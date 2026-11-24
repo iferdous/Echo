@@ -2,7 +2,10 @@
 
 import argparse
 import csv
+import json
+import sqlite3
 import sys
+from dataclasses import asdict
 from importlib.metadata import version
 from pathlib import Path
 from zipfile import BadZipFile
@@ -21,7 +24,10 @@ from echo.datasets import (
     read_fsd50k_partitions,
     read_manifest,
 )
+from echo.fingerprint import read_config
 from echo.fixtures import write_fixture
+from echo.index import build_index, open_index
+from echo.matcher import DEFAULT_LIMIT, MATCH_SCHEMA_VERSION, match_audio
 from echo.spike import DEFAULT_INDEX_SIZE, DEFAULT_SEED, write_spike
 
 
@@ -96,6 +102,88 @@ def run_spike(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_index(args: argparse.Namespace) -> int:
+    report = build_index(
+        args.manifest,
+        args.root or args.manifest.parent,
+        args.out,
+        read_config(args.config),
+        replace_existing=args.replace,
+    )
+    print(json.dumps(report, sort_keys=True))
+    return 0
+
+
+def run_match(args: argparse.Namespace) -> int:
+    try:
+        expected_config = read_config(args.config) if args.config is not None else None
+        with open_index(args.index, expected_config) as index:
+            result = match_audio(args.path, index, limit=args.limit)
+            digest = index.config.digest
+    except (OSError, ValueError, sqlite3.DatabaseError) as error:
+        if not args.json:
+            raise
+        print(
+            json.dumps(
+                {
+                    "schema_version": MATCH_SCHEMA_VERSION,
+                    "status": "input_error",
+                    "query_id": args.path.name,
+                    "message": str(error),
+                }
+            )
+        )
+        return 1
+
+    if args.json:
+        print(
+            json.dumps(
+                {
+                    **asdict(result),
+                    "query_id": args.path.name,
+                    "fingerprint_config_sha256": digest,
+                },
+                sort_keys=True,
+            )
+        )
+    elif result.status == "matched":
+        winner = result.candidates[0]
+        print(
+            f"{winner.asset_id} at {winner.offset_seconds:+.3f} s ({winner.score} aligned landmarks)"
+        )
+    else:
+        print(result.status.replace("_", " "))
+    return 0
+
+
+def add_match_commands(commands) -> None:
+    index = commands.add_parser("index", help="build a local SQLite fingerprint index")
+    index.add_argument("manifest", type=Path)
+    index.add_argument(
+        "--root", type=Path, help="audio root (defaults to the manifest directory)"
+    )
+    index.add_argument("--out", required=True, type=Path)
+    index.add_argument("--config", type=Path, help="fingerprint configuration JSON")
+    index.add_argument(
+        "--replace",
+        action="store_true",
+        help="replace the old index after a successful build",
+    )
+    index.set_defaults(handler=run_index)
+
+    match = commands.add_parser(
+        "match", help="look up the recording and offset for a clip"
+    )
+    match.add_argument("path", type=Path)
+    match.add_argument("--index", required=True, type=Path)
+    match.add_argument(
+        "--config", type=Path, help="require this fingerprint configuration"
+    )
+    match.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
+    match.add_argument("--json", action="store_true")
+    match.set_defaults(handler=run_match)
+
+
 def add_data_commands(commands) -> None:
     data = commands.add_parser(
         "data", help="fetch, inventory, and prepare dataset inputs"
@@ -162,6 +250,7 @@ def main(argv: list[str] | None = None) -> int:
     audio.set_defaults(handler=run_audio)
 
     add_data_commands(commands)
+    add_match_commands(commands)
     args = parser.parse_args(argv)
     try:
         return args.handler(args)
@@ -170,6 +259,7 @@ def main(argv: list[str] | None = None) -> int:
         RuntimeError,
         ValueError,
         BadZipFile,
+        sqlite3.DatabaseError,
         KeyError,
         csv.Error,
     ) as error:
