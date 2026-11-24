@@ -1,7 +1,7 @@
 {
   "dataset_revision": "33c8ce9eb2cf0b1c2f8bcf322eb349b6be34dbb6",
   "files": {
-    "crops.csv": "c1ba3ca7007fac7ca73b2495ffe3eddba1cab05b44d9b97f1de33a349c944ef8",
+    "crops.csv": "f2854af12d9eb4cef6e993e10ab5cd7323f39282fb7364e2827f35f67d2e10b7",
     "donors.csv": "06a3946d64fefc021c610ce6a4e70d1f57152103a2360744254374c66dadee69",
     "exclusions.csv": "ac2566ef9650fb5bb0c49a58b1e2ce9603cfe2f7cc088e9f629580c0913ba81a",
     "test.csv": "88fbb2f8c80693bc93c569efa7b68613ba996151c4f86ddd6373c781f0cf0597",
@@ -9,7 +9,7 @@
     "validation.csv": "c2c15db1e85805c5b249c2cdab0c82fcad012e5cf6ec21323c36dc652e3ecadb"
   },
   "inventory_sha256": "f36a56e21fd3f70001114a8e0a4514fbad65e1940567d14f7e6aed35cfe80c8b",
-  "policy": "native_pcm16_center_crop_without_gain_or_codec_change",
+  "policy": "native_pcm16_maximum_energy_crop_center_then_earliest_tie",
   "schema_version": 1,
   "spec": {
     "batch_size": 64,

@@ -8,6 +8,8 @@ import soundfile as sf
 from echo.artifacts import sha256_file
 from echo.datasets import ESC50_REVISION, Asset, write_manifest
 from echo.experiment_data import (
+    Pairing,
+    make_crop,
     make_plan,
     prepare_design,
     read_experiment_design,
@@ -98,3 +100,29 @@ def test_group_precedence_and_frozen_pcm_exposure(tmp_path):
         file.write("\n")
     with pytest.raises(ValueError, match="frozen checksums"):
         read_experiment_design(out, inventory)
+
+
+def test_crop_keeps_signal_when_the_center_is_silent(tmp_path):
+    samples = np.zeros(40000, dtype=np.int16)
+    samples[1000:2500] = 2000
+    original = tmp_path / "short_event.wav"
+    sf.write(original, samples, 8000)
+    asset = Asset(
+        "take",
+        "esc50",
+        ESC50_REVISION,
+        original.name,
+        "source",
+        "freesound",
+        "101",
+        "knock",
+        "1",
+        sha256_file(original),
+    )
+    pair = Pairing("slot-001", "knock", asset, asset, "freesound:101", "freesound:101")
+    (tmp_path / "crops" / "exposed").mkdir(parents=True)
+    crop = make_crop(pair, "exposed", asset, pair.test_group, tmp_path, tmp_path, 3)
+    assert crop.start_sample == 1000
+    assert crop.pcm_sum_squares == 1500 * 2000**2
+    output, _ = sf.read(tmp_path / crop.path, dtype="int16")
+    np.testing.assert_array_equal(output, samples[1000:25000])

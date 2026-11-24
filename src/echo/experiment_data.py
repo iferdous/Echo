@@ -6,6 +6,7 @@ from dataclasses import asdict, dataclass, fields
 from pathlib import Path
 from random import Random
 
+import numpy as np
 import soundfile as sf
 
 from echo.artifacts import new_output_directory, sha256_file, write_csv, write_json
@@ -69,6 +70,7 @@ class Crop:
     start_sample: int
     frames: int
     sample_rate: int
+    pcm_sum_squares: int
     sha256: str
 
 
@@ -76,6 +78,7 @@ CROP_COLUMNS = tuple(field.name for field in fields(Crop))
 EXCLUSION_COLUMNS = ("asset_id", "group", "fold", "reason")
 SPLIT_NAMES = ("test", "validation", "train_base", "donors")
 ARMS = ("comparison", "exposed")
+CROP_POLICY = "native_pcm16_maximum_energy_crop_center_then_earliest_tie"
 
 
 @dataclass(frozen=True, slots=True)
@@ -290,9 +293,17 @@ def make_crop(
             raise ValueError(
                 f"{asset.asset_id}: recording is too short for the frozen crop"
             )
-        start = (wave.frames - frames) // 2
-        wave.seek(start)
-        samples = wave.read(frames, dtype="int16", always_2d=True)
+        original = wave.read(dtype="int16", always_2d=True)
+    frame_energy = np.sum(original.astype(np.int64) ** 2, axis=1)
+    energy = np.concatenate(([0], np.cumsum(frame_energy, dtype=np.int64)))
+    window_energy = energy[frames:] - energy[:-frames]
+    max_energy = int(window_energy.max())
+    if not max_energy:
+        raise ValueError(f"{asset.asset_id}: recording is silent throughout")
+    strongest = np.flatnonzero(window_energy == max_energy)
+    middle = (len(original) - frames) // 2
+    start = int(strongest[np.abs(strongest - middle).argmin()])
+    samples = original[start : start + frames]
     sf.write(out / path, samples, rate, subtype="PCM_16")
     return Crop(
         pair.slot,
@@ -304,6 +315,7 @@ def make_crop(
         start,
         frames,
         rate,
+        max_energy,
         sha256_file(out / path),
     )
 
@@ -349,7 +361,7 @@ def prepare_design(inventory: Path, root: Path, spec_path: Path, out: Path) -> d
             "inventory_sha256": sha256_file(inventory),
             "spec_sha256": sha256_file(spec_path),
             "spec": asdict(spec),
-            "policy": "native_pcm16_center_crop_without_gain_or_codec_change",
+            "policy": CROP_POLICY,
             "files": {f.name: sha256_file(f) for f in sorted(out.glob("*.csv"))},
             "validation": validation,
         }
@@ -362,6 +374,7 @@ def read_experiment_design(path: Path, inventory: Path) -> ExperimentDesign:
     files = {f"{name}.csv" for name in SPLIT_NAMES} | {"crops.csv", "exclusions.csv"}
     if (
         metadata["schema_version"] != 1
+        or metadata["policy"] != CROP_POLICY
         or metadata["inventory_sha256"] != sha256_file(inventory)
         or metadata["files"].keys() != files
         or any(
@@ -392,7 +405,7 @@ def read_experiment_design(path: Path, inventory: Path) -> ExperimentDesign:
             (comparison, "comparison", pair.donor, pair.donor_group),
             (exposure, "exposed", pair.test, pair.test_group),
         ):
-            for key in ("start_sample", "frames", "sample_rate"):
+            for key in ("start_sample", "frames", "sample_rate", "pcm_sum_squares"):
                 row[key] = int(row[key])
             item = Crop(**{key: row[key] for key in CROP_COLUMNS})
             if (
@@ -414,6 +427,7 @@ def read_experiment_design(path: Path, inventory: Path) -> ExperimentDesign:
                 )
                 or item.start_sample < 0
                 or item.sample_rate <= 0
+                or item.pcm_sum_squares <= 0
                 or item.frames != spec.crop_seconds * item.sample_rate
             ):
                 raise ValueError(
