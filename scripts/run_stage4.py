@@ -1,10 +1,11 @@
-"""Prepare and acquire the Stage 4 cross-dataset cohort."""
+"""Prepare, acquire, and audit the Stage 4 cross-dataset cohort."""
 
 import argparse
 import json
 import sys
 from pathlib import Path
 
+from echo.cross_audit import audit_cohort
 from echo.cross_dataset import acquire_cohort, prepare_cohort
 
 
@@ -30,6 +31,21 @@ def main() -> int:
     acquire.add_argument(
         "--resume", type=Path, help="reuse verified WAVs from a previous run"
     )
+    audit = modes.add_parser(
+        "audit", help="score and independently review the frozen cohort"
+    )
+    audit.add_argument("--cohort", type=Path, required=True)
+    audit.add_argument("--esc-root", type=Path, required=True)
+    audit.add_argument("--fsd-root", type=Path, required=True)
+    audit.add_argument(
+        "--policy", type=Path, default=Path("docs/results/stage-3-policy.json")
+    )
+    audit.add_argument(
+        "--calibration",
+        type=Path,
+        default=Path("docs/results/stage-3-calibration.json"),
+    )
+    audit.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     try:
         if args.mode == "prepare":
@@ -47,7 +63,7 @@ def main() -> int:
                     sort_keys=True,
                 )
             )
-        else:
+        elif args.mode == "acquire":
             report = acquire_cohort(
                 args.cohort, args.metadata, args.out, resume=args.resume
             )
@@ -64,6 +80,16 @@ def main() -> int:
                     sort_keys=True,
                 )
             )
+        else:
+            report = audit_cohort(
+                args.cohort,
+                args.esc_root,
+                args.fsd_root,
+                args.policy,
+                args.calibration,
+                args.out,
+            )
+            print(json.dumps(report["coverage"]["outcomes"], sort_keys=True))
     except (OSError, ValueError, KeyError) as error:
         print(f"echo cross-dataset audit: {error}", file=sys.stderr)
         return 1
