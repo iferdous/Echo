@@ -179,3 +179,32 @@ def test_failed_and_interrupted_replacements_preserve_prior_index(
     with open_index(database) as index:
         assert list(index.tracks) == ["fixture:reference"]
     assert not any(path.is_dir() for path in audio_fixture.iterdir())
+
+
+def test_score_margin_uses_runner_up_even_with_one_visible_candidate(audio_fixture):
+    config = FingerprintConfig()
+    manifest = audio_fixture / "index.csv"
+    (original,) = read_manifest(manifest)
+    write_manifest(
+        manifest, [original, replace(original, asset_id="another-recording")]
+    )
+    index = MemoryIndex(config, fingerprint_manifest(manifest, audio_fixture, config))
+    query = audio_fixture / "query.wav"
+    base = match_audio(query, index, limit=1)
+    with_margin = match_audio(
+        query, index, limit=1, policy=replace(DEFAULT_POLICY, min_score_margin=1)
+    )
+    assert base.status == "matched"
+    assert with_margin.status == "no_match"
+    assert base.candidates == with_margin.candidates
+
+
+def test_policy_file_uses_stable_digest_and_rejects_invalid_thresholds(tmp_path):
+    from echo.matcher import read_policy
+
+    path = tmp_path / "policy.json"
+    path.write_text(json.dumps(asdict(DEFAULT_POLICY), indent=4))
+    assert read_policy(path).digest == DEFAULT_POLICY.digest
+    path.write_text('{"min_coverage": 1.2}')
+    with pytest.raises(ValueError, match="min_coverage"):
+        read_policy(path)

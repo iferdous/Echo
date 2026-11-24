@@ -27,7 +27,13 @@ from echo.datasets import (
 from echo.fingerprint import read_config
 from echo.fixtures import write_fixture
 from echo.index import build_index, open_index
-from echo.matcher import DEFAULT_LIMIT, MATCH_SCHEMA_VERSION, match_audio
+from echo.matcher import (
+    DEFAULT_LIMIT,
+    DEFAULT_POLICY,
+    MATCH_SCHEMA_VERSION,
+    match_audio,
+    read_policy,
+)
 from echo.spike import DEFAULT_INDEX_SIZE, DEFAULT_SEED, write_spike
 
 
@@ -117,8 +123,9 @@ def run_index(args: argparse.Namespace) -> int:
 def run_match(args: argparse.Namespace) -> int:
     try:
         expected_config = read_config(args.config) if args.config is not None else None
+        policy = read_policy(args.policy) if args.policy is not None else DEFAULT_POLICY
         with open_index(args.index, expected_config) as index:
-            result = match_audio(args.path, index, limit=args.limit)
+            result = match_audio(args.path, index, limit=args.limit, policy=policy)
             digest = index.config.digest
     except (OSError, ValueError, sqlite3.DatabaseError) as error:
         if not args.json:
@@ -142,6 +149,7 @@ def run_match(args: argparse.Namespace) -> int:
                     **asdict(result),
                     "query_id": args.path.name,
                     "fingerprint_config_sha256": digest,
+                    "match_policy_sha256": policy.digest,
                 },
                 sort_keys=True,
             )
@@ -179,6 +187,7 @@ def add_match_commands(commands) -> None:
     match.add_argument(
         "--config", type=Path, help="require this fingerprint configuration"
     )
+    match.add_argument("--policy", type=Path, help="threshold policy JSON")
     match.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
     match.add_argument("--json", action="store_true")
     match.set_defaults(handler=run_match)

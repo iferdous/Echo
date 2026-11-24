@@ -1,7 +1,9 @@
 """Rank candidate recordings by consistent, independent offset votes."""
 
+import hashlib
+import json
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
 from echo.audio import load_audio
@@ -21,9 +23,44 @@ class MatchPolicy:
     min_distinct_hashes: int = 10
     min_coverage: float = 0.20
     min_support_fraction: float = 0.035
+    min_score_margin: int = 0
+
+    def __post_init__(self) -> None:
+        for field in (
+            "max_postings_per_hash",
+            "min_support",
+            "min_anchor_frames",
+            "min_distinct_hashes",
+        ):
+            value = getattr(self, field)
+            if type(value) is not int or value < 1:
+                raise ValueError(f"{field} must be a positive integer")
+        for field in ("offset_radius_frames", "min_score_margin"):
+            value = getattr(self, field)
+            if type(value) is not int or value < 0:
+                raise ValueError(f"{field} must be a nonnegative integer")
+        for field in ("min_coverage", "min_support_fraction"):
+            value = getattr(self, field)
+            if type(value) not in (int, float) or not 0 <= value <= 1:
+                raise ValueError(f"{field} must be between zero and one")
+
+    @property
+    def digest(self) -> str:
+        canonical = json.dumps(asdict(self), sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 DEFAULT_POLICY = MatchPolicy()
+
+
+def read_policy(path: Path) -> MatchPolicy:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        if not isinstance(value, dict):
+            raise TypeError("expected a JSON object")
+        return MatchPolicy(**value)
+    except TypeError as error:
+        raise ValueError(f"invalid match policy: {error}") from error
 
 
 @dataclass(frozen=True, slots=True)
@@ -86,7 +123,6 @@ def describe_alignment(
     query_samples: int,
     query_landmarks: int,
     index: Index,
-    policy: MatchPolicy,
 ) -> Candidate:
     config = index.config
     first_sample = alignment.first_frame * config.hop_size + config.fft_size // 2
@@ -101,13 +137,6 @@ def describe_alignment(
         min(track.samples, max(0, sample + offset_samples)) / rate
         for sample in (first_sample, last_sample)
     ]
-    passes = (
-        alignment.score >= policy.min_support
-        and alignment.anchors >= policy.min_anchor_frames
-        and alignment.hashes >= policy.min_distinct_hashes
-        and coverage >= policy.min_coverage
-        and support_fraction >= policy.min_support_fraction
-    )
     return Candidate(
         alignment.asset_id,
         rank,
@@ -120,11 +149,11 @@ def describe_alignment(
         alignment.hashes,
         coverage,
         support_fraction,
-        passes,
+        False,
     )
 
 
-def match_landmarks(
+def rank_landmarks(
     query: list[Landmark],
     query_samples: int,
     index: Index,
@@ -138,7 +167,7 @@ def match_landmarks(
         raise ValueError("query must contain at least one sample")
     query = sorted(set(query))
     duration = query_samples / index.config.sample_rate
-    if len(query) < policy.min_support:
+    if not query:
         return MatchResult(
             MATCH_SCHEMA_VERSION, "insufficient_evidence", duration, len(query), []
         )
@@ -183,12 +212,54 @@ def match_landmarks(
             query_samples,
             len(query),
             index,
-            policy,
         )
         for rank, item in enumerate(alignments[:limit], start=1)
     ]
-    status = "matched" if candidates and candidates[0].passes_threshold else "no_match"
-    return MatchResult(MATCH_SCHEMA_VERSION, status, duration, len(query), candidates)
+    return MatchResult(
+        MATCH_SCHEMA_VERSION, "no_match", duration, len(query), candidates
+    )
+
+
+def meets_thresholds(candidate: Candidate, policy: MatchPolicy) -> bool:
+    return (
+        candidate.score >= policy.min_support
+        and candidate.anchor_frames >= policy.min_anchor_frames
+        and candidate.distinct_hashes >= policy.min_distinct_hashes
+        and candidate.coverage >= policy.min_coverage
+        and candidate.support_fraction >= policy.min_support_fraction
+    )
+
+
+def decide(result: MatchResult, policy: MatchPolicy) -> MatchResult:
+    if result.query_landmarks < policy.min_support:
+        return replace(result, status="insufficient_evidence", candidates=[])
+    candidates = [
+        replace(candidate, passes_threshold=meets_thresholds(candidate, policy))
+        for candidate in result.candidates
+    ]
+    status = "no_match"
+    if candidates and candidates[0].passes_threshold:
+        runner_up_score = candidates[1].score if len(candidates) > 1 else 0
+        if candidates[0].score - runner_up_score >= policy.min_score_margin:
+            status = "matched"
+    return replace(result, status=status, candidates=candidates)
+
+
+def match_landmarks(
+    query: list[Landmark],
+    query_samples: int,
+    index: Index,
+    *,
+    limit: int = DEFAULT_LIMIT,
+    policy: MatchPolicy = DEFAULT_POLICY,
+) -> MatchResult:
+    if limit < 1:
+        raise ValueError("result limit must be positive")
+    raw = rank_landmarks(
+        query, query_samples, index, limit=max(limit, 2), policy=policy
+    )
+    result = decide(raw, policy)
+    return replace(result, candidates=result.candidates[:limit])
 
 
 def match_audio(
