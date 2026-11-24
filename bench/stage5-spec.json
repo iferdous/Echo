@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "selection_seed": 500207,
+  "max_crops_per_class": 4,
+  "crop_seconds": 3,
+  "calibration_seed": 503011,
+  "paired_seeds": [501013, 501023, 501031, 501043, 501047],
+  "learning_rates": [0.001, 0.003],
+  "epochs": 14,
+  "batch_size": 64,
+  "cpu_threads": 4
+}
