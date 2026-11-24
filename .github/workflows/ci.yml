@@ -21,7 +21,7 @@ jobs:
         with:
           version: "0.13.9"
       - name: Install locked environment
-        run: uv sync --locked --group benchmark --group experiment
+        run: uv sync --locked --group benchmark --group experiment --group demo
       - name: Check formatting
         run: uv run --no-sync ruff format --check src tests scripts
       - name: Lint
@@ -36,6 +36,12 @@ jobs:
           uv run --no-sync echo-audit index "$RUNNER_TEMP/echo-fixture/index.csv" --out "$RUNNER_TEMP/echo.sqlite"
           uv run --no-sync echo-audit match "$RUNNER_TEMP/echo-fixture/query.wav" --index "$RUNNER_TEMP/echo.sqlite" --json > "$RUNNER_TEMP/echo-match.json"
           uv run --no-sync python -c 'import json, sys; from pathlib import Path; match = json.loads(Path(sys.argv[1]).read_text()); assert match["status"] == "matched" and match["candidates"][0]["asset_id"] == "fixture:reference" and abs(match["candidates"][0]["offset_seconds"] - 0.75) <= 0.008' "$RUNNER_TEMP/echo-match.json"
+
+      - name: Reproduce the public walkthrough and chart
+        run: |
+          uv run --no-sync python scripts/run_stage7.py --out "$RUNNER_TEMP/echo-delivery"
+          test -s "$RUNNER_TEMP/echo-delivery/audit/review.html"
+          test -s "$RUNNER_TEMP/echo-delivery/leakage-accuracy.svg"
 
   native:
     runs-on: ubuntu-24.04

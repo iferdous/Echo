@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280, height=720">
+<title>Echo walkthrough</title>
+<script src="assets/gsap.min.js"></script>
+<script src="assets/evidence.js"></script>
+<style>
+:root{--paper:#f5f4eb;--surface:#fffdf6;--ink:#142822;--quiet:#4d5b54;--pine:#126751;--line:#cad0c3;--amber:#8b4b09;--slate:#526d7a}
+*{box-sizing:border-box}
+html,body{margin:0;width:1280px;height:720px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:system-ui,sans-serif}
+#root{position:relative;width:100%;height:100%}
+.scene{position:absolute;inset:0;opacity:0;background:var(--paper)}
+.scene:first-child{opacity:1}
+.scene-content{width:100%;height:100%;padding:55px 70px 50px;display:flex;flex-direction:column;gap:24px}
+h1,h2,h3,p,figure,pre{margin:0}
+h1{font-size:76px;letter-spacing:-.064em;line-height:.99;max-width:740px}
+h2{font-size:54px;letter-spacing:-.052em;line-height:1.04}
+h3{font-size:28px;line-height:1.12;letter-spacing:-.031em}
+p{font-size:24px;line-height:1.3}
+.kicker{font-size:17px;font-weight:740;letter-spacing:.1em;text-transform:uppercase;color:var(--pine)}
+.lead{max-width:760px;color:var(--quiet);font-size:26px}
+.columns{display:grid;grid-template-columns:minmax(0,1.23fr) minmax(0,1fr);gap:38px;align-items:center;min-height:0;flex:1}
+.intro-columns{grid-template-columns:minmax(0,1.64fr) minmax(0,1fr)}
+.steps{border-block:1px solid var(--line);display:grid}
+.step{padding:21px 0;display:grid;gap:5px;border-bottom:1px solid var(--line)}
+.step:last-child{border:0}
+.step b{color:var(--pine);font-size:27px}
+.step p,.note{color:var(--quiet);font-size:20px}
+.terminal{min-width:0;background:#202e28;color:#f6f4e8;border-radius:12px;padding:25px;display:grid;gap:17px}
+.mono,pre{font-family:monospace;font-variant-numeric:tabular-nums}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:19px;line-height:1.4}
+.terminal output{display:block;margin-top:10px;color:#bce8d4;font-weight:700}
+.terminal output.control{color:#f3ce9f}
+.terminal>div+div{border-top:1px solid #567266;padding-top:16px}
+.figure-caption{font-size:19px;color:var(--quiet);padding-top:12px}
+figure img{display:block;width:100%;height:auto}
+.review-shot{background:var(--surface);border:1px solid var(--line);border-radius:9px;width:100%;box-shadow:0 12px 30px #192c2015}
+.review-layout{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:34px}
+.actions{display:grid;gap:21px}
+.actions>div{border-block-start:1px solid var(--line);padding-top:14px}
+.actions p{font-size:20px;margin-top:7px;color:var(--quiet)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.compare>div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:28px;min-height:195px}
+.compare p{font-size:20px}
+.compare .value{color:var(--pine);font-size:57px;margin:.3rem 0;line-height:1.03}
+.compare .warn{color:var(--amber)}
+.evidence-label{color:var(--quiet);font-size:21px}
+.chart-layout{grid-template-columns:minmax(0,2.5fr) minmax(0,1fr);gap:26px}
+.chart-layout img{width:100%;height:auto;border:1px solid var(--line);border-radius:10px}
+.statboard{margin-top:16px;border-block:1px solid var(--line)}
+.statrow{display:grid;grid-template-columns:240px 1fr;gap:30px;align-items:center;border-block-end:1px solid var(--line);padding:21px 0}
+.statrow:last-child{border:0}
+.metric{font-size:44px;letter-spacing:-.06em;color:var(--pine);white-space:nowrap}
+.statrow p{font-size:21px;color:var(--quiet);margin-top:3px}
+.badge{display:inline-block;color:var(--quiet);font-size:18px}
+</style>
+<div id="root" data-composition-id="echo-demo" data-start="0" data-duration="69" data-width="1280" data-height="720">
+  <section class="scene">
+    <div class="scene-content">
+      <p class="kicker enter">Echo · audio dataset auditor</p>
+      <div class="columns intro-columns">
+        <div class="enter">
+          <h1>Find shared audio before you score a model.</h1>
+          <p class="lead" style="margin-top:24px">A renamed or trimmed recording can cross from training into evaluation.</p>
+        </div>
+        <div class="steps enter">
+          <div class="step"><b>Index training audio</b><p>Build a local reference database.</p></div>
+          <div class="step"><b>Audit evaluation clips</b><p>Find candidate recordings and time offsets.</p></div>
+          <div class="step"><b>Review the evidence</b><p>Decide which source groups need attention.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene">
+    <div class="scene-content">
+      <p class="kicker enter">Synthetic audio · recorded CLI output</p>
+      <h2 class="enter">A renamed two-second crop</h2>
+      <div class="columns enter">
+        <figure>
+          <img src="assets/alignment.png" alt="Waveforms of the reference and the two-second crop plotted on a shared timeline">
+          <figcaption class="figure-caption">Listen to the full reference, then the crop, then a separately generated sweep.</figcaption>
+        </figure>
+        <div class="terminal">
+          <div><pre data-value="matchCommand"></pre><output class="mono" data-value="matchResult"></output></div>
+          <div><pre data-value="controlCommand"></pre><output class="mono control" data-value="controlResult"></output></div>
+        </div>
+      </div>
+      <p class="note enter">The generated crop starts at <strong data-value="expected"></strong>. Echo’s reported offset is within one 8 ms fingerprint hop.</p>
+    </div>
+  </section>
+
+  <section class="scene">
+    <div class="scene-content">
+      <p class="kicker enter">Batch audit</p>
+      <h2 class="enter">Review the split before release</h2>
+      <div class="columns review-layout enter">
+        <img class="review-shot" src="assets/review-preview.png" alt="Actual Echo audit review with an accepted match, insufficient evidence for silence, and a rejected control">
+        <div class="actions">
+          <div><h3>Accepted</h3><p>Listen at the reported intervals and compare source IDs.</p></div>
+          <div><h3>No accepted match</h3><p>Check reference coverage before treating a clip as independent.</p></div>
+          <div><h3>Insufficient evidence</h3><p>Try a longer excerpt containing the sound.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene">
+    <div class="scene-content">
+      <p class="kicker enter">Observed failure · ESC-50 against FSD50K eval</p>
+      <h2 class="enter">A ticking clock slipped through</h2>
+      <p class="evidence-label mono enter" data-value="failurePair"></p>
+      <div class="compare enter">
+        <div>
+          <h3>Landmark ranking</h3>
+          <p class="value warn mono" data-value="missOffset"></p>
+          <p>The top candidate used this offset. Echo declined the match.</p>
+        </div>
+        <div>
+          <h3>Independent waveform check</h3>
+          <p class="value mono" data-value="verifiedOffset"></p>
+          <p data-value="verifiedWindows"></p>
+        </div>
+      </div>
+      <p class="lead enter">If provenance says the source is shared, inspect the waveform even when the matcher abstains.</p>
+    </div>
+  </section>
+
+  <section class="scene">
+    <div class="scene-content">
+      <p class="kicker enter">Controlled model experiment</p>
+      <h2 class="enter">What did overlap do to the score?</h2>
+      <div class="columns chart-layout enter">
+        <img src="assets/leakage-accuracy.png" alt="47.4 percent mean accuracy with independent crops versus 57 percent with excerpts of test recordings">
+        <div class="actions">
+          <div><h3>Same evaluation clips</h3><p>All 400 files and labels were held fixed.</p></div>
+          <div><h3>Same training budget</h3><p>Only the matched crop slots changed across each seed pair.</p></div>
+          <div><h3 data-value="directDelta"></h3><p>Change on the 164 directly exposed clips.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene">
+    <div class="scene-content">
+      <p class="kicker enter">Published evidence</p>
+      <h2 class="enter">Measure coverage, quality, and cost</h2>
+      <div class="statboard enter">
+        <div class="statrow"><strong class="metric" data-value="benchmark"></strong><div><h3>Held-out matching trials accepted correctly</h3><p data-value="benchmarkNegative"></p></div></div>
+        <div class="statrow"><strong class="metric" data-value="crossMatches"></strong><div><h3>Confirmed pairs found at the supported offset</h3><p data-value="crossScope"></p></div></div>
+        <div class="statrow"><strong class="metric" data-value="speedup"></strong><div><h3>Less median query time with optional Rust voting</h3><p>Warm cross-dataset sample on Apple M3, compared with tuned Python.</p></div></div>
+      </div>
+      <p class="badge enter">github.com/iferdous/Echo · walkthrough, data receipts, and engineer guide</p>
+    </div>
+  </section>
+
+  <audio id="reference-audio" src="assets/reference.wav" data-start="10.2" data-duration="4" data-track-index="1" data-volume="0.75"></audio>
+  <audio id="crop-audio" src="assets/renamed-crop.wav" data-start="15.1" data-duration="2" data-track-index="1" data-volume="0.75"></audio>
+  <audio id="control-audio" src="assets/similar-control.wav" data-start="18.2" data-duration="2" data-track-index="1" data-volume="0.75"></audio>
+</div>
+<script>
+for (const item of document.querySelectorAll("[data-value]")) item.textContent = window.ECHO_EVIDENCE[item.dataset.value];
+const scenes = [...document.querySelectorAll(".scene")];
+const starts = [0, 8.2, 24, 35, 46, 59];
+const timeline = gsap.timeline({paused:true});
+const easing = ["power3.out", "sine.out", "power2.out", "expo.out"];
+scenes.forEach((scene, index) => {
+  const begin = starts[index];
+  if (index > 0) {
+    timeline.to(scene, {opacity:1, duration:.46, ease:"sine.inOut"}, begin);
+    timeline.set(scenes[index - 1], {opacity:0}, begin + .47);
+  }
+  scene.querySelectorAll(".enter").forEach((element, n) => {
+    timeline.from(element, {opacity:0, y:n % 2 ? 18 : 10, duration:.55, ease:easing[n % easing.length]}, begin + .14 + n * .09);
+  });
+});
+window.__timelines = {"echo-demo": timeline};
+</script>
+</html>

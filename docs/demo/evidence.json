@@ -1,0 +1,269 @@
+{
+  "benchmark": {
+    "absent_sources": 40,
+    "absent_trials": 360,
+    "accepted_absent": 0,
+    "correct_accepts": 333,
+    "matching_trials": 360,
+    "positive_sources": 40
+  },
+  "classifier": {
+    "comparison_accuracy": 0.474,
+    "delta_points": 9.600000000000001,
+    "delta_range_points": [
+      0.5000000000000004,
+      21.250000000000004
+    ],
+    "direct_delta_points": 19.26829268292683,
+    "direct_rows": 164,
+    "exposed_accuracy": 0.5700000000000001,
+    "rates_by_seed": {
+      "501013": {
+        "comparison": 0.5575,
+        "exposed": 0.6475
+      },
+      "501023": {
+        "comparison": 0.535,
+        "exposed": 0.6225
+      },
+      "501031": {
+        "comparison": 0.5325,
+        "exposed": 0.6175
+      },
+      "501043": {
+        "comparison": 0.3125,
+        "exposed": 0.525
+      },
+      "501047": {
+        "comparison": 0.4325,
+        "exposed": 0.4375
+      }
+    },
+    "run_id": "2c117167672477d6faa6c8591f527ff84d17e223529a458135c6e4a348ba889b",
+    "test_rows": 400
+  },
+  "cross_dataset": {
+    "confirmed_pairs": 140,
+    "failure": {
+      "decision": "no_match",
+      "matcher_offset_s": -2.008,
+      "query_id": "esc50:4-188033-A-38.wav",
+      "reference_id": "reference-0029",
+      "review_source": "https://freesound.org/s/188033/",
+      "waveform_offset_s": 0.0,
+      "waveform_windows": 4
+    },
+    "known_source_pairs": 171,
+    "matched_with_agreeing_offset": 137,
+    "queries": 267,
+    "references": 290
+  },
+  "profiling": {
+    "cross_dataset_reduction_percent": 56.052991741826695,
+    "esc50_reduction_percent": 41.66765253331434,
+    "full_audit_equivalence": 267
+  },
+  "source_sha256": {
+    "stage-3-test-queries.csv": "c84016c1aec01d870f3ba444f8e2b2c3de4386882cbd17f10dda09d1a91b0f12",
+    "stage-3-test-summary.json": "49f3ad1dd308bf5126025fb36cb73bb58e07005d30a0b2bbdbd58b96f194f8a6",
+    "stage-4-audit-queries.csv": "4caa18b9b76bcde2cc3a18305d9c5f88eb7883fcf5cb5d3029f452166ad88d15",
+    "stage-4-reviews.csv": "e96b0963c14923977fe602dcc1c9075d9802341399d2a8acec928b2707a25eb0",
+    "stage-4-summary.json": "6d293092127826e1ca3a54615be6f1786cd0e67dca2662101f9f8c2193e0dc9a",
+    "stage-5-design/test.csv": "88fbb2f8c80693bc93c569efa7b68613ba996151c4f86ddd6373c781f0cf0597",
+    "stage-5-predictions.csv": "1426e6ca7675df3f4163b56973130ba9f16800c1f46b5804576dadaae42c8cba",
+    "stage-5-summary.json": "1b00ae1d8b2eaa0136f7df8f8f39e7a05e5c7ea161618272c3e626bb2430cfb7",
+    "stage-6/comparison.json": "80fbc487c921818362eeca571fbe63ce91c2fce429e577241ba77afa84f0a357"
+  },
+  "walkthrough": {
+    "batch": {
+      "candidate_count": 1,
+      "candidates_sha256": "895e3f650503d642e1582b6d9793d17b912e058eb4f778c156fe1e70c7f6d43d",
+      "decisions": {
+        "insufficient_evidence": 1,
+        "matched": 1,
+        "no_match": 1
+      },
+      "fingerprint_config_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+      "indexed_assets": 1,
+      "match_policy_sha256": "0fcc832c470289f5205fc6cc8f044742980990dc2a22dd43bd1048ccd24d53be",
+      "queries_sha256": "2a87392b2b1e26ff7f0975956eae427ab053806f85a2b22cf74314e736c3a7d7",
+      "query_count": 3,
+      "query_manifest_sha256": "7c5f8b55e787d8cd8106b7ed5104ef06437f8113a42fc81902cc92991ce95620",
+      "reference_manifest_sha256": "b0c9f009ba0e3df5bb165569b87604cd16e566b33b5cf2fa7fa7d8b77d7071ac",
+      "result_limit": 5,
+      "run_id": "7fd42a53a11bf24626b0cddde41215e0e880c78ee1c325c892ddb165a6047e30",
+      "schema_version": 1
+    },
+    "commands": {
+      "audit": {
+        "args": [
+          "audit",
+          "test.csv",
+          "--root",
+          "test",
+          "--index",
+          "reference.sqlite",
+          "--out",
+          "audit"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "{\"candidate_count\": 1, \"candidates_sha256\": \"895e3f650503d642e1582b6d9793d17b912e058eb4f778c156fe1e70c7f6d43d\", \"decisions\": {\"insufficient_evidence\": 1, \"matched\": 1, \"no_match\": 1}, \"fingerprint_config_sha256\": \"d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385\", \"indexed_assets\": 1, \"match_policy_sha256\": \"0fcc832c470289f5205fc6cc8f044742980990dc2a22dd43bd1048ccd24d53be\", \"queries_sha256\": \"2a87392b2b1e26ff7f0975956eae427ab053806f85a2b22cf74314e736c3a7d7\", \"query_count\": 3, \"query_manifest_sha256\": \"7c5f8b55e787d8cd8106b7ed5104ef06437f8113a42fc81902cc92991ce95620\", \"reference_manifest_sha256\": \"b0c9f009ba0e3df5bb165569b87604cd16e566b33b5cf2fa7fa7d8b77d7071ac\", \"result_limit\": 5, \"run_id\": \"7fd42a53a11bf24626b0cddde41215e0e880c78ee1c325c892ddb165a6047e30\", \"schema_version\": 1}"
+      },
+      "control": {
+        "args": [
+          "match",
+          "test/similar-control.wav",
+          "--index",
+          "reference.sqlite",
+          "--json"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "{\"candidates\": [], \"fingerprint_config_sha256\": \"d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385\", \"match_policy_sha256\": \"0fcc832c470289f5205fc6cc8f044742980990dc2a22dd43bd1048ccd24d53be\", \"query_duration_seconds\": 2.0, \"query_id\": \"similar-control.wav\", \"query_landmarks\": 42, \"schema_version\": 1, \"status\": \"no_match\"}"
+      },
+      "control_text": {
+        "args": [
+          "match",
+          "test/similar-control.wav",
+          "--index",
+          "reference.sqlite"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "no match"
+      },
+      "fixture": {
+        "args": [
+          "fixture",
+          "--out",
+          "generated"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "Wrote audio fixture to generated"
+      },
+      "index": {
+        "args": [
+          "index",
+          "train.csv",
+          "--root",
+          "train",
+          "--out",
+          "reference.sqlite"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "{\"bytes\": 24576, \"fingerprint_config_sha256\": \"d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385\", \"fingerprint_version\": 1, \"indexed_assets\": 1, \"manifest_sha256\": \"b0c9f009ba0e3df5bb165569b87604cd16e566b33b5cf2fa7fa7d8b77d7071ac\", \"postings\": 256, \"schema_version\": 1}"
+      },
+      "match": {
+        "args": [
+          "match",
+          "test/renamed-crop.wav",
+          "--index",
+          "reference.sqlite",
+          "--json"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "{\"candidates\": [{\"anchor_frames\": 14, \"asset_id\": \"train:reference.wav\", \"coverage\": 0.804, \"distinct_hashes\": 61, \"offset_frames\": 94, \"offset_seconds\": 0.752, \"passes_threshold\": true, \"query_span_seconds\": [0.176, 1.784], \"rank\": 1, \"reference_span_seconds\": [0.928, 2.536], \"score\": 61, \"support_fraction\": 0.488}], \"fingerprint_config_sha256\": \"d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385\", \"match_policy_sha256\": \"0fcc832c470289f5205fc6cc8f044742980990dc2a22dd43bd1048ccd24d53be\", \"query_duration_seconds\": 2.0, \"query_id\": \"renamed-crop.wav\", \"query_landmarks\": 125, \"schema_version\": 1, \"status\": \"matched\"}"
+      },
+      "match_text": {
+        "args": [
+          "match",
+          "test/renamed-crop.wav",
+          "--index",
+          "reference.sqlite"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "train:reference.wav at +0.752 s (61 aligned landmarks)"
+      },
+      "query_manifest": {
+        "args": [
+          "data",
+          "manifest",
+          "test",
+          "--dataset",
+          "test",
+          "--role",
+          "query",
+          "--out",
+          "test.csv"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "Wrote 3 checksummed audio rows to test.csv"
+      },
+      "reference_manifest": {
+        "args": [
+          "data",
+          "manifest",
+          "train",
+          "--dataset",
+          "train",
+          "--role",
+          "reference",
+          "--out",
+          "train.csv"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "Wrote 1 checksummed audio rows to train.csv"
+      },
+      "review": {
+        "args": [
+          "review",
+          "audit",
+          "--out",
+          "audit/review.html"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "Wrote offline review for 3 queries to audit/review.html"
+      }
+    },
+    "control": {
+      "candidates": [],
+      "fingerprint_config_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+      "match_policy_sha256": "0fcc832c470289f5205fc6cc8f044742980990dc2a22dd43bd1048ccd24d53be",
+      "query_duration_seconds": 2.0,
+      "query_id": "similar-control.wav",
+      "query_landmarks": 42,
+      "schema_version": 1,
+      "status": "no_match"
+    },
+    "expected_offset_seconds": 0.75,
+    "match": {
+      "candidates": [
+        {
+          "anchor_frames": 14,
+          "asset_id": "train:reference.wav",
+          "coverage": 0.804,
+          "distinct_hashes": 61,
+          "offset_frames": 94,
+          "offset_seconds": 0.752,
+          "passes_threshold": true,
+          "query_span_seconds": [
+            0.176,
+            1.784
+          ],
+          "rank": 1,
+          "reference_span_seconds": [
+            0.928,
+            2.536
+          ],
+          "score": 61,
+          "support_fraction": 0.488
+        }
+      ],
+      "fingerprint_config_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+      "match_policy_sha256": "0fcc832c470289f5205fc6cc8f044742980990dc2a22dd43bd1048ccd24d53be",
+      "query_duration_seconds": 2.0,
+      "query_id": "renamed-crop.wav",
+      "query_landmarks": 125,
+      "schema_version": 1,
+      "status": "matched"
+    }
+  }
+}

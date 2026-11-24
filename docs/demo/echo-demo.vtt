@@ -1,0 +1,39 @@
+WEBVTT
+
+00:00.000 --> 00:08.200
+Echo checks a proposed evaluation split against training audio.
+Index the references, audit the queries, then review the evidence.
+
+00:08.200 --> 00:10.200
+Synthetic example. The renamed crop is two seconds long.
+
+00:10.200 --> 00:14.200
+[The four-second reference sweep plays.]
+
+00:15.100 --> 00:17.100
+[The two-second copied section plays.]
+Echo finds the reference at +0.752 seconds.
+
+00:18.200 --> 00:20.200
+[A separately generated sweep plays.]
+Echo returns no match.
+
+00:20.200 --> 00:24.000
+The crop's known start is +0.750 seconds.
+The reported timestamp differs by two milliseconds.
+
+00:24.000 --> 00:35.000
+The offline report shows decisions, ranks, votes, and time intervals.
+Listen to accepted hits. Investigate short, silent, or uncovered queries.
+
+00:35.000 --> 00:46.000
+A published ticking-clock case was declined at an incorrect offset.
+An independent waveform check found four shared windows at zero seconds.
+
+00:46.000 --> 00:59.000
+On the same 400 ESC-50 test clips, mean accuracy was 47.4% with independent
+training crops and 57.0% with excerpts of test recordings, a 9.6-point gain.
+
+00:59.000 --> 01:09.000
+333 of 360 matching trials were accepted correctly. Echo found 137 of 140
+waveform-confirmed pairs at the supported offset. Rust cut measured median query time by 56%.
