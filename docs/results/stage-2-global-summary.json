@@ -1,0 +1,65 @@
+{
+  "environment": {
+    "machine": "arm64",
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0",
+    "sqlite": "3.53.1",
+    "system": "macOS-26.6.2-arm64-arm-64bit"
+  },
+  "fingerprint_config": {
+    "delay_bin_frames": 2,
+    "fan_out": 8,
+    "fft_size": 512,
+    "hop_size": 128,
+    "max_pair_ms": 750,
+    "max_peaks_per_frame": 5,
+    "min_frequency_hz": 50,
+    "min_pair_ms": 50,
+    "peak_floor_db": 45,
+    "peak_floor_radius_frames": 0,
+    "peak_frequency_radius": 3,
+    "peak_time_radius": 3,
+    "sample_rate": 16000
+  },
+  "index": {
+    "bytes": 26791936,
+    "fingerprint_config_sha256": "1df364ee5298cb737d33acbc21f3c506dda526b9f1f4ce2397c8d2e221a00b4a",
+    "fingerprint_version": 1,
+    "indexed_assets": 200,
+    "manifest_sha256": "70ef852301074bee9aa47157832a259deb08bdd7c15e1a513791e5a1a57e0fee",
+    "postings": 1535633,
+    "schema_version": 1,
+    "sqlite_build_ms": 26200.609
+  },
+  "input_queries_sha256": "ea15e04490fc11b0300c65855cbdbe0d9b4d823c4606ed5ebafac11721b62360",
+  "match_policy": {
+    "max_postings_per_hash": 256,
+    "min_anchor_frames": 8,
+    "min_coverage": 0.2,
+    "min_distinct_hashes": 10,
+    "min_support": 18,
+    "min_support_fraction": 0.035,
+    "offset_radius_frames": 1
+  },
+  "result_queries_sha256": "7fb295992016411519ba115977a5b1572ce94f8ba04d566e272e75f9a69fdf88",
+  "results": {
+    "absent_source_accepted": 0,
+    "absent_source_queries": 10,
+    "backend_agreements": 30,
+    "correct_accepted": 15,
+    "correct_top_one": 17,
+    "correct_top_one_within_50ms": 17,
+    "input_errors": 0,
+    "max_correct_top_one_offset_error_seconds": 0.004,
+    "positive_queries": 20,
+    "sqlite_query_median_ms": 107.645,
+    "sqlite_query_p95_ms": 473.107
+  },
+  "schema_version": 1,
+  "scope": "Stage 2 ESC-50 development spike",
+  "source_commit": "9a2ec0b2e113afefa89256b937267ae0d9483776",
+  "timing_boundary": "build includes decode, SHA-256, features and publication. Each SQLite query includes decode, fingerprinting, lookup and ranking on one open connection.",
+  "tracked_or_untracked_changes_at_start": false
+}

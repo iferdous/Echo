@@ -1,8 +1,8 @@
 # Echo
 
-Echo is an audio dataset auditing project. The current build prepares pinned datasets, reads and resamples audio, checks for shared recording IDs, and generates a reproducible crop benchmark. Upcoming stages will match clips from the sound itself and measure how training on shared audio changes a classifier's score.
+Echo is an audio dataset auditing project. The current build prepares pinned datasets, checks for shared recording IDs, and searches audio by sound. Give it a known clip or a crop and it returns a candidate recording and signed time offset. Later stages will measure how exposure to shared recordings changes a classifier's score.
 
-A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo will use acoustic fingerprints to find the shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo will use those IDs to check its work and test what it can recover from the audio itself. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
+A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo uses acoustic fingerprints to find shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo will use those IDs to check its work and test what it can recover from the audio itself. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
 
 ## Getting started
 
@@ -16,6 +16,17 @@ uv run pytest
 ```
 
 The fixture writes a reference WAV, a related crop with a known sample offset, and an unrelated distractor. Use a fresh output path for each run. The command is also available as `uv run python -m echo`. FFmpeg is optional until codec evaluation.
+
+## Try the matcher
+
+```bash
+uv run echo-audit fixture --out .local/quickstart
+uv run echo-audit index .local/quickstart/index.csv --out .local/quickstart/index.sqlite
+uv run echo-audit match .local/quickstart/query.wav --index .local/quickstart/index.sqlite --json
+uv run echo-audit match .local/quickstart/distractor.wav --index .local/quickstart/index.sqlite
+```
+
+The fixture's expected recording is `fixture:reference` around **+0.750 s**. The separate recording returns `no_match`. Offsets are reference time minus query time. For ESC-50 manifests, pass `--root .local/esc50` to `index`. [Stage 2 measurements and reproduction](docs/results/stage-2.md)
 
 ## Stage 1 dataset workflow
 

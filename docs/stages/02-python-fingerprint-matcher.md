@@ -18,4 +18,4 @@
 
 **Done when** a reader can run the CLI on a generated crop and an ESC-50 sample and inspect the results. Record failures and development-target gaps for Stage 3.
 
-[Stage index](README.md) · [Next stage](03-matcher-evaluation.md)
+[Implementation results](../results/stage-2.md) · [Stage index](README.md) · [Next stage](03-matcher-evaluation.md)

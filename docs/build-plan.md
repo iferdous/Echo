@@ -69,7 +69,7 @@ Add files when their responsibilities exist. Keep downloaded datasets and genera
 
 ### CLI and data contracts
 
-These are planned interfaces. Each command should have a human-readable summary and write structured evidence where specified.
+Stage 2 implements `index` and `match`. The remaining commands describe later stages. Each command should have a human-readable summary and write structured evidence where specified.
 
 ~~~text
 echo-audit index TRAIN.csv --out train.sqlite
