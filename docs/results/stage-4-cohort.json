@@ -1,0 +1,321 @@
+{
+  "all_fsd_partitions_shared_rows": 630,
+  "all_prior_source_groups": 530,
+  "class_controls": [
+    {
+      "esc50_label": "car_horn",
+      "fsd50k_label": "Vehicle_horn_and_car_horn_and_honking",
+      "query_count": 2,
+      "reference_source_ids": [
+        "393179",
+        "338168"
+      ]
+    },
+    {
+      "esc50_label": "cat",
+      "fsd50k_label": "Cat",
+      "query_count": 2,
+      "reference_source_ids": [
+        "420887",
+        "406613"
+      ]
+    },
+    {
+      "esc50_label": "chirping_birds",
+      "fsd50k_label": "Chirp_and_tweet",
+      "query_count": 2,
+      "reference_source_ids": [
+        "135646",
+        "268729"
+      ]
+    },
+    {
+      "esc50_label": "church_bells",
+      "fsd50k_label": "Church_bell",
+      "query_count": 2,
+      "reference_source_ids": [
+        "424791",
+        "153580"
+      ]
+    },
+    {
+      "esc50_label": "clapping",
+      "fsd50k_label": "Clapping",
+      "query_count": 2,
+      "reference_source_ids": [
+        "179127",
+        "105223"
+      ]
+    },
+    {
+      "esc50_label": "clock_tick",
+      "fsd50k_label": "Tick-tock",
+      "query_count": 2,
+      "reference_source_ids": [
+        "366221",
+        "78321"
+      ]
+    },
+    {
+      "esc50_label": "coughing",
+      "fsd50k_label": "Cough",
+      "query_count": 2,
+      "reference_source_ids": [
+        "383335",
+        "325669"
+      ]
+    },
+    {
+      "esc50_label": "crickets",
+      "fsd50k_label": "Cricket",
+      "query_count": 2,
+      "reference_source_ids": [
+        "238074",
+        "193608"
+      ]
+    },
+    {
+      "esc50_label": "crow",
+      "fsd50k_label": "Crow",
+      "query_count": 2,
+      "reference_source_ids": [
+        "194949",
+        "418181"
+      ]
+    },
+    {
+      "esc50_label": "dog",
+      "fsd50k_label": "Bark",
+      "query_count": 2,
+      "reference_source_ids": [
+        "274471",
+        "64460"
+      ]
+    },
+    {
+      "esc50_label": "door_wood_knock",
+      "fsd50k_label": "Knock",
+      "query_count": 2,
+      "reference_source_ids": [
+        "171973",
+        "326922"
+      ]
+    },
+    {
+      "esc50_label": "fireworks",
+      "fsd50k_label": "Fireworks",
+      "query_count": 2,
+      "reference_source_ids": [
+        "161680",
+        "132900"
+      ]
+    },
+    {
+      "esc50_label": "footsteps",
+      "fsd50k_label": "Walk_and_footsteps",
+      "query_count": 2,
+      "reference_source_ids": [
+        "172357",
+        "209661"
+      ]
+    },
+    {
+      "esc50_label": "frog",
+      "fsd50k_label": "Frog",
+      "query_count": 2,
+      "reference_source_ids": [
+        "414400",
+        "121556"
+      ]
+    },
+    {
+      "esc50_label": "keyboard_typing",
+      "fsd50k_label": "Computer_keyboard",
+      "query_count": 2,
+      "reference_source_ids": [
+        "256290",
+        "179385"
+      ]
+    },
+    {
+      "esc50_label": "laughing",
+      "fsd50k_label": "Laughter",
+      "query_count": 2,
+      "reference_source_ids": [
+        "398046",
+        "19260"
+      ]
+    },
+    {
+      "esc50_label": "rain",
+      "fsd50k_label": "Rain",
+      "query_count": 2,
+      "reference_source_ids": [
+        "121945",
+        "240230"
+      ]
+    },
+    {
+      "esc50_label": "sea_waves",
+      "fsd50k_label": "Waves_and_surf",
+      "query_count": 2,
+      "reference_source_ids": [
+        "196676",
+        "193608"
+      ]
+    },
+    {
+      "esc50_label": "siren",
+      "fsd50k_label": "Siren",
+      "query_count": 2,
+      "reference_source_ids": [
+        "58369",
+        "58371"
+      ]
+    },
+    {
+      "esc50_label": "thunderstorm",
+      "fsd50k_label": "Thunderstorm",
+      "query_count": 2,
+      "reference_source_ids": [
+        "121945",
+        "240230"
+      ]
+    },
+    {
+      "esc50_label": "toilet_flush",
+      "fsd50k_label": "Toilet_flush",
+      "query_count": 2,
+      "reference_source_ids": [
+        "268132",
+        "233454"
+      ]
+    },
+    {
+      "esc50_label": "train",
+      "fsd50k_label": "Train",
+      "query_count": 2,
+      "reference_source_ids": [
+        "28396",
+        "209970"
+      ]
+    },
+    {
+      "esc50_label": "wind",
+      "fsd50k_label": "Wind",
+      "query_count": 2,
+      "reference_source_ids": [
+        "121945",
+        "146422"
+      ]
+    }
+  ],
+  "esc_inventory_sha256": "f36a56e21fd3f70001114a8e0a4514fbad65e1940567d14f7e6aed35cfe80c8b",
+  "fsd50k_partition": "eval",
+  "fsd50k_revision": "10.5281/zenodo.4060432",
+  "full_esc50_rows": 2000,
+  "ground_truth_sha256": "db2396260a7b1fb06feb6ccac71685794fc89917d71c3a8d64a1de85c2cc0ebf",
+  "index_cohorts": {
+    "background": 96,
+    "class_distractor": 42,
+    "shared_eval_id": 152
+  },
+  "official_eval_sources": 10231,
+  "previously_seen_query_sources": [
+    "102568",
+    "102908",
+    "104958",
+    "106881",
+    "107228",
+    "108677",
+    "109505",
+    "110536",
+    "110537",
+    "117616",
+    "117617",
+    "119455",
+    "143119",
+    "144120",
+    "144137",
+    "150231",
+    "153057",
+    "154405",
+    "163727",
+    "17124",
+    "17742",
+    "181599",
+    "18631",
+    "186693",
+    "187979",
+    "196671",
+    "20133",
+    "207781",
+    "210571",
+    "210612",
+    "232495",
+    "234855",
+    "235671",
+    "243449",
+    "256452",
+    "257642",
+    "259514",
+    "260640",
+    "261325",
+    "50666",
+    "52323",
+    "59579",
+    "62594",
+    "70938",
+    "73260",
+    "78562",
+    "82538",
+    "84943",
+    "90797"
+  ],
+  "queries_sha256": "ee8d01cfefebcf8b487dfc99f81a2d675bf6e66c7127a231dff400950f635bb2",
+  "query_cohorts": {
+    "background_control": 50,
+    "same_class_control": 46,
+    "shared_eval_id": 171
+  },
+  "references_sha256": "1ac7d07871d126a4192ded8035b7c8961cb0390e50dcb715c85b5c8d26457897",
+  "schema_version": 1,
+  "shared_eval_unique_sources": 152,
+  "spec": {
+    "background_queries": 50,
+    "background_references": 96,
+    "class_map": {
+      "car_horn": "Vehicle_horn_and_car_horn_and_honking",
+      "cat": "Cat",
+      "chirping_birds": "Chirp_and_tweet",
+      "church_bells": "Church_bell",
+      "clapping": "Clapping",
+      "clock_tick": "Tick-tock",
+      "coughing": "Cough",
+      "crickets": "Cricket",
+      "crow": "Crow",
+      "dog": "Bark",
+      "door_wood_knock": "Knock",
+      "fireworks": "Fireworks",
+      "footsteps": "Walk_and_footsteps",
+      "frog": "Frog",
+      "keyboard_typing": "Computer_keyboard",
+      "laughing": "Laughter",
+      "rain": "Rain",
+      "sea_waves": "Waves_and_surf",
+      "siren": "Siren",
+      "thunderstorm": "Thunderstorm",
+      "toilet_flush": "Toilet_flush",
+      "train": "Train",
+      "wind": "Wind"
+    },
+    "class_queries_per_label": 2,
+    "class_references_per_label": 2,
+    "seed": 4060432
+  },
+  "spec_sha256": "f28db6e962a6dd3ca70e7c0bc736c42e9ac2d010dee6066c06bb41f5cbafbb84",
+  "stage2_index_sha256": "70ef852301074bee9aa47157832a259deb08bdd7c15e1a513791e5a1a57e0fee",
+  "stage2_queries_sha256": "ea15e04490fc11b0300c65855cbdbe0d9b4d823c4606ed5ebafac11721b62360",
+  "stage3_design_sha256": "7c831b2d3af456d81218df46b50e5203178b55fc2a9502878a1be992600361fc",
+  "stage3_seed": 8312026
+}
