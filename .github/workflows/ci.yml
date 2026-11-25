@@ -59,6 +59,9 @@ jobs:
           uv run --no-sync echo-audit report "$RUNNER_TEMP/echo-fixture.zip" --out "$RUNNER_TEMP/echo-bench-report"
           uv run --no-sync echo-audit report . --check
 
+      - name: Verify the real-data release case from saved audit results
+        run: uv run --no-sync python scripts/run_stage9_case.py --check --out "$RUNNER_TEMP/echo-release-case"
+
   native:
     runs-on: ubuntu-24.04
     timeout-minutes: 10

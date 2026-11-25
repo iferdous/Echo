@@ -1,0 +1,17 @@
+{
+  "candidate_count": 475,
+  "candidates_sha256": "794315b04aed8e7f3a770d70c4ff6832712de798dd6103ae0f0e01003b9496c3",
+  "decisions": {
+    "no_match": 95
+  },
+  "fingerprint_config_sha256": "d7d65ab746a54752f1b03d6bb9de8eed0b87423fb170f5ad7064c889b4d3b385",
+  "indexed_assets": 290,
+  "match_policy_sha256": "eb78b5ed1e4b370196b7191a853afde96c86a4880a06dca0ee75141a6e1b78c4",
+  "queries_sha256": "bbe7644bcf024d3d79a4bcce99ba77d6bbacd8e77cf10b3885ffcc77b2d7d241",
+  "query_count": 95,
+  "query_manifest_sha256": "d886ff2f09952c9360ba635c86fae44ffc1369cecdc672a17f75e09118c54f62",
+  "reference_manifest_sha256": "8ea1331f42ebc76915741d4ef735229e776cd3d7daa1f09602fa2183d8e12c3c",
+  "result_limit": 5,
+  "run_id": "4fbb2f2c086a71681e4bdd36546eb4f1b1bc1c430635c00a14c46f6f1ca5b816",
+  "schema_version": 1
+}
