@@ -1,0 +1,596 @@
+{
+  "corpora": [
+    {
+      "assets": 2000,
+      "channels": {
+        "1": 2000
+      },
+      "counts": {
+        "one_percent_or_more_samples_at_pcm16_ceiling": 55
+      },
+      "dataset": "esc50",
+      "decoded": 2000,
+      "duration_seconds": {
+        "max": 5.0,
+        "min": 5.0
+      },
+      "formats": {
+        "WAV/PCM_16": 2000
+      },
+      "issues": [
+        {
+          "asset_id": "esc50:1-110537-A-22.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.025691609977324264,
+          "path": "audio/1-110537-A-22.wav"
+        },
+        {
+          "asset_id": "esc50:1-20736-A-18.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.01346485260770975,
+          "path": "audio/1-20736-A-18.wav"
+        },
+        {
+          "asset_id": "esc50:1-46744-A-36.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.024,
+          "path": "audio/1-46744-A-36.wav"
+        },
+        {
+          "asset_id": "esc50:1-47709-A-16.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.10262131519274377,
+          "path": "audio/1-47709-A-16.wav"
+        },
+        {
+          "asset_id": "esc50:1-47714-A-16.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.01166439909297052,
+          "path": "audio/1-47714-A-16.wav"
+        },
+        {
+          "asset_id": "esc50:1-50661-A-44.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.01965079365079365,
+          "path": "audio/1-50661-A-44.wav"
+        },
+        {
+          "asset_id": "esc50:1-58792-A-24.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.04229931972789116,
+          "path": "audio/1-58792-A-24.wav"
+        },
+        {
+          "asset_id": "esc50:1-64473-A-45.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.03462585034013605,
+          "path": "audio/1-64473-A-45.wav"
+        },
+        {
+          "asset_id": "esc50:1-72195-B-37.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.016816326530612245,
+          "path": "audio/1-72195-B-37.wav"
+        },
+        {
+          "asset_id": "esc50:1-77241-A-3.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.04190022675736962,
+          "path": "audio/1-77241-A-3.wav"
+        },
+        {
+          "asset_id": "esc50:1-81001-A-30.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.019006802721088435,
+          "path": "audio/1-81001-A-30.wav"
+        },
+        {
+          "asset_id": "esc50:1-81001-B-30.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.018163265306122448,
+          "path": "audio/1-81001-B-30.wav"
+        },
+        {
+          "asset_id": "esc50:2-100648-A-43.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.04506575963718821,
+          "path": "audio/2-100648-A-43.wav"
+        },
+        {
+          "asset_id": "esc50:2-103426-A-3.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.07487074829931972,
+          "path": "audio/2-103426-A-3.wav"
+        },
+        {
+          "asset_id": "esc50:2-103428-A-3.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.018770975056689343,
+          "path": "audio/2-103428-A-3.wav"
+        },
+        {
+          "asset_id": "esc50:2-108017-A-24.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.010058956916099773,
+          "path": "audio/2-108017-A-24.wav"
+        },
+        {
+          "asset_id": "esc50:2-110011-A-5.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.01291609977324263,
+          "path": "audio/2-110011-A-5.wav"
+        },
+        {
+          "asset_id": "esc50:2-117616-A-48.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.02110204081632653,
+          "path": "audio/2-117616-A-48.wav"
+        },
+        {
+          "asset_id": "esc50:2-117617-A-48.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.0379546485260771,
+          "path": "audio/2-117617-A-48.wav"
+        },
+        {
+          "asset_id": "esc50:2-158746-A-2.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.041578231292517004,
+          "path": "audio/2-158746-A-2.wav"
+        },
+        {
+          "asset_id": "esc50:2-158746-B-2.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.01726077097505669,
+          "path": "audio/2-158746-B-2.wav"
+        },
+        {
+          "asset_id": "esc50:2-87795-A-24.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.015156462585034013,
+          "path": "audio/2-87795-A-24.wav"
+        },
+        {
+          "asset_id": "esc50:2-87799-A-24.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.017900226757369613,
+          "path": "audio/2-87799-A-24.wav"
+        },
+        {
+          "asset_id": "esc50:3-115382-A-44.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.016294784580498867,
+          "path": "audio/3-115382-A-44.wav"
+        },
+        {
+          "asset_id": "esc50:3-115387-B-47.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.012970521541950114,
+          "path": "audio/3-115387-B-47.wav"
+        },
+        {
+          "asset_id": "esc50:3-130330-A-22.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.03108843537414966,
+          "path": "audio/3-130330-A-22.wav"
+        },
+        {
+          "asset_id": "esc50:3-131943-A-37.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.21946485260770976,
+          "path": "audio/3-131943-A-37.wav"
+        },
+        {
+          "asset_id": "esc50:3-144510-A-30.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.010272108843537416,
+          "path": "audio/3-144510-A-30.wav"
+        },
+        {
+          "asset_id": "esc50:3-152020-A-36.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.024471655328798185,
+          "path": "audio/3-152020-A-36.wav"
+        },
+        {
+          "asset_id": "esc50:3-152020-B-36.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.06003174603174603,
+          "path": "audio/3-152020-B-36.wav"
+        },
+        {
+          "asset_id": "esc50:3-152039-B-3.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.06551020408163265,
+          "path": "audio/3-152039-B-3.wav"
+        },
+        {
+          "asset_id": "esc50:3-197408-B-8.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.019346938775510206,
+          "path": "audio/3-197408-B-8.wav"
+        },
+        {
+          "asset_id": "esc50:3-246513-A-16.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.021251700680272108,
+          "path": "audio/3-246513-A-16.wav"
+        },
+        {
+          "asset_id": "esc50:3-51909-B-42.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.15317460317460319,
+          "path": "audio/3-51909-B-42.wav"
+        },
+        {
+          "asset_id": "esc50:4-151242-A-37.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.07391383219954649,
+          "path": "audio/4-151242-A-37.wav"
+        },
+        {
+          "asset_id": "esc50:4-161100-A-47.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.03903854875283447,
+          "path": "audio/4-161100-A-47.wav"
+        },
+        {
+          "asset_id": "esc50:4-176631-A-43.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.06512471655328798,
+          "path": "audio/4-176631-A-43.wav"
+        },
+        {
+          "asset_id": "esc50:4-176638-A-43.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.011650793650793651,
+          "path": "audio/4-176638-A-43.wav"
+        },
+        {
+          "asset_id": "esc50:4-186962-A-44.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.041954648526077096,
+          "path": "audio/4-186962-A-44.wav"
+        },
+        {
+          "asset_id": "esc50:4-204777-A-39.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.046140589569161,
+          "path": "audio/4-204777-A-39.wav"
+        },
+        {
+          "asset_id": "esc50:4-204777-B-39.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.05546031746031746,
+          "path": "audio/4-204777-B-39.wav"
+        },
+        {
+          "asset_id": "esc50:4-204777-C-39.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.07439002267573697,
+          "path": "audio/4-204777-C-39.wav"
+        },
+        {
+          "asset_id": "esc50:4-205738-A-22.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.08025396825396826,
+          "path": "audio/4-205738-A-22.wav"
+        },
+        {
+          "asset_id": "esc50:4-213915-C-3.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.013668934240362812,
+          "path": "audio/4-213915-C-3.wav"
+        },
+        {
+          "asset_id": "esc50:4-80761-A-42.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.02251700680272109,
+          "path": "audio/4-80761-A-42.wav"
+        },
+        {
+          "asset_id": "esc50:5-156999-B-19.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.13126984126984126,
+          "path": "audio/5-156999-B-19.wav"
+        },
+        {
+          "asset_id": "esc50:5-156999-C-19.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.08312471655328799,
+          "path": "audio/5-156999-C-19.wav"
+        },
+        {
+          "asset_id": "esc50:5-156999-D-19.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.05936054421768708,
+          "path": "audio/5-156999-D-19.wav"
+        },
+        {
+          "asset_id": "esc50:5-156999-E-19.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.044335600907029475,
+          "path": "audio/5-156999-E-19.wav"
+        },
+        {
+          "asset_id": "esc50:5-172299-A-5.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.011224489795918367,
+          "path": "audio/5-172299-A-5.wav"
+        },
+        {
+          "asset_id": "esc50:5-189795-A-4.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.01636281179138322,
+          "path": "audio/5-189795-A-4.wav"
+        },
+        {
+          "asset_id": "esc50:5-223176-A-37.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.03490249433106576,
+          "path": "audio/5-223176-A-37.wav"
+        },
+        {
+          "asset_id": "esc50:5-250629-A-37.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.07194557823129252,
+          "path": "audio/5-250629-A-37.wav"
+        },
+        {
+          "asset_id": "esc50:5-253085-B-3.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.0216281179138322,
+          "path": "audio/5-253085-B-3.wav"
+        },
+        {
+          "asset_id": "esc50:5-256512-A-30.wav",
+          "duration_seconds": 5.0,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.02767800453514739,
+          "path": "audio/5-256512-A-30.wav"
+        }
+      ],
+      "manifest_sha256": "f36a56e21fd3f70001114a8e0a4514fbad65e1940567d14f7e6aed35cfe80c8b",
+      "sample_rates_hz": {
+        "44100": 2000
+      }
+    },
+    {
+      "assets": 290,
+      "channels": {
+        "1": 290
+      },
+      "counts": {
+        "one_percent_or_more_samples_at_pcm16_ceiling": 4,
+        "shorter_than_waveform_review_window": 1
+      },
+      "dataset": "fsd50k_eval",
+      "decoded": 290,
+      "duration_seconds": {
+        "max": 30.0,
+        "min": 0.31755102040816324
+      },
+      "formats": {
+        "WAV/PCM_16": 290
+      },
+      "issues": [
+        {
+          "asset_id": "reference-0032",
+          "duration_seconds": 8.835668934240363,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.1974551716527269,
+          "path": "audio/171686.wav"
+        },
+        {
+          "asset_id": "reference-0137",
+          "duration_seconds": 12.565238095238096,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.013989572787465689,
+          "path": "audio/319397.wav"
+        },
+        {
+          "asset_id": "reference-0141",
+          "duration_seconds": 0.5224489795918368,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.010416666666666666,
+          "path": "audio/109505.wav"
+        },
+        {
+          "asset_id": "reference-0175",
+          "duration_seconds": 1.000997732426304,
+          "findings": [
+            "one_percent_or_more_samples_at_pcm16_ceiling"
+          ],
+          "mono_ceiling_fraction": 0.029109278724175427,
+          "path": "audio/57809.wav"
+        },
+        {
+          "asset_id": "reference-0256",
+          "duration_seconds": 0.31755102040816324,
+          "findings": [
+            "shorter_than_waveform_review_window"
+          ],
+          "mono_ceiling_fraction": 7.140816909454442e-05,
+          "path": "audio/100032.wav"
+        }
+      ],
+      "manifest_sha256": "8ea1331f42ebc76915741d4ef735229e776cd3d7daa1f09602fa2183d8e12c3c",
+      "sample_rates_hz": {
+        "44100": 290
+      }
+    }
+  ],
+  "mono_pcm16_ceiling_fraction_threshold": 0.01,
+  "review_min_seconds": 0.5,
+  "schema_version": 1
+}
