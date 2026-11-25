@@ -26,6 +26,7 @@ from echo.evidence import (
     require,
     write_evidence,
 )
+from echo.evidence_metrics import aggregate
 from echo.fingerprint import FingerprintConfig
 from echo.fixtures import (
     CROP_SAMPLES,
@@ -40,7 +41,7 @@ from echo.matcher import DEFAULT_POLICY, read_policy, resolve_alignment_engine
 RECOVERY = "see docs/reproduce-evidence.md for the pinned inputs and build commands"
 
 
-def capture_environment(repo: Path, started: datetime, tick: float) -> dict:
+def capture_environment(repo: Path) -> dict:
     git = (repo / ".git").exists()
     commit = None
     dirty = None
@@ -67,6 +68,11 @@ def capture_environment(repo: Path, started: datetime, tick: float) -> dict:
         "system": platform.platform(),
         "machine": platform.machine(),
         "logical_cpus": os.cpu_count(),
+    }
+
+
+def elapsed(started: datetime, tick: float) -> dict:
+    return {
         "started_utc": started.isoformat(),
         "completed_utc": datetime.now(UTC).isoformat(),
         "wall_seconds": perf_counter() - tick,
@@ -75,6 +81,7 @@ def capture_environment(repo: Path, started: datetime, tick: float) -> dict:
 
 def build_fixture(repo: Path, out: Path) -> None:
     started, tick = datetime.now(UTC), perf_counter()
+    environment = capture_environment(repo)
     config = FingerprintConfig()
     expected_results = {
         "crop": "matched",
@@ -155,7 +162,7 @@ def build_fixture(repo: Path, out: Path) -> None:
             for name, file in zip(FIXTURE_FILES, sources, strict=True)
         }
         evidence = make_evidence(
-            "fixture", payload, capture_environment(repo, started, tick)
+            "fixture", payload, {**environment, **elapsed(started, tick)}
         )
         write_evidence(evidence, out)
 
@@ -185,7 +192,9 @@ def build_full(
     engine: str = "python",
 ) -> None:
     started, tick = datetime.now(UTC), perf_counter()
+    environment = capture_environment(repo)
     published = published_evidence(repo)
+    aggregate(published)
     historical = published.json("results/stage-4-summary.json")
     inventory = published.json("results/stage-1-inventory.json")
     cohort = published.json("results/stage-4-cohort.json")
@@ -270,6 +279,6 @@ def build_full(
             **{name: (replay / Path(name).name).read_bytes() for name in REPLAY_FILES},
         }
         evidence = make_evidence(
-            "full", payload, capture_environment(repo, started, tick)
+            "full", payload, {**environment, **elapsed(started, tick)}
         )
         write_evidence(evidence, out)

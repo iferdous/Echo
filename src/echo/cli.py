@@ -391,6 +391,102 @@ def add_experiment_commands(commands) -> None:
         command.set_defaults(handler=run_experiment_command)
 
 
+def run_benchmark(args: argparse.Namespace) -> int:
+    from echo.benchmark import build_fixture, build_full
+    from echo.evidence import open_evidence
+
+    if args.profile == "fixture":
+        if any((args.data_root, args.fsd_root, args.index, args.engine)):
+            raise ValueError("the fixture profile only uses generated audio")
+        build_fixture(args.repo, args.out)
+    else:
+        if args.data_root is None:
+            raise ValueError(
+                "the full profile requires --data-root; see docs/reproduce-evidence.md"
+            )
+        build_full(
+            args.repo,
+            args.data_root,
+            args.out,
+            fsd_root=args.fsd_root,
+            index=args.index,
+            engine=args.engine or "python",
+        )
+    evidence = open_evidence(args.out)
+    print(f"{evidence.profile} benchmark {evidence.run_id} saved to {args.out}")
+    return 0
+
+
+def run_evidence_report(args: argparse.Namespace) -> int:
+    from echo.evidence import open_evidence
+    from echo.reporting import publish, report
+
+    if args.check:
+        if not (args.source / "README.md").is_file():
+            raise ValueError("--check requires the repository root")
+        run_id = publish(args.source, check=True, scratch_root=args.source / ".local")
+        print(f"Published report, README, charts, and ZIP agree with {run_id}")
+    else:
+        evidence = open_evidence(args.source)
+        report(evidence, args.out)
+        print(f"Report for {evidence.run_id} written to {args.out}")
+    return 0
+
+
+def run_evidence_bundle(args: argparse.Namespace) -> int:
+    from echo.evidence import open_evidence
+    from echo.reporting import bundle
+
+    evidence = open_evidence(args.source)
+    bundle(evidence, args.out)
+    print(f"Checksummed bundle for {evidence.run_id} written to {args.out}")
+    return 0
+
+
+def add_evidence_commands(commands) -> None:
+    bench = commands.add_parser(
+        "bench", help="run the generated fixture or verify and replay the full corpus"
+    )
+    bench.add_argument("--profile", choices=("fixture", "full"), required=True)
+    bench.add_argument("--repo", type=Path, default=Path("."))
+    bench.add_argument("--out", type=Path, required=True)
+    bench.add_argument(
+        "--data-root", type=Path, help="data and saved indexes for the full profile"
+    )
+    bench.add_argument(
+        "--fsd-root", type=Path, help="override the official FSD50K audio directory"
+    )
+    bench.add_argument("--index", type=Path, help="override the saved Stage 4 index")
+    bench.add_argument(
+        "--engine",
+        choices=("python", "rust"),
+        help="matcher engine for the full replay",
+    )
+    bench.set_defaults(handler=run_benchmark)
+
+    report = commands.add_parser(
+        "report", help="regenerate charts and tables from saved benchmark evidence"
+    )
+    report.add_argument(
+        "source", type=Path, help="repository, saved profile directory, or evidence ZIP"
+    )
+    report_action = report.add_mutually_exclusive_group(required=True)
+    report_action.add_argument("--out", type=Path, help="new report directory")
+    report_action.add_argument(
+        "--check", action="store_true", help="check published files in the repository"
+    )
+    report.set_defaults(handler=run_evidence_report)
+
+    bundle = commands.add_parser(
+        "bundle", help="export a checksummed, text-only benchmark ZIP"
+    )
+    bundle.add_argument(
+        "source", type=Path, help="repository, saved profile directory, or evidence ZIP"
+    )
+    bundle.add_argument("--out", type=Path, required=True)
+    bundle.set_defaults(handler=run_evidence_bundle)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="echo-audit", description="Audit shared recordings across audio datasets."
@@ -416,6 +512,7 @@ def main(argv: list[str] | None = None) -> int:
     add_data_commands(commands)
     add_match_commands(commands)
     add_experiment_commands(commands)
+    add_evidence_commands(commands)
     args = parser.parse_args(argv)
     try:
         return args.handler(args)

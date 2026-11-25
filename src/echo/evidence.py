@@ -196,7 +196,10 @@ class Evidence:
 def make_evidence(
     profile: str, payload: dict[str, bytes], provenance: dict
 ) -> Evidence:
-    require(profile in PROFILE_FILES, f"unknown evidence profile {profile!r}")
+    require(
+        isinstance(profile, str) and profile in PROFILE_FILES,
+        f"unknown evidence profile {profile!r}",
+    )
     require(
         payload.keys() == set(PROFILE_FILES[profile]),
         f"{profile}: missing or unexpected evidence files",
@@ -300,7 +303,9 @@ def open_evidence(source: Path) -> Evidence:
         return published_evidence(source)
     manifest = json_record(read_text_file(source, "manifest.json"), "manifest.json")
     require(
-        manifest.get("profile") in PROFILE_FILES, "unknown or missing evidence profile"
+        isinstance(manifest.get("profile"), str)
+        and manifest["profile"] in PROFILE_FILES,
+        "unknown or missing evidence profile",
     )
     files = PROFILE_FILES[manifest["profile"]]
     return validate_evidence(

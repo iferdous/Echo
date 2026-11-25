@@ -3,7 +3,6 @@
 import argparse
 import csv
 import json
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -15,6 +14,7 @@ import soundfile as sf
 
 from echo.artifacts import new_output_directory, sha256_file, write_json
 from echo.fixtures import CROP_SAMPLES, CROP_START, SAMPLE_RATE
+from echo.plots import plot_classifier
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "docs" / "results"
@@ -164,80 +164,6 @@ def evidence() -> dict:
             ],
         },
     }
-
-
-def plot_classifier(model: dict, out: Path) -> None:
-    os.environ.setdefault("MPLCONFIGDIR", str(out / ".matplotlib"))
-    import matplotlib as mpl
-    from matplotlib.backends.backend_agg import FigureCanvasAgg
-    from matplotlib.figure import Figure
-    from matplotlib.ticker import PercentFormatter
-
-    with mpl.rc_context({"svg.hashsalt": "echo-stage7", "font.family": "DejaVu Sans"}):
-        paper, ink, muted = "#f5f4eb", "#142822", "#4d5b54"
-        figure = Figure(figsize=(9.8, 4.9), dpi=135, facecolor=paper)
-        FigureCanvasAgg(figure)
-        axes = figure.add_axes((0.26, 0.23, 0.66, 0.49), facecolor=paper)
-        scale = [model["comparison_accuracy"] * 100, model["exposed_accuracy"] * 100]
-        axes.barh([1, 0], scale, height=0.47, color=["#526d7a", "#126751"], zorder=3)
-        axes.set_xlim(0, 101)
-        axes.set_yticks(
-            [1, 0], ["Independent\ntraining crops", "Crops from test\nrecordings"]
-        )
-        axes.set_xticks(range(0, 101, 20))
-        axes.xaxis.set_major_formatter(PercentFormatter(xmax=100, decimals=0))
-        axes.grid(axis="x", color="#d5d9cf", zorder=0)
-        axes.tick_params(length=0, colors=ink, labelsize=11)
-        axes.tick_params(axis="y", pad=12)
-        axes.spines[:].set_visible(False)
-        for y, rate in zip((1, 0), scale, strict=True):
-            axes.text(
-                rate + 2,
-                y,
-                f"{rate:.1f}%",
-                va="center",
-                color=ink,
-                fontsize=15,
-                weight="bold",
-            )
-        figure.text(
-            0.055,
-            0.90,
-            "Shared training audio raised the test score",
-            fontsize=20,
-            weight="bold",
-            color=ink,
-        )
-        figure.text(
-            0.055,
-            0.81,
-            f"Mean accuracy on the same {model['test_rows']} ESC-50 clips across {len(model['rates_by_seed'])} paired seeds",
-            fontsize=12,
-            color=muted,
-        )
-        figure.text(
-            0.055,
-            0.105,
-            f"+{model['delta_points']:.2f} percentage points",
-            fontsize=15,
-            weight="bold",
-            color="#126751",
-        )
-        low, high = model["delta_range_points"]
-        figure.text(
-            0.055,
-            0.046,
-            f"Per-seed gain {low:+.2f} to {high:+.2f} points  ·  Run {model['run_id'][:12]}",
-            fontsize=9.5,
-            color=muted,
-        )
-        chart = out / "leakage-accuracy.svg"
-        figure.savefig(chart, metadata={"Date": None})
-        lines = chart.read_text(encoding="utf-8").splitlines()
-        chart.write_text(
-            "".join(line.rstrip() + "\n" for line in lines), encoding="utf-8"
-        )
-        figure.savefig(out / "leakage-accuracy.png")
 
 
 def run_walkthrough(out: Path) -> dict:
