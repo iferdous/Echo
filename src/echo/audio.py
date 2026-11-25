@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from math import gcd
+from os import fstat
 from pathlib import Path
 
 import numpy as np
@@ -35,16 +36,30 @@ def load_audio(path: Path, *, target_rate: int | None = None) -> Audio:
         raise ValueError("target sample rate must be a positive integer")
 
     try:
-        with sf.SoundFile(path) as file:
-            source_rate = file.samplerate
-            source_channels = file.channels
-            source_format = file.format
-            source_subtype = file.subtype
-            frames = file.read(dtype="float32", always_2d=True)
+        with path.open("rb") as stream:
+            header = stream.read(12)
+            # libsndfile can decode a shortened RIFF file without reporting truncation.
+            # Check its container length before handing the same open file to the decoder.
+            if len(header) == 12 and header[8:12] == b"WAVE":
+                byte_order = {b"RIFF": "little", b"RIFX": "big"}.get(header[:4])
+                if byte_order is not None:
+                    container_size = int.from_bytes(header[4:8], byte_order) + 8
+                    if container_size > fstat(stream.fileno()).st_size:
+                        raise AudioError(f"{path}: truncated WAV container")
+            stream.seek(0)
+            with sf.SoundFile(stream) as file:
+                source_rate = file.samplerate
+                source_channels = file.channels
+                source_format = file.format
+                source_subtype = file.subtype
+                declared_frames = file.frames
+                frames = file.read(dtype="float32", always_2d=True)
     except (OSError, sf.SoundFileError) as error:
         raise AudioError(f"cannot decode {path}: {error}") from error
 
     source_frames = len(frames)
+    if source_frames != declared_frames:
+        raise AudioError(f"{path}: truncated audio frames")
     if source_rate <= 0 or source_channels <= 0 or source_frames == 0:
         raise AudioError(f"{path}: empty audio or invalid source format")
     if not np.isfinite(frames).all():
