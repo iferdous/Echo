@@ -73,7 +73,9 @@ def plot_classifier(model: dict, out: Path, *, png: bool = True) -> None:
         figure.savefig(chart, metadata={"Date": None})
         lines = chart.read_text(encoding="utf-8").splitlines()
         chart.write_text(
-            "".join(line.rstrip() + "\n" for line in lines), encoding="utf-8"
+            "".join(line.rstrip() + "\n" for line in lines),
+            encoding="utf-8",
+            newline="\n",
         )
         if png:
             figure.savefig(out / "leakage-accuracy.png")
@@ -159,5 +161,7 @@ def plot_timing(timing: dict, out: Path) -> None:
         figure.savefig(chart, metadata={"Date": None})
         lines = chart.read_text(encoding="utf-8").splitlines()
         chart.write_text(
-            "".join(line.rstrip() + "\n" for line in lines), encoding="utf-8"
+            "".join(line.rstrip() + "\n" for line in lines),
+            encoding="utf-8",
+            newline="\n",
         )
