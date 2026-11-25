@@ -2,6 +2,8 @@
 
 **Outcome.** Every reported number can be traced to a named run with documented inputs and regenerated tables.
 
+The completed [report](../results/stage-8.md), [checksummed ZIP](../results/echo-evidence.zip), and [reproduction guide](../reproduce-evidence.md) cover the fixture, full replay, and published-result checks.
+
 ## Build
 
 1. Define a generated-fixture CI profile and a full local profile. Keep the CI profile deterministic and small. Validate the benchmark output structure and run identifiers before producing tables.

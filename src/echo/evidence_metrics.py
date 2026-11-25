@@ -540,4 +540,6 @@ def aggregate(evidence: Evidence) -> dict:
             classifier=model_metrics(evidence),
             timing=timing_metrics(evidence),
         )
+        if evidence.profile == "full":
+            result["local_replay"] = receipt(evidence, "replay/verification.json")
     return result

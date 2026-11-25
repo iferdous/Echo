@@ -43,6 +43,13 @@ jobs:
           test -s "$RUNNER_TEMP/echo-delivery/audit/review.html"
           test -s "$RUNNER_TEMP/echo-delivery/leakage-accuracy.svg"
 
+      - name: Reproduce the fixture benchmark and check published evidence
+        run: |
+          uv run --no-sync echo-audit bench --profile fixture --out "$RUNNER_TEMP/echo-bench"
+          uv run --no-sync echo-audit bundle "$RUNNER_TEMP/echo-bench" --out "$RUNNER_TEMP/echo-fixture.zip"
+          uv run --no-sync echo-audit report "$RUNNER_TEMP/echo-fixture.zip" --out "$RUNNER_TEMP/echo-bench-report"
+          uv run --no-sync echo-audit report . --check
+
   native:
     runs-on: ubuntu-24.04
     timeout-minutes: 10

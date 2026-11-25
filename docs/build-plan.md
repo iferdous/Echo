@@ -69,15 +69,16 @@ Add files when their responsibilities exist. Keep downloaded datasets and genera
 
 ### CLI and data contracts
 
-Stages 2 and 4 implement `index`, `match`, and `audit`. Stage 3 provides its benchmark through `scripts/run_stage3.py`. Stage 5 implements `experiment prepare`, `smoke`, `calibrate`, and `run`. Stage 6 adds the optional Rust voting engine and the profiling script `scripts/run_stage6.py`. Stage 7 adds `data manifest` and `review` for preparing local audio and inspecting a batch offline. The benchmark and `report` wrappers below are planned. Each command should have a human-readable summary and write structured evidence where specified.
+Stages 2 and 4 implement `index`, `match`, and `audit`. Stage 3 provides its benchmark through `scripts/run_stage3.py`. Stage 5 implements `experiment prepare`, `smoke`, `calibrate`, and `run`. Stage 6 adds the optional Rust voting engine and the profiling script `scripts/run_stage6.py`. Stage 7 adds `data manifest` and `review` for preparing local audio and inspecting a batch offline. Stage 8 adds `bench`, `report`, and `bundle` to verify, regenerate, and export measured evidence. Each command should have a human-readable summary and write structured evidence where specified.
 
 ~~~text
 echo-audit index TRAIN.csv --out train.sqlite
 echo-audit match QUERY.wav --index train.sqlite --json
 echo-audit audit TEST.csv --root test-audio --index train.sqlite --out audit/
-echo-audit bench --spec bench/matcher-test.json --out run/
+echo-audit bench --profile fixture --out run/
 echo-audit experiment run --inventory ASSETS.csv --esc-root ESC50/ --design DESIGN/ --calibration CALIBRATION.json --out run/
-echo-audit report run/
+echo-audit report run/ --out report/
+echo-audit bundle run/ --out evidence.zip
 ~~~
 
 - A track manifest includes a stable asset ID, dataset/version, relative path, role, optional source service and source ID, label, and attribution reference. Record file checksum and decode status after scanning. Keep missing metadata explicit. Resolve paths relative to the manifest or a specified dataset root.

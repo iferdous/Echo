@@ -163,6 +163,17 @@ def matcher_tables(metrics: dict) -> list[str]:
             ("Baseline", "Correct top 1", "Available trials", "Unavailable trials"),
             comparisons,
         ),
+        table(
+            ("Source ID visibility", "Correct accepted", "Accepted absent-source"),
+            [
+                (
+                    name,
+                    f"{row['correct_accepts']}/{row['positives']}",
+                    f"{row['false_accepts']}/{row['absent']}",
+                )
+                for name, row in test["id_visibility"].items()
+            ],
+        ),
     ]
 
 
@@ -329,6 +340,18 @@ def timing_tables(metrics: dict) -> list[str]:
             ("Workload", "Indexed files", "Index MiB", "Median build s", "Tracks/s"),
             builds,
         ),
+        table(
+            (
+                "Workload",
+                "Engine",
+                "Decode ms",
+                "Peaks ms",
+                "Pair ms",
+                "SQLite ms",
+                "Vote and rank ms",
+            ),
+            phases,
+        ),
     ]
 
 
@@ -383,6 +406,13 @@ def public_report(
         f"![Warm median query time in Python and Rust by workload.]({timing_name})",
         f"[Reproduction guide]({REFS}/docs/reproduce-evidence.md) · [Engineer workflow]({REFS}/docs/demo/ENGINEER-GUIDE.md)",
     ]
+    if replay := metrics.get("local_replay"):
+        counts = replay["audio_sha256_verified"]
+        stages.insert(
+            3,
+            f"The local replay verified {counts['esc50']:,} ESC-50 and {counts['fsd50k_eval']:,} FSD50K file digests. "
+            f"The {replay['replay_engine']} engine reproduced all {replay['equal_query_rows']} decisions and {replay['equal_candidate_rows']:,} ranked candidates.",
+        )
     return "\n\n".join(stages) + "\n"
 
 
