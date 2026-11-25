@@ -3,12 +3,16 @@
 import csv
 import json
 import platform
-import resource
 import subprocess
 from collections import defaultdict
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from time import perf_counter
+
+try:
+    import resource
+except ImportError:
+    resource = None
 
 from echo.artifacts import new_output_directory, sha256_file, write_json
 from echo.audio import load_audio
@@ -303,7 +307,11 @@ def select_policy(evidence: list[TrialEvidence]) -> tuple[str, list[dict]]:
 
 def run_info() -> dict:
     project = Path(__file__).resolve().parents[2]
-    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    system = platform.system()
+    peak_rss = None
+    if resource is not None:
+        rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        peak_rss = rss if system == "Darwin" else rss * 1024
     return {
         "source_commit": subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=project, text=True
@@ -314,10 +322,8 @@ def run_info() -> dict:
         "lock_sha256": sha256_file(project / "uv.lock"),
         "python": platform.python_version(),
         "machine": platform.machine(),
-        "platform": platform.system(),
-        "peak_whole_process_rss_bytes": rss
-        if platform.system() == "Darwin"
-        else rss * 1024,
+        "platform": system,
+        "peak_whole_process_rss_bytes": peak_rss,
     }
 
 
