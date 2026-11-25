@@ -266,6 +266,21 @@ def audit_metrics(evidence: Evidence) -> dict:
         replay = receipt(evidence, "replay/audit.json")
         verification = receipt(evidence, "replay/verification.json")
         check_batch(evidence, replay, "replay/queries.csv", "replay/candidates.csv")
+        inventory = receipt(evidence, "results/stage-1-inventory.json")
+        classifier = receipt(evidence, "results/stage-5-summary.json")
+        profiled_index = receipt(evidence, "results/stage-6/tuned-stage4.json")["index"]
+        require(
+            verification["audio_sha256_verified"]
+            == {
+                "esc50": inventory["decoded_assets"],
+                "fsd50k_eval": batch["indexed_assets"],
+            }
+            and verification["historical_classifier_run_id"] == classifier["run_id"]
+            and verification["matches_profiled_sqlite_bytes"]
+            == (verification["sqlite_sha256"] == profiled_index["sha256"])
+            and verification["replay_engine"] in ("python", "rust"),
+            "full replay receipt disagrees with the corpus, classifier, or index record",
+        )
         require(
             verification["equal_query_rows"]
             == replay["query_count"]

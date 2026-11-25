@@ -91,7 +91,14 @@ def plot_timing(timing: dict, out: Path) -> None:
         figure = Figure(figsize=(9.8, 4.9), dpi=135, facecolor=paper)
         FigureCanvasAgg(figure)
         axis = figure.add_axes((0.24, 0.20, 0.70, 0.55), facecolor=paper)
-        for y, stage in ((1, "stage2"), (0, "stage4")):
+        workloads = ("stage2", "stage4")
+        engines = ("tuned", "rust")
+        max_median = max(
+            timing[stage]["engines"][engine]["warm_connection"]["p50_ms"]
+            for stage in workloads
+            for engine in engines
+        )
+        for y, stage in zip((1, 0), workloads, strict=True):
             for offset, engine, color in (
                 (0.16, "tuned", "#526d7a"),
                 (-0.16, "rust", "#126751"),
@@ -106,10 +113,15 @@ def plot_timing(timing: dict, out: Path) -> None:
                     label=engine if y == 1 else None,
                 )
                 axis.text(
-                    ms + 9, y + offset, f"{ms:.0f}", va="center", color=ink, fontsize=10
+                    ms + max_median * 0.02,
+                    y + offset,
+                    f"{ms:.0f}",
+                    va="center",
+                    color=ink,
+                    fontsize=10,
                 )
         axis.set(
-            xlim=(0, 520),
+            xlim=(0, max_median * 1.2),
             yticks=[1, 0],
             yticklabels=["ESC-50 crops", "ESC-50 → FSD50K"],
         )
@@ -131,7 +143,7 @@ def plot_timing(timing: dict, out: Path) -> None:
         figure.text(
             0.055,
             0.90,
-            "Offset voting latency by workload",
+            "Warm query latency by workload",
             fontsize=20,
             weight="bold",
             color=ink,

@@ -495,8 +495,11 @@ def write_bundle(evidence: Evidence, outputs: dict[str, bytes], path: Path) -> N
 
 
 def bundle(evidence: Evidence, output: Path) -> None:
-    with new_output_file(output) as temporary:
-        outputs = render(aggregate(evidence), temporary.parent)
+    with (
+        new_output_file(output) as temporary,
+        TemporaryDirectory(dir=temporary.parent) as directory,
+    ):
+        outputs = render(aggregate(evidence), Path(directory))
         write_bundle(evidence, outputs, temporary)
 
 

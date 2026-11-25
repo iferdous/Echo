@@ -12,6 +12,7 @@ from echo.datasets import csv_rows
 
 SCHEMA_VERSION = 1
 MAX_FILE_BYTES = 16 * 1024 * 1024
+MAX_BUNDLE_BYTES = 64 * 1024 * 1024
 
 PUBLIC_RESULTS = (
     "stage-1-inventory.json",
@@ -277,7 +278,8 @@ def unpack_bundle(path: Path) -> tuple[Evidence, dict[str, bytes]]:
             "bundle is missing its manifest or checksum list",
         )
         require(
-            all(member.file_size <= MAX_FILE_BYTES for member in info),
+            all(member.file_size <= MAX_FILE_BYTES for member in info)
+            and sum(member.file_size for member in info) <= MAX_BUNDLE_BYTES,
             "bundle evidence exceeds size limit",
         )
         members = {name: archive.read(name) for name in names}
