@@ -1,4 +1,5 @@
 import json
+import os
 import sqlite3
 import subprocess
 import sys
@@ -34,7 +35,9 @@ def audio_fixture(tmp_path):
 
 
 def test_fresh_cli_process_matches_memory_and_reports_offset(audio_fixture):
-    database = audio_fixture / "index #1?.sqlite"
+    database = audio_fixture / (
+        "index #1%.sqlite" if os.name == "nt" else "index #1?.sqlite"
+    )
     manifest = audio_fixture / "index.csv"
     assert main(["index", str(manifest), "--out", str(database)]) == 0
     query = audio_fixture / "query.wav"
