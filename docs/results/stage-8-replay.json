@@ -1,0 +1,77 @@
+{
+  "candidate_rows_sha256": "c527bad2c5151f3d06550133f1b3f903a2aceab628bf4f84adc7b3761c186c8a",
+  "profile": "full",
+  "query_rows_excluding_elapsed_identity_sha256": "9164be0ebd85143c0eab33c9d35ec2cfd5d6453e240f11d5d3deb6b743283b1a",
+  "replays": [
+    {
+      "provenance": {
+        "completed_utc": "2026-11-25T04:46:25.723860+00:00",
+        "dirty": false,
+        "echo_audit": "0.1.0.dev0",
+        "libsndfile": "1.2.2",
+        "lock_sha256": "26ee4d13be0330b43cdebc1a4226469635225aab65aa29472cb5328e0dec6fa7",
+        "logical_cpus": 8,
+        "machine": "arm64",
+        "numpy": "2.5.5",
+        "python": "3.12.16",
+        "scipy": "1.18.1",
+        "soundfile": "0.14.0",
+        "source_commit": "2c6e720312ec7111d281cb3dded77c7f9b008658",
+        "sqlite": "3.53.1",
+        "started_utc": "2026-11-25T04:41:22.189947+00:00",
+        "system": "macOS-26.6.2-arm64-arm-64bit",
+        "wall_seconds": 303.5358962919563
+      },
+      "verification": {
+        "audio_sha256_verified": {
+          "esc50": 2000,
+          "fsd50k_eval": 290
+        },
+        "audit_run_id": "21351d5272b0c7d71b07a74bc127e9edcbaa89da2dc8808fea8aed0b9a3f5988",
+        "equal_candidate_rows": 1335,
+        "equal_query_rows": 267,
+        "historical_classifier_run_id": "2c117167672477d6faa6c8591f527ff84d17e223529a458135c6e4a348ba889b",
+        "matches_profiled_sqlite_bytes": true,
+        "replay_engine": "python",
+        "schema_version": 1,
+        "sqlite_sha256": "7976dce7485e64872bb14e3c43f96c71116ab3ce3340b2987007f0b55c3d49b2"
+      }
+    },
+    {
+      "provenance": {
+        "completed_utc": "2026-11-25T04:39:04.461999+00:00",
+        "dirty": false,
+        "echo_audit": "0.1.0.dev0",
+        "libsndfile": "1.2.2",
+        "lock_sha256": "26ee4d13be0330b43cdebc1a4226469635225aab65aa29472cb5328e0dec6fa7",
+        "logical_cpus": 8,
+        "machine": "arm64",
+        "numpy": "2.5.5",
+        "python": "3.12.16",
+        "scipy": "1.18.1",
+        "soundfile": "0.14.0",
+        "source_commit": "bb0aba7bd17df336c5c2435c146ccf6633d2b390",
+        "sqlite": "3.53.1",
+        "started_utc": "2026-11-25T04:36:59.608805+00:00",
+        "system": "macOS-26.6.2-arm64-arm-64bit",
+        "wall_seconds": 124.8518962910166
+      },
+      "verification": {
+        "audio_sha256_verified": {
+          "esc50": 2000,
+          "fsd50k_eval": 290
+        },
+        "audit_run_id": "21351d5272b0c7d71b07a74bc127e9edcbaa89da2dc8808fea8aed0b9a3f5988",
+        "equal_candidate_rows": 1335,
+        "equal_query_rows": 267,
+        "historical_classifier_run_id": "2c117167672477d6faa6c8591f527ff84d17e223529a458135c6e4a348ba889b",
+        "matches_profiled_sqlite_bytes": true,
+        "replay_engine": "rust",
+        "schema_version": 1,
+        "sqlite_sha256": "7976dce7485e64872bb14e3c43f96c71116ab3ce3340b2987007f0b55c3d49b2"
+      }
+    }
+  ],
+  "run_id": "8365f5b6465a79a795199f6ad33ad5f05923ff89e405c0fc07b1724cef47236d",
+  "schema_version": 1
+}

@@ -42,6 +42,8 @@ uv run --no-sync echo-audit bundle .local/full-profile --out .local/full-evidenc
 
 Choose new output paths on each run. Python is the default matcher. After building the optional native wheel, use `--engine rust` for the same profile and compare the replay evidence. A separately rebuilt index can have different bytes across SQLite builds. Its manifest, fingerprint configuration, decisions, and candidate payloads still need to agree. [Optional Rust install](results/stage-6.md#reproduce)
 
+Both engines reproduced the same 267 query rows and 1,335 ranked candidate rows after verifying 2,290 source WAVs. The saved receipt includes source commits, input identity, versions, and the shared candidate checksum. Use the Stage 6 profiling protocol for latency comparisons. [Python and Rust replay receipts](results/stage-8-replay.json)
+
 The profile reuses the held-out matcher, paired-model predictions, and profiler samples as historical measurements. For fresh measurements, follow each stage’s commands. For the training run, the saved summary names its source commit and dependency-lock digest. Use that revision to recreate the original locked environment, or regenerate calibration and training with the current lock. Scores can vary with backend or platform and timings vary with hardware, caches, and concurrent load. Keep the original receipt alongside each new run. [Held-out matching](results/stage-3.md#reproduce) · [Paired training](results/stage-5.md#reproduce) · [Profiling](results/stage-6.md#reproduce)
 
 ## Use the evidence in a dataset release
