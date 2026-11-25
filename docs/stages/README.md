@@ -1,6 +1,6 @@
 # Echo implementation stages
 
-Start with [Stage 0](00-environment-and-scaffold.md). See the [Stages 0 and 1 verification](../results/stages-0-1.md), [Stage 2 matcher results](../results/stage-2.md), [Stage 3 held-out benchmark](../results/stage-3.md), [Stage 4 cross-dataset audit](../results/stage-4.md), [Stage 5 paired model experiment](../results/stage-5.md), [Stage 6 matcher profiles](../results/stage-6.md), [Stage 7 walkthrough and delivery](../demo/README.md), and [Stage 8 benchmark evidence](../results/stage-8.md). Echo's metadata preflight is documented in the [evaluation protocol](../evaluation-protocol.md#metadata-preflight).
+Start with [Stage 0](00-environment-and-scaffold.md). See the [Stages 0 and 1 verification](../results/stages-0-1.md), [Stage 2 matcher results](../results/stage-2.md), [Stage 3 held-out benchmark](../results/stage-3.md), [Stage 4 cross-dataset audit](../results/stage-4.md), [Stage 5 paired model experiment](../results/stage-5.md), [Stage 6 matcher profiles](../results/stage-6.md), [Stage 7 walkthrough and delivery](../demo/README.md), [Stage 8 benchmark evidence](../results/stage-8.md), and [Stage 9 release verification](../results/stage-9.md). Echo's metadata preflight is documented in the [evaluation protocol](../evaluation-protocol.md#metadata-preflight).
 
 | Stage | Work | Evidence required to close the stage |
 | --- | --- | --- |

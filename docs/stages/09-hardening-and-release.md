@@ -2,6 +2,8 @@
 
 **Outcome.** Echo ships a reproducible preview with the matcher and paired model evidence, a concise demo, and claims scoped to what was measured.
 
+The preview includes a real-data split review with a published re-audit, dataset validation, and an audit of the previous stages. [Release verification](../results/stage-9.md) · [Real-world case](../real-world-case.md) · [Preview notes](../preview-release.md)
+
 ## Build
 
 1. Test malformed audio, invalid manifests, decode failure, silence, very short audio, repeated hashes, ties, missing data, and interrupted index writes. Confirm predictable statuses and no partial index replacing a previously valid file.

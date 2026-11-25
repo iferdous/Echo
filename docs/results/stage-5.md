@@ -76,7 +76,7 @@ uv run --group experiment echo-audit experiment run \
   --out .local/stage5/run
 ```
 
-Use the published `docs/results/stage-5-calibration.json` with the matching design to replay the published run identity. A new calibration records a new run identity.
+Use the published `docs/results/stage-5-calibration.json` with the matching design, training code, and lockfile to replay the published run identity. Check out the source commit listed in the summary and use the published calibration from this report. On the current checkout, recalibrate with its lockfile before training. The new calibration records a different run identity.
 
 Environment details, the dependency lock digest, and input and output hashes are in the run summary. Repeated CPU training was verified on the recorded environment. Results may differ across PyTorch builds and platforms. [PyTorch reproducibility notes](https://docs.pytorch.org/docs/stable/notes/randomness.html)
 

@@ -1,12 +1,12 @@
 # Echo
 
-Echo audits audio datasets for shared recordings. Give it a clip or a manifest and an index of reference audio. It reports candidate recordings, timestamps, and the evidence behind each decision. A controlled training experiment shows how prior exposure to test audio changes a classifier's score.
+Echo finds audio that appears in both training and test data. If a model has already heard a test clip during training, the test can overstate how well it recognizes new sounds. Echo reports candidate recordings, timestamps, and the evidence an engineer can use to review each overlap.
 
 A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo uses acoustic fingerprints to find shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo uses those IDs to measure coverage after it ranks candidates by sound. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
 
 ## See Echo in use
 
-Start with the [69-second demo](docs/demo/echo-demo.mp4), the [reproducible walkthrough](docs/demo/README.md), or the [engineer guide for your own audio](docs/demo/ENGINEER-GUIDE.md).
+Start with the real-audio case, the short walkthrough, or the guide for your own datasets. [Real-world case](docs/real-world-case.md) · [Video](docs/demo/echo-demo.mp4) · [Captions](docs/demo/echo-demo.vtt) · [Engineer guide](docs/demo/ENGINEER-GUIDE.md)
 
 <!-- echo-evidence:start -->
 | Measured result | Scope | Run |
@@ -19,9 +19,19 @@ Start with the [69-second demo](docs/demo/echo-demo.mp4), the [reproducible walk
 
 ![Mean classifier accuracy by training condition on the fixed ESC-50 test set.](docs/demo/leakage-accuracy.svg)
 
+## Real-world case study
+
+A dataset team wants to score on ESC-50 after training with Freesound audio. Echo checks the proposed test set against indexed FSD50K recordings, supports a decision to quarantine or hold clips, and re-audits the revised test manifest. Follow a shared dog bark, a confirmed clock clip Echo missed, and an alarm pair that stayed in review. [Study, results, and reproduction](docs/real-world-case.md)
+
+![Recorded ESC-50 and FSD50K split review and example dog-bark alignment.](docs/results/stage-9-case/split-review.svg)
+
+## How it works
+
+Echo maps time-frequency peaks to integer hashes and stores them with their original times in SQLite. When a query shares hashes with a reference, their differences vote for the time offset. Echo ranks the alignments and checks how much of the query supports the top result.
+
 ## Getting started
 
-Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and use its locked environment. The project pins Python 3.12.16. The locked environment is verified on Apple Silicon macOS and Ubuntu 24.04.
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and use its locked environment. The project pins Python 3.12.16. The locked environment is verified on Apple Silicon macOS, Ubuntu 24.04, and Windows Server 2025.
 
 ```bash
 uv sync --locked
@@ -97,6 +107,10 @@ Follow the [numbered stages, 0 through 9](docs/stages/README.md). Start with [St
 - [Build plan](docs/build-plan.md) covers shared scope, architecture, commands, and implementation decisions.
 - [Evaluation protocol](docs/evaluation-protocol.md) covers the dataset audit, how to verify audio matches, and the controlled model experiment.
 
-## Dataset baseline
+## Data and limitations
 
-The metadata audit records shared Freesound IDs and cross-fold source groups before checking for overlapping audio. [Audit inputs, counts, and reproduction](docs/evaluation-protocol.md#metadata-preflight)
+ESC-50 and FSD50K have separate terms and source attributions. The preview uses generated audio in the video and publishes manifests and statistics for the real datasets. [Data sources and licenses](docs/data-sources.md)
+
+The matcher can abstain on very short, noisy or repetitive audio, and can choose a plausible offset for a different recording. The held-out suite measures cropping, MP3, resampling, added noise and gain changes. Pitch and speed edits are outside that benchmark. A clean report applies to the indexed corpus and policy. The controlled model result applies to the documented dataset, crops and classifier. [Measured failure cases](docs/results/stage-4.md#results) · [Model evidence](docs/results/stage-5.md)
+
+[Preview release](https://github.com/iferdous/Echo/releases/tag/v0.1.0-preview.1) · [Release verification](docs/results/stage-9.md) · [Interview notes](docs/resume-bullets.md)
