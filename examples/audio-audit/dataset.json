@@ -1,0 +1,145 @@
+{
+  "audio": {
+    "catalog-dog": {
+      "change": "Official WAV",
+      "dataset": "FSD50K eval",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "path": "audio/catalog-dog.wav",
+      "sha256": "390a00952404d8e0341be05e8940a32dc66acbff0d8a9e0a3efab0c6699361c8",
+      "source_id": "207124",
+      "source_url": "https://freesound.org/s/207124/",
+      "title": "DogBARKING.wav",
+      "uploader": "ahill86"
+    },
+    "catalog-other-dog": {
+      "change": "Official WAV",
+      "dataset": "FSD50K eval",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "path": "audio/catalog-other-dog.wav",
+      "sha256": "2814664bac06855540c9ef43c02ce1810dd4de0a2b9da6058d02a80c24d4e6f1",
+      "source_id": "32318",
+      "source_url": "https://freesound.org/s/32318/",
+      "title": "MABEL 1.aif",
+      "uploader": "Bobby Beck"
+    },
+    "catalog-rain": {
+      "change": "Official WAV",
+      "dataset": "FSD50K eval",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "path": "audio/catalog-rain.wav",
+      "sha256": "c9e5d6840679d65416f3a34ce346c672ed71bf9e853b99e0e2e09bac840bd24e",
+      "source_id": "21189",
+      "source_url": "https://freesound.org/s/21189/",
+      "title": "Louisiana Rain 1.wav",
+      "uploader": "uberhuberman"
+    },
+    "dog-mp3": {
+      "change": "Same 2-second crop, 64 kbps MP3",
+      "dataset": "Derived from ESC-10",
+      "license": "https://creativecommons.org/licenses/by/3.0/",
+      "path": "audio/dog-mp3.mp3",
+      "sha256": "c986ac6ee24897034f68a76139a15e676031fdc0200a6644c0f23c394d5db95f",
+      "source_id": "207124",
+      "source_url": "https://freesound.org/s/207124/",
+      "title": "DogBARKING.wav",
+      "uploader": "ahill86"
+    },
+    "dog-noisy": {
+      "change": "Same crop with seeded white noise at \u22125 dB SNR",
+      "dataset": "Derived from ESC-10",
+      "license": "https://creativecommons.org/licenses/by/3.0/",
+      "path": "audio/dog-noisy.wav",
+      "sha256": "052f1f304a80d1ee9378f91077ff8e72adaf129a1c1d74e20c14e1907fbb71f8",
+      "source_id": "207124",
+      "source_url": "https://freesound.org/s/207124/",
+      "title": "DogBARKING.wav",
+      "uploader": "ahill86"
+    },
+    "dog-trim": {
+      "change": "ESC-10 dog clip, 1.6 to 3.6 s",
+      "dataset": "Derived from ESC-10",
+      "license": "https://creativecommons.org/licenses/by/3.0/",
+      "path": "audio/dog-trim.wav",
+      "sha256": "a22e9f8bc914315f9c3ee8fc438d0e5d0cc8f1f4b8d8bdd440fb8d5c8a9d4610",
+      "source_id": "207124",
+      "source_url": "https://freesound.org/s/207124/",
+      "title": "DogBARKING.wav",
+      "uploader": "ahill86"
+    },
+    "esc-dog": {
+      "change": "Official excerpt 4-207124-A-0.wav",
+      "dataset": "ESC-10 subset of ESC-50",
+      "license": "https://creativecommons.org/licenses/by/3.0/",
+      "path": "audio/esc-dog.wav",
+      "sha256": "4172efa07482e36b67f50bc730d9ecaf95da20c81f79242d0439ac6bae21f53c",
+      "source_id": "207124",
+      "source_url": "https://freesound.org/s/207124/",
+      "title": "DogBARKING.wav",
+      "uploader": "ahill86"
+    },
+    "esc-rain": {
+      "change": "Official excerpt 1-21189-A-10.wav",
+      "dataset": "ESC-10 subset of ESC-50",
+      "license": "https://creativecommons.org/licenses/by/3.0/",
+      "path": "audio/esc-rain.wav",
+      "sha256": "5f15ab2d8f6ef9932909b1b75c8ac254cbea46c93b4b2f0f3542abdf09b9abc0",
+      "source_id": "21189",
+      "source_url": "https://freesound.org/s/21189/",
+      "title": "Louisiana Rain 1.wav",
+      "uploader": "uberhuberman"
+    },
+    "other-dog": {
+      "change": "Official WAV",
+      "dataset": "FSD50K eval",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "path": "audio/other-dog.wav",
+      "sha256": "fe099e663e209feea36f0f77ab2dc684888088d465b70b85a0a25d7dcc0af3b7",
+      "source_id": "274471",
+      "source_url": "https://freesound.org/s/274471/",
+      "title": "Dog Barking",
+      "uploader": "nick121087"
+    }
+  },
+  "dataset_urls": {
+    "esc50": "https://github.com/karolpiczak/ESC-50/tree/33c8ce9eb2cf0b1c2f8bcf322eb349b6be34dbb6",
+    "fsd50k": "https://zenodo.org/records/4060432"
+  },
+  "queries": [
+    {
+      "expected": "catalog-dog",
+      "id": "esc-dog",
+      "label": "Dog bark from ESC-50"
+    },
+    {
+      "expected": "catalog-rain",
+      "id": "esc-rain",
+      "label": "Rain from ESC-50"
+    },
+    {
+      "expected": "catalog-dog",
+      "id": "dog-trim",
+      "label": "2-second dog crop"
+    },
+    {
+      "expected": "catalog-dog",
+      "id": "dog-mp3",
+      "label": "64 kbps MP3 crop"
+    },
+    {
+      "expected": "catalog-dog",
+      "id": "dog-noisy",
+      "label": "Dog crop with heavy noise"
+    },
+    {
+      "expected": null,
+      "id": "other-dog",
+      "label": "Different dog recording"
+    }
+  ],
+  "references": [
+    "catalog-dog",
+    "catalog-rain",
+    "catalog-other-dog"
+  ],
+  "schema_version": 1
+}
