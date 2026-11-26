@@ -65,6 +65,8 @@ button:disabled { color: var(--muted); cursor: default; opacity: .65; }
 .math-grid code { display: block; overflow-wrap: anywhere; padding: 9px 0; font-size: .83rem; }
 .math-grid label { display: flex; justify-content: space-between; gap: 8px; font-size: .84rem; font-weight: 650; margin-top: 12px; }
 .math-grid input { width: 100%; margin: 3px 0 4px; accent-color: var(--forest); }
+.policy-result { display: flex; align-items: center; flex-wrap: wrap; gap: 7px 12px; margin-top: 5px; }
+.policy-result output { font-size: .85rem; font-weight: 750; }
 .results-wrap { overflow-x: auto; margin-bottom: 20px; }
 table { width: 100%; border-collapse: collapse; text-align: left; font-size: .87rem; }
 th, td { padding: 9px 11px; border-bottom: 1px solid var(--line); white-space: nowrap; }

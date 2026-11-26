@@ -51,6 +51,7 @@ function updateDecision() {
   const current = replayDecision(item, Number(support.value) / 100, Number(margin.value));
   byId("summary").dataset.result = current;
   set("status", resultNames[current]);
+  set("policy-verdict", resultNames[current]);
   set("decision", top
     ? `${(100 * top.support_fraction).toFixed(2)}% fingerprint support · ${formatCount(top.score - (runner?.score ?? 0))} vote lead`
     : `${formatCount(item.match.query_landmarks)} extracted fingerprints`);

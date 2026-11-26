@@ -62,6 +62,9 @@ jobs:
       - name: Verify the real-data release case from saved audit results
         run: uv run --no-sync python scripts/run_stage9_case.py --check --out "$RUNNER_TEMP/echo-release-case"
 
+      - name: Replay the interactive audio example and verify its recorded data
+        run: uv run --no-sync python scripts/run_audio_lab.py --check --out "$RUNNER_TEMP/echo-audio-example"
+
   native:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -81,3 +84,29 @@ jobs:
           uv pip install --no-deps "$RUNNER_TEMP"/echo-wheels/*.whl
       - name: Verify native and Python result parity
         run: uv run --no-sync python -c 'import _echo_offsets' && uv run --no-sync pytest tests/test_native_offsets.py tests/test_matcher.py tests/test_stage6_profile.py
+
+  pages:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: [python, native]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: audio-audit-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: examples/audio-audit
+      - uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        id: deployment

@@ -4,9 +4,15 @@ Echo finds audio that appears in both training and test data. If a model has alr
 
 A five-second excerpt can come from the same recording as a longer file with a different name and encoding. Echo uses acoustic fingerprints to find shared audio and return a timestamp and matching evidence. The two datasets for the first study are ESC-50 and FSD50K. LAION has already documented overlap in their source IDs. Echo uses those IDs to measure coverage after it ranks candidates by sound. [ESC-50](https://github.com/karolpiczak/ESC-50) · [FSD50K](https://zenodo.org/records/4060432) · [LAION overlap analysis](https://github.com/LAION-AI/audio-dataset/blob/main/laion-audio-630k/ICASSP.md#potential-data-leakage)
 
-## See Echo in use
+## Try it on real recordings
 
-Start with the real-audio case, the short walkthrough, or the guide for your own datasets. [Real-world case](docs/real-world-case.md) · [Video](docs/demo/echo-demo.mp4) · [Captions](docs/demo/echo-demo.vtt) · [Engineer guide](docs/demo/ENGINEER-GUIDE.md)
+Play an ESC-50 dog bark and the longer FSD50K recording that contains it. Switch to a trimmed or MP3 version, see the exact fingerprint votes that line up, then lower the support threshold to see how an unrelated recording can slip through. [Open the interactive example](https://iferdous.github.io/Echo/) · [Run it locally and follow the math](examples/audio-audit/README.md)
+
+[![Echo finds the dog bark at +0.616 seconds and shows the peaks driving the match.](examples/audio-audit/preview.png)](https://iferdous.github.io/Echo/)
+
+## Measured results
+
+The interactive pack is small enough to rerun locally. The larger audits and the controlled model experiment below give the full evaluation context. [Full real-world case](docs/real-world-case.md) · [Video walkthrough](docs/demo/echo-demo.mp4) · [Engineer guide](docs/demo/ENGINEER-GUIDE.md)
 
 <!-- echo-evidence:start -->
 | Measured result | Scope | Run |
@@ -109,7 +115,7 @@ Follow the [numbered stages, 0 through 9](docs/stages/README.md). Start with [St
 
 ## Data and limitations
 
-ESC-50 and FSD50K have separate terms and source attributions. The preview uses generated audio in the video and publishes manifests and statistics for the real datasets. [Data sources and licenses](docs/data-sources.md)
+ESC-50 and FSD50K have separate terms and source attributions. The preview video uses generated audio. The interactive example ships a small pack of attributed CC0 recordings and CC BY 3.0 ESC-10 excerpts. [Data sources and licenses](docs/data-sources.md)
 
 The matcher can abstain on very short, noisy or repetitive audio, and can choose a plausible offset for a different recording. The held-out suite measures cropping, MP3, resampling, added noise and gain changes. Pitch and speed edits are outside that benchmark. A clean report applies to the indexed corpus and policy. The controlled model result applies to the documented dataset, crops and classifier. [Measured failure cases](docs/results/stage-4.md#results) · [Model evidence](docs/results/stage-5.md)
 

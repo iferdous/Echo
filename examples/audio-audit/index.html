@@ -47,6 +47,7 @@
         </article>
       </div>
       <p id="known" class="evidence-note"></p>
+      <p class="caption">Dots show spectral peaks. The orange mark identifies one fingerprint anchor shared by the query and candidate.</p>
     </section>
     <section class="panel" id="math" aria-labelledby="math-title">
       <div class="panel-head"><div><h2 id="math-title">How an offset wins</h2><p>Echo pairs peaks in the frequency spectrum. Equal pairs across files cast votes for the same time shift.</p></div></div>
@@ -65,7 +66,7 @@
           <input id="support" type="range" min="0" max="40" step="0.1">
           <label for="margin">Minimum lead <output for="margin" id="margin-value"></output></label>
           <input id="margin" type="range" min="0" max="1500" step="1">
-          <button type="button" id="reset" class="ghost">Reset to Echo’s policy</button>
+          <div class="policy-result"><output id="policy-verdict" aria-live="polite"></output><button type="button" id="reset" class="ghost">Reset to Echo’s policy</button></div>
         </div>
       </div>
     </section>

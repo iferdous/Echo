@@ -1,5 +1,7 @@
 # Audit an audio test set before using it to score a model
 
+[Listen to real clips and inspect the matcher’s votes](https://iferdous.github.io/Echo/) · [Replay the small listening pack](../examples/audio-audit/README.md)
+
 Imagine an audio ML team wants to evaluate on ESC-50 after adding Freesound audio to training. Both datasets draw from Freesound, so renaming a file or cutting it shorter can hide audio the model may have heard. Echo gives the team a way to decide which clips to quarantine, which to review, and which to retain for further evaluation.
 
 This case uses **267 real ESC-50 clips** as a proposed test set and **290 official FSD50K eval recordings** as a stand-in for previously seen audio. The case uses a deliberately enriched overlap cohort. The FSD50K files keep their original upstream `eval` membership. [Frozen input cohorts and acquisition](results/stage-4.md)
