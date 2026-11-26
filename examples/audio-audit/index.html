@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Listen to real dataset clips, trace Echo's audio fingerprints, and audit a proposed test split.">
+  <title>Echo Audio Audit</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="evidence.js" defer></script>
+  <script src="performance.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><div class="shell nav">
+    <a href="./" class="mark">Echo <span>Audio Audit</span></a>
+    <nav aria-label="Project"><a href="#math">Match math</a><a href="#performance">Performance</a><a href="https://github.com/iferdous/Echo">GitHub ↗</a></nav>
+  </div></header>
+  <main class="shell">
+    <section class="hero">
+      <h1>Same sound.<br><em>Different file.</em></h1>
+      <div class="hero-context">
+        <p>Before scoring an audio model, check whether the proposed test clips already appear in the training catalog.</p>
+        <p>Listen to recordings from ESC-50 and FSD50K, then see the fingerprint votes Echo used to make its decision.</p>
+      </div>
+    </section>
+    <noscript>This example needs JavaScript to render its saved matches and policy controls.</noscript>
+    <section class="panel workbench" aria-labelledby="inspect-title">
+      <div class="panel-head">
+        <div><h2 id="inspect-title">Inspect a query</h2><p>Three FSD50K references stay fixed as you change the test clip.</p></div>
+        <label class="select">Query clip<select id="query"></select></label>
+      </div>
+      <div id="summary" class="verdict" aria-live="polite">
+        <div><strong id="status"></strong><p id="decision"></p></div>
+        <dl class="metrics"><div><dt>Best offset</dt><dd id="offset"></dd></div><div><dt>Aligned votes</dt><dd id="score"></dd></div><div><dt>Exact file hash</dt><dd id="byte"></dd></div></dl>
+      </div>
+      <div class="recordings">
+        <article class="recording">
+          <h3>Proposed test clip</h3><strong id="query-name"></strong><p id="query-source"></p>
+          <audio id="query-audio" aria-label="Play the proposed test clip" controls preload="metadata"></audio>
+          <canvas id="query-peaks" role="img"></canvas>
+        </article>
+        <article class="recording">
+          <h3>Top catalog candidate</h3><strong id="ref-name"></strong><p id="ref-source"></p>
+          <audio id="ref-audio" aria-label="Play the catalog recording" controls preload="metadata"></audio>
+          <canvas id="ref-peaks" role="img"></canvas>
+          <button type="button" id="jump" class="jump">Play from the matching offset</button>
+        </article>
+      </div>
+      <p id="known" class="evidence-note"></p>
+    </section>
+    <section class="panel" id="math" aria-labelledby="math-title">
+      <div class="panel-head"><div><h2 id="math-title">How an offset wins</h2><p>Echo pairs peaks in the frequency spectrum. Equal pairs across files cast votes for the same time shift.</p></div></div>
+      <canvas id="histogram" role="img"></canvas>
+      <p class="caption" id="vote-caption"></p>
+      <div class="math-grid">
+        <div>
+          <h3>One vote from these recordings</h3>
+          <p id="vote-detail"></p>
+          <code id="packed"></code>
+        </div>
+        <div>
+          <h3>Try the review policy</h3>
+          <p>These controls reapply the policy to Echo’s recorded candidates.</p>
+          <label for="support">Minimum support <output for="support" id="support-value"></output></label>
+          <input id="support" type="range" min="0" max="40" step="0.1">
+          <label for="margin">Minimum lead <output for="margin" id="margin-value"></output></label>
+          <input id="margin" type="range" min="0" max="1500" step="1">
+          <button type="button" id="reset" class="ghost">Reset to Echo’s policy</button>
+        </div>
+      </div>
+    </section>
+    <section class="panel comparison" id="performance" aria-labelledby="performance-title">
+      <div class="panel-head"><div><h2 id="performance-title">What changed across the examples</h2><p id="summary-copy"></p></div></div>
+      <div class="results-wrap"><table><thead><tr><th scope="col">Test clip</th><th scope="col">Known source</th><th scope="col">Exact hash</th><th scope="col">Echo’s frozen policy</th></tr></thead><tbody id="results"></tbody></table></div>
+      <h3>Measured query time</h3>
+      <p id="timing-description"></p>
+      <div class="speed-cards" id="speed"></div>
+      <p class="caption">Decode, fingerprints, SQLite lookup, voting and decision over a reused connection. One warmup pass per engine. The timer starts after the index opens and covers decode through decision.</p>
+      <p class="caption">The larger run measured a warm median of 429.6 ms in Python and 188.8 ms with Rust. <a href="https://github.com/iferdous/Echo/blob/main/docs/results/stage-6.md">Read the larger benchmark and workload</a>.</p>
+    </section>
+    <section class="next-steps">
+      <h2>Use it before a dataset release</h2>
+      <p>Index the earlier recordings, query the proposed test set, and check the timestamps on anything Echo flags. Quarantine confirmed source groups. Keep uncertain clips in a review queue and rerun on the revised split.</p>
+      <p><a href="https://github.com/iferdous/Echo/blob/main/docs/real-world-case.md">See the 267-clip release audit</a> · <a href="https://github.com/iferdous/Echo/blob/main/examples/audio-audit/README.md">Reproduce this example and view attribution</a></p>
+    </section>
+  </main>
+  <footer><div class="shell">Echo · Real audio from <a href="https://github.com/karolpiczak/ESC-50">ESC-50</a> and <a href="https://zenodo.org/records/4060432">FSD50K</a>.</div></footer>
+</body>
+</html>

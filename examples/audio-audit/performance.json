@@ -1,0 +1,68 @@
+{
+  "engines": {
+    "python": {
+      "observations": 54,
+      "phases": {
+        "decode_ns": {
+          "p50_ms": 1.9368954999999999,
+          "p95_ms": 7.1792229
+        },
+        "pair_hashes_ns": {
+          "p50_ms": 15.2624375,
+          "p95_ms": 112.57686249999999
+        },
+        "retrieve_ns": {
+          "p50_ms": 4.0535625,
+          "p95_ms": 20.733389699999996
+        },
+        "spectral_peaks_ns": {
+          "p50_ms": 2.4742085,
+          "p95_ms": 14.010071049999999
+        },
+        "vote_rank_decide_ns": {
+          "p50_ms": 1.515938,
+          "p95_ms": 8.37692335
+        }
+      },
+      "query": {
+        "p50_ms": 24.026792,
+        "p95_ms": 164.2829125
+      }
+    },
+    "rust": {
+      "observations": 54,
+      "phases": {
+        "decode_ns": {
+          "p50_ms": 1.952354,
+          "p95_ms": 7.1714375
+        },
+        "pair_hashes_ns": {
+          "p50_ms": 12.8064375,
+          "p95_ms": 112.9051273
+        },
+        "retrieve_ns": {
+          "p50_ms": 4.061584,
+          "p95_ms": 21.664554399999997
+        },
+        "spectral_peaks_ns": {
+          "p50_ms": 2.4941875000000002,
+          "p95_ms": 14.27256645
+        },
+        "vote_rank_decide_ns": {
+          "p50_ms": 1.0288335000000002,
+          "p95_ms": 15.50687685
+        }
+      },
+      "query": {
+        "p50_ms": 23.437583,
+        "p95_ms": 167.98215624999997
+      }
+    }
+  },
+  "processor": "Apple M3",
+  "python": "3.12.16",
+  "repeats": 9,
+  "source_commit": "01fe5dac5503853be6c4d032e9915449195523bc",
+  "system": "macOS-26.6.2-arm64-arm-64bit",
+  "timing_boundary": "WAV or MP3 decode, spectral peaks, fingerprint hashes, SQLite retrieval, voting and decision over one reused connection. One warmup pass per engine. Index build, process startup, file digests and trace export excluded."
+}
